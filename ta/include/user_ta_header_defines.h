@@ -5,7 +5,7 @@
 /* To get the TA UUID definition */
 #include <darknetp_ta.h>
 
-#define TA_UUID				TA_DARKNETP_UUID
+#define TA_UUID				TA_DARKNETZ_UUID
 
 /*
  * TA properties: multi-instance TA, no specific attribute
