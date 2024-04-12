@@ -480,7 +480,7 @@ void forward_convolutional_layer(convolutional_layer l, network net)
 
     fill_cpu(l.outputs*l.batch, 0, l.output, 1);
 
-    if(l.xnor){
+    if(l.xnor){ // 일반적으로 이 조건문은 실행되지 않는다.
         binarize_weights(l.weights, l.n, l.c/l.groups*l.size*l.size, l.binary_weights);
         swap_binary(&l);
         binarize_cpu(net.input, l.c*l.h*l.w*l.batch, l.binary_input);
