@@ -283,6 +283,7 @@ void forward_network(network *netp)
 
             if(l.delta){
                 fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
+                printf("forward_netmork(), if(l.delta) activated\n");
             }
 
             l.forward(l, net);

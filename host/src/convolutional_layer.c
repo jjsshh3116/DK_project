@@ -177,25 +177,25 @@ void cudnn_convolutional_setup(layer *l)
 }
 #endif
 #endif
-
+                                                            //  c: channels
 convolutional_layer make_convolutional_layer(int batch, int h, int w, int c, int n, int groups, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int binary, int xnor, int adam)
-{
+{                                             //       height, width,       n: filters, 
     int i;
     convolutional_layer l = {0};
     l.type = CONVOLUTIONAL;
 
-    l.groups = groups;
+    l.groups = groups; //default value: 1
     l.h = h;
     l.w = w;
     l.c = c;
     l.n = n;
-    l.binary = binary;
-    l.xnor = xnor;
+    l.binary = binary; //default value: 0
+    l.xnor = xnor; //default value: 0
     l.batch = batch;
     l.stride = stride;
     l.size = size;
     l.pad = padding;
-    l.batch_normalize = batch_normalize;
+    l.batch_normalize = batch_normalize; //default value: 0
 
     l.weights = calloc(c/groups*n*size*size, sizeof(float));
     l.weight_updates = calloc(c/groups*n*size*size, sizeof(float));
