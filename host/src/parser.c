@@ -534,9 +534,9 @@ maxpool_layer parse_maxpool(list *options, size_params params)
     batch=params.batch;
     if(!(h && w && c)) error("Layer before maxpool layer must output image.");
 
-    printf("Before parse_maxpool's make_maxpool_layer");
+    printf("Before parse_maxpool's make_maxpool_layer\n");
     maxpool_layer layer = make_maxpool_layer(batch,h,w,c,size,stride,padding);
-    printf("After parse_maxpool's make_maxpool_layer");
+    printf("After parse_maxpool's make_maxpool_layer\n");
 
     make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
 

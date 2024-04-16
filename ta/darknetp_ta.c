@@ -225,6 +225,7 @@ static TEE_Result make_convolutional_layer_TA_params(uint32_t param_types,
 static TEE_Result make_maxpool_layer_TA_params(uint32_t param_types,
                                        TEE_Param params[4])
 {
+    printf("make_maxpool_layer_TA_params function entered. \n");
     uint32_t exp_param_types = TEE_PARAM_TYPES(TEE_PARAM_TYPE_MEMREF_INPUT,
                                                TEE_PARAM_TYPE_NONE,
                                                TEE_PARAM_TYPE_NONE,
@@ -250,6 +251,8 @@ static TEE_Result make_maxpool_layer_TA_params(uint32_t param_types,
     layer_TA lta = make_maxpool_layer_TA(batch, h, w, c, size, stride, padding);
     netta.layers[netnum] = lta;
     netnum++;
+
+    printf("All make_maxpool_layer_TA_params function passed. \n");
 
     return TEE_SUCCESS;
 }
