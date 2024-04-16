@@ -1298,6 +1298,9 @@ void run_classifier(int argc, char **argv)
         partition_point2 = pp_end;
         */
 
+       partition_point1 = -1;
+       partition_point2 = 10;
+
         int dp = find_int_arg(argc, argv, "-dp", -1);
         global_dp = dp;
 
