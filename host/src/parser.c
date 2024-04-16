@@ -833,6 +833,7 @@ network *parse_network_cfg(char *filename)
     while(temp_n){
         temp_n = n->next;
         ++count;
+        printf("%d\n", count);
     }
 
     partition_point2 = count;
