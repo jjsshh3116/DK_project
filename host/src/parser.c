@@ -534,7 +534,9 @@ maxpool_layer parse_maxpool(list *options, size_params params)
     batch=params.batch;
     if(!(h && w && c)) error("Layer before maxpool layer must output image.");
 
+    printf("Before parse_maxpool's make_maxpool_layer")
     maxpool_layer layer = make_maxpool_layer(batch,h,w,c,size,stride,padding);
+    printf("After parse_maxpool's make_maxpool_layer")
 
     make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
 
@@ -987,7 +989,7 @@ network *parse_network_cfg(char *filename)
             net->workspace = calloc(1, workspace_size);
         }
 #else
-        net->workspace = calloc(2, workspace_size);
+        net->workspace = calloc(1, workspace_size);
 
         //netta.workspace = net->workspace;
 #endif
