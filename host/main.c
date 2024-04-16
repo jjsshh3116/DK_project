@@ -268,14 +268,19 @@ void make_maxpool_layer_CA(int batch, int h, int w, int c, int size, int stride,
     passint[6] = padding;
 
     memset(&op, 0, sizeof(op));
+    printf("make_maxpool_layer_CA memset passed \n");
     op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_INPUT, TEEC_NONE,
                                      TEEC_NONE, TEEC_NONE);
+
+    printf("make_maxpool_layer_CA TEEC_PARAM_TYPES passed \n");
 
     op.params[0].tmpref.buffer = passint;
     op.params[0].tmpref.size = sizeof(passint);
 
     res = TEEC_InvokeCommand(&sess, MAKE_MAX_CMD,
                              &op, &origin);
+
+    printf("make_maxpool_layer_CA TEEC_InvokeCommand passed \n");
 
     if (res != TEEC_SUCCESS)
     errx(1, "TEEC_InvokeCommand(MAX) failed 0x%x origin 0x%x",
