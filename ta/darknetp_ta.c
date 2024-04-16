@@ -230,9 +230,12 @@ static TEE_Result make_maxpool_layer_TA_params(uint32_t param_types,
                                                TEE_PARAM_TYPE_NONE,
                                                TEE_PARAM_TYPE_NONE);
 
+    printf("Befor make_maxpool_layer_TA_params's ERROR Code . \n");
     //DMSG("has been called");
     if (param_types != exp_param_types)
     return TEE_ERROR_BAD_PARAMETERS;
+
+    printf("make_maxpool_layer_TA_params's ERROR Code passed. \n");
 
     int *params0 = params[0].memref.buffer;
 
