@@ -987,7 +987,7 @@ network *parse_network_cfg(char *filename)
             net->workspace = calloc(1, workspace_size);
         }
 #else
-        net->workspace = calloc(1, workspace_size);
+        net->workspace = calloc(2, workspace_size);
 
         //netta.workspace = net->workspace;
 #endif
