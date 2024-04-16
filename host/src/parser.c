@@ -825,6 +825,22 @@ network *parse_network_cfg(char *filename)
     free_section(s);
     fprintf(stderr, "layer     filters    size              input                output\n");
 
+    //partition num set.
+    partition_point1 = -1;
+
+    node *temp_n = n;
+    
+    while(temp_n){
+        temp_n = n->next;
+        ++count;
+    }
+
+    partition_point2 = count;
+    count = 0;
+    
+    printf("partition point2 = %d\n", partition_point2);
+    
+
     while(n){
         params.index = count;
         fprintf(stderr, "%5d ", count); //layer index 정수값 출력
