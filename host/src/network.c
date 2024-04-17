@@ -268,6 +268,7 @@ void forward_network(network *netp)
             // receive parames (layer partition_point2's outputs) from TA
             if(partition_point2 < net.n - 1)
             {
+                printf("forward_network if of if...\n");
                 layer l_pp2 = net.layers[partition_point2];
 
                 forward_network_back_CA(l_pp2.output, l_pp2.outputs, net.batch);
