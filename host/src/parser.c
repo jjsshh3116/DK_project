@@ -1001,7 +1001,7 @@ list *read_cfg(char *filename)
     FILE *file = fopen(filename, "r");
     if(file == 0) file_error(filename);
     char *line;
-    int nu = 0;
+    int nu = 0, tmp = 0;
     list *options = make_list();
     section *current = 0;
     while((line=fgetl(file)) != 0){
@@ -1013,6 +1013,7 @@ list *read_cfg(char *filename)
                 list_insert(options, current);
                 current->options = make_list();
                 current->type = line;
+                tmp++;
                 break;
             case '\0':
             case '#':
@@ -1028,7 +1029,7 @@ list *read_cfg(char *filename)
         }
     }
     fclose(file);
-    printf("nu: %d \n", nu);
+    printf("tmp: %d \n", tmp);
     return options;
 }
 
