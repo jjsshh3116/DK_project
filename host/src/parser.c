@@ -1028,6 +1028,7 @@ list *read_cfg(char *filename)
         }
     }
     fclose(file);
+    printf("nu: %d \n", nu);
     return options;
 }
 
