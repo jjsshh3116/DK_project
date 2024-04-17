@@ -1001,7 +1001,7 @@ list *read_cfg(char *filename)
     FILE *file = fopen(filename, "r");
     if(file == 0) file_error(filename);
     char *line;
-    int nu = 0, tmp = 0;
+    int nu = 0, layer_count = 0;
     list *options = make_list();
     section *current = 0;
     while((line=fgetl(file)) != 0){
@@ -1013,7 +1013,7 @@ list *read_cfg(char *filename)
                 list_insert(options, current);
                 current->options = make_list();
                 current->type = line;
-                tmp++;
+                layer_count++;
                 break;
             case '\0':
             case '#':
@@ -1029,7 +1029,10 @@ list *read_cfg(char *filename)
         }
     }
     fclose(file);
-    printf("tmp: %d \n", tmp);
+    
+    partition_point1 = -1;
+    partition_point2 = layer_count - 2;
+    
     return options;
 }
 
