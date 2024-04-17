@@ -251,39 +251,7 @@ void forward_network(network *netp)
         net.index = i;
         layer l = net.layers[i];
 
-        if(i > partition_point1 && i <= partition_point2)
-        {
-            // forward all the others in TEE
-            if(debug_summary_com == 1){
-                summary_array("forward_network / net.input", net.input, l.inputs*net.batch);
-            }
-
-            forward_network_CA(net.input, l.inputs, net.batch, net.train);
-            //if(wssize)  workspace_CA(wssize, net.workspace);
-
-            //i = partition_point2 + 1; // jump to further forward in CA
-            i = partition_point2;
-            printf("forward_network if \n");
-
-            // receive parames (layer partition_point2's outputs) from TA
-            if(partition_point2 < net.n - 1)
-            {
-                printf("forward_network if of if...\n");
-                layer l_pp2 = net.layers[partition_point2];
-
-                forward_network_back_CA(l_pp2.output, l_pp2.outputs, net.batch);
-
-                net.input = l_pp2.output;
-
-                if(debug_summary_com == 1){
-                    summary_array("forward_network_back / l_pp2.output", l_pp2.output, l_pp2.outputs * net.batch);
-                }
-            }
-
-        }else // forward in REE
-        {
-
-            if(l.delta){
+        if(l.delta){
                 fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
             }
 
@@ -297,8 +265,58 @@ void forward_network(network *netp)
             if(l.truth) {
                 net.truth = l.output;
             }
-        }
     }
+
+    // for(i = 0; i < net.n; ++i){
+    //     net.index = i;
+    //     layer l = net.layers[i];
+
+    //     if(i > partition_point1 && i <= partition_point2)
+    //     {
+    //         // forward all the others in TEE
+    //         if(debug_summary_com == 1){
+    //             summary_array("forward_network / net.input", net.input, l.inputs*net.batch);
+    //         }
+
+    //         forward_network_CA(net.input, l.inputs, net.batch, net.train);
+    //         //if(wssize)  workspace_CA(wssize, net.workspace);
+
+    //         //i = partition_point2 + 1; // jump to further forward in CA
+    //         i = partition_point2;
+
+    //         // receive parames (layer partition_point2's outputs) from TA
+    //         if(partition_point2 < net.n - 1)
+    //         {
+    //             layer l_pp2 = net.layers[partition_point2];
+
+    //             forward_network_back_CA(l_pp2.output, l_pp2.outputs, net.batch);
+
+    //             net.input = l_pp2.output;
+
+    //             if(debug_summary_com == 1){
+    //                 summary_array("forward_network_back / l_pp2.output", l_pp2.output, l_pp2.outputs * net.batch);
+    //             }
+    //         }
+
+    //     }else // forward in REE
+    //     {
+
+    //         if(l.delta){
+    //             fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
+    //         }
+
+    //         l.forward(l, net);
+
+    //         if(debug_summary_pass == 1){
+    //             summary_array("forward_network / l.output", l.output, l.inputs*net.batch);
+    //         }
+
+    //         net.input = l.output;
+    //         if(l.truth) {
+    //             net.truth = l.output;
+    //         }
+    //     }
+    // }
 
     calc_network_cost(netp);
 }
