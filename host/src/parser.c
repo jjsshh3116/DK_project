@@ -1032,7 +1032,7 @@ list *read_cfg(char *filename)
     
     partition_point1 = -1;
     partition_point2 = layer_count - 2;
-    
+
     return options;
 }
 
