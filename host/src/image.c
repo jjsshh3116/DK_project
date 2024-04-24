@@ -1334,7 +1334,7 @@ image load_image(char *filename, int w, int h, int c)
         printf("\n=============== %d channel =================\n", k + 1);
         for(int z = 0; z < h; z++){
             for(int i = 0; i < w; i++){
-                printf("im_data[%d]: %f \t", (i*w)+(z*h)+(k*c), out.data[(i*w)+(z*h)+(k*c)]);
+                printf("im_data[%d]: %f \t", (i+(z*h)+(k*c)), out.data[i+(z*h)+(k*c)]);
             }
            
 
