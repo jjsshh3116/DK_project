@@ -1330,17 +1330,14 @@ image load_image(char *filename, int w, int h, int c)
 
     int data_size = w*h*c;
 
-    for(int k = 0; k < c; k++){
-        printf("\n=============== %d channel =================\n", k + 1);
-        for(int z = 0; z < h; z++){
-            for(int i = 0; i < w; i++){
-                printf("im_data[%d]: %f \t", (i+(z*h)+(k*c)), out.data[i+(z*h)+(k*c)]);
-            }
-           
-
+    for(int k = 0; k < data_size; k++){
+        if(k % (h*w) == 0){
+            printf("\n==================== %d channel ========================\n", (k / (h*w)) + 1);
         }
+        printf("im_data[%d]: %f \t", k, out.data[k]);
 
-         printf("\n============================================\n");
+        if(k % h == 0) printf("\n");
+
 
     }
 
