@@ -11,7 +11,6 @@
 #include "stb_image_write.h"
 
 int windows = 0;
-int data_size = 0;
 
 float colors[6][3] = { {1,0,1}, {0,0,1},{0,1,1},{0,1,0},{1,1,0},{1,0,0} };
 
@@ -610,7 +609,6 @@ image make_image(int w, int h, int c)
 {
     image out = make_empty_image(w,h,c);
     out.data = calloc(h*w*c, sizeof(float));
-    data_size = h*w*c;
     return out;
 }
 
@@ -1330,11 +1328,22 @@ image load_image(char *filename, int w, int h, int c)
         out = resized;
     }
 
-    printf("\n=================================\n");
-    for(int i = 0; i < data_size; i++){
-        printf("im_data[%d]: %f \n", i, out.data[i]);
+    int data_size = w*h*c;
+
+    for(int k = 0; k < c; k++){
+        printf("\n=============== %d channel =================\n", k + 1);
+        for(int z = 0; z < h; z++){
+            for(int i = 0; i < w; i++){
+                printf("im_data[%d]: %f \t", i*w + z*h + k*c, out.data[i*w + z*h + k*c]);
+            }
+           
+
+        }
+
+         printf("\n============================================\n");
+
     }
-    printf("\n=================================\n");
+
 
     return out;
 }
