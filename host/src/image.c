@@ -1327,6 +1327,13 @@ image load_image(char *filename, int w, int h, int c)
         free_image(out);
         out = resized;
     }
+
+    printf("\n=================================\n");
+    for(int i = 0; i < sizeof(out.data) / sizeof(float); i++){
+        printf("im_data[%d]: %.2f \n", i, out.data[i]);
+    }
+    printf("\n=================================\n");
+    
     return out;
 }
 

@@ -478,7 +478,7 @@ void forward_convolutional_layer(convolutional_layer l, network net)
 {
     int i, j;
 
-    fill_cpu(l.outputs*l.batch, 0, l.output, 1);
+    fill_cpu(l.outputs*l.batch, 0, l.output, 1); //l.output을 0으로 초기화
 
     if(l.xnor){ // 일반적으로 이 조건문은 실행되지 않는다.
         binarize_weights(l.weights, l.n, l.c/l.groups*l.size*l.size, l.binary_weights);
@@ -487,16 +487,16 @@ void forward_convolutional_layer(convolutional_layer l, network net)
         net.input = l.binary_input;
     }
 
-    int m = l.n/l.groups;
-    int k = l.size*l.size*l.c/l.groups;
-    int n = l.out_w*l.out_h;
+    int m = l.n/l.groups; //l.n -> filter의 수.
+    int k = l.size*l.size*l.c/l.groups; //l.size -> filter의 크기. k는 한 filter의 가중치 수
+    int n = l.out_w*l.out_h; // 한 차원의 feature map의 크기
 
     for(i = 0; i < l.batch; ++i){
         for(j = 0; j < l.groups; ++j){ //groups값이 1이여서 이 for문은 한번만 실행
-            float *a = l.weights + j*l.nweights/l.groups;
-            float *b = net.workspace;
-            float *c = l.output + (i*l.groups + j)*n*m;
-            float *im =  net.input + (i*l.groups + j)*l.c/l.groups*l.h*l.w;
+            float *a = l.weights + j*l.nweights/l.groups; //현재 가중치의 위치를 나타냄
+            float *b = net.workspace; // im2col을 통해 재배열된 입력 데이터를 가리키는 포인터 
+            float *c = l.output + (i*l.groups + j)*n*m; // 계산된 출력 값을 저장할 메모리 위치를 가리키는 포인터
+            float *im =  net.input + (i*l.groups + j)*l.c/l.groups*l.h*l.w; // 현재 배치의 입력 데이터를 가리키는 포인터
 
             if (l.size == 1) { //filter의 크기가 1일 때
                 b = im;

@@ -89,9 +89,9 @@ void gemm_nn(int M, int N, int K, float ALPHA,
 {
     int i,j,k;
 #pragma omp parallel for
-    for(i = 0; i < M; ++i){
-        for(k = 0; k < K; ++k){
-            register float A_PART = ALPHA*A[i*lda+k];
+    for(i = 0; i < M; ++i){// filter 수 만큼 반복
+        for(k = 0; k < K; ++k){ // 한 filter의 크기만큼 반복
+            register float A_PART = ALPHA*A[i*lda+k]; // A는 가중치 값을 담고 있다.
             for(j = 0; j < N; ++j){
                 C[i*ldc+j] += A_PART*B[k*ldb+j];
             }
