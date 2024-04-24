@@ -11,6 +11,7 @@
 #include "stb_image_write.h"
 
 int windows = 0;
+int data_size = 0;
 
 float colors[6][3] = { {1,0,1}, {0,0,1},{0,1,1},{0,1,0},{1,1,0},{1,0,0} };
 
@@ -609,6 +610,7 @@ image make_image(int w, int h, int c)
 {
     image out = make_empty_image(w,h,c);
     out.data = calloc(h*w*c, sizeof(float));
+    data_size = h*w*c;
     return out;
 }
 
@@ -1329,11 +1331,11 @@ image load_image(char *filename, int w, int h, int c)
     }
 
     printf("\n=================================\n");
-    for(int i = 0; i < sizeof(out.data) / sizeof(float); i++){
+    for(int i = 0; i < data_size; i++){
         printf("im_data[%d]: %.2f \n", i, out.data[i]);
     }
     printf("\n=================================\n");
-    
+
     return out;
 }
 
