@@ -1332,7 +1332,7 @@ image load_image(char *filename, int w, int h, int c)
 
     printf("\n=================================\n");
     for(int i = 0; i < data_size; i++){
-        printf("im_data[%d]: %.2f \n", i, out.data[i]);
+        printf("im_data[%d]: %f \n", i, out.data[i]);
     }
     printf("\n=================================\n");
 
