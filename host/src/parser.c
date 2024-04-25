@@ -810,6 +810,9 @@ network *parse_network_cfg(char *filename)
     if(!is_network(s)) error("First section must be [net] or [network]");
     parse_net_options(options, net);
 
+    partition_point1 = 999;
+    partition_point2 = 999;
+
     params.h = net->h;
     params.w = net->w;
     params.c = net->c;
