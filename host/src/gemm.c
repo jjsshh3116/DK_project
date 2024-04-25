@@ -98,6 +98,7 @@ void gemm_nn(int M, int N, int K, float ALPHA,
         }
     }
 
+    printf("M:%3d K:%3d N:%3d\n", M, K, N);
     printf("M * K * N: %d\n", M * K * N);
 
 }
