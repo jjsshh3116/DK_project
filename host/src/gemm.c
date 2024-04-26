@@ -87,7 +87,7 @@ void gemm_nn(int M, int N, int K, float ALPHA,
              float *B, int ldb,
              float *C, int ldc)
 {
-    int i,j,k;
+        int i,j,k;
 #pragma omp parallel for
     for(i = 0; i < M; ++i){// filter 수 만큼 반복
         for(k = 0; k < K; ++k){ // 한 filter의 크기만큼 반복
@@ -97,9 +97,6 @@ void gemm_nn(int M, int N, int K, float ALPHA,
             }
         }
     }
-
-    printf("M:%3d K:%3d N:%3d\n", M, K, N);
-    printf("M * K * N: %d\n", M * K * N);
 
 }
 

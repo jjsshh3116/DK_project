@@ -516,7 +516,6 @@ void forward_convolutional_layer(convolutional_layer l, network net)
     }
 
     activate_array(l.output, l.outputs*l.batch, l.activation);
-    printf("l.outputs: %d\t l.outputs*l.batch: %d\n", l.outputs, l.outputs*l.batch);
     if(l.binary || l.xnor) swap_binary(&l);
 
     debug_num++;
