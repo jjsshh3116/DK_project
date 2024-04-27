@@ -537,7 +537,7 @@ void save_weights_CA(float *vec, int length, int layer_i, char type)
 
 
 
-void forward_network_CA(float *net_input, int l_inputs, int net_batch, int net_train)
+void forward_network_CA(float *net_input, int l_inputs, int net_batch, int net_train, int net_index)
 {
     //invoke op and transfer paramters
     TEEC_Operation op;
@@ -546,7 +546,7 @@ void forward_network_CA(float *net_input, int l_inputs, int net_batch, int net_t
 
     memset(&op, 0, sizeof(op));
     op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_INPUT, TEEC_VALUE_INPUT,
-                                     TEEC_NONE, TEEC_NONE);
+                                     TEEC_VALUE_INPUT, TEEC_NONE);
 
     float *params0 = malloc(sizeof(float)*l_inputs*net_batch);
     for(int z=0; z<l_inputs*net_batch; z++){
@@ -557,6 +557,7 @@ void forward_network_CA(float *net_input, int l_inputs, int net_batch, int net_t
     op.params[0].tmpref.buffer = params0;
     op.params[0].tmpref.size = sizeof(float) * l_inputs*net_batch;
     op.params[1].value.a = params1;
+    op.params[2].value.a = net_index;
 
     /////////  debug_plot  /////////
     if(debug_plot_bool == 1){
@@ -573,7 +574,7 @@ void forward_network_CA(float *net_input, int l_inputs, int net_batch, int net_t
 }
 
 
-void forward_network_back_CA(float *l_output, int net_inputs, int net_batch)
+void forward_network_back_CA(float *l_output, int net_inputs, int net_batch, int net_index)
 {
   TEEC_Operation op;
   uint32_t origin;
@@ -583,13 +584,14 @@ void forward_network_back_CA(float *l_output, int net_inputs, int net_batch)
 
 
   memset(&op, 0, sizeof(op));
-  op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_OUTPUT, TEEC_NONE,
+  op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_OUTPUT, TEEC_VALUE_INPUT,
                                    TEEC_NONE, TEEC_NONE);
 
 
 
    op.params[0].tmpref.buffer = net_input_back;
    op.params[0].tmpref.size = sizeof(float) * net_inputs*net_batch;
+   op.params[1].value.a = net_index;
 
    res = TEEC_InvokeCommand(&sess, FORWARD_BACK_CMD,
                             &op, &origin);

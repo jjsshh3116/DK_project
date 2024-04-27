@@ -496,9 +496,8 @@ static TEE_Result forward_network_TA_params(uint32_t param_types,
 {
     uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_INPUT,
                                                TEE_PARAM_TYPE_VALUE_INPUT,
-                                               TEE_PARAM_TYPE_NONE,
+                                               TEE_PARAM_TYPE_VALUE_INPUT,
                                                TEE_PARAM_TYPE_NONE);
-    //TEE_PARAM_TYPE_VALUE_INPUT
 
     //DMSG("has been called");
 
@@ -507,9 +506,11 @@ static TEE_Result forward_network_TA_params(uint32_t param_types,
 
     float *net_input = params[0].memref.buffer;
     int net_train = params[1].value.a;
+    int net_index = params[2].value.a;
 
     netta.input = net_input;
     netta.train = net_train;
+    netta.index = net_index;
 
     if(debug_summary_com == 1){
         summary_array("forward_network / net.input", netta.input, params[0].memref.size / sizeof(float));
@@ -550,7 +551,7 @@ static TEE_Result forward_network_back_TA_params(uint32_t param_types,
                                            TEE_Param params[4])
 {
     uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_OUTPUT,
-                                               TEE_PARAM_TYPE_NONE,
+                                               TEE_PARAM_TYPE_VALUE_INPUT,
                                                TEE_PARAM_TYPE_NONE,
                                                TEE_PARAM_TYPE_NONE);
     if (param_types != exp_param_types)
@@ -558,14 +559,16 @@ static TEE_Result forward_network_back_TA_params(uint32_t param_types,
 
     float *params0 = params[0].memref.buffer;
     int buffersize = params[0].memref.size / sizeof(float);
+    int net_index = params[1].value.a;
+    
     for(int z=0; z<buffersize; z++){
-        params0[z] = netta.layers[netta.n-1].output[z];
+        params0[z] = netta.layers[net_index].output[z];
     }
 
     // ?????
     //free(ta_net_input);
     if(debug_summary_com == 1){
-        summary_array("forward_network_back / l_pp2.output", netta.layers[netta.n-1].output, buffersize);
+        summary_array("forward_network_back / l_pp2.output", netta.layers[net_index].output, buffersize);
     }
     return TEE_SUCCESS;
 }

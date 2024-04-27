@@ -1328,20 +1328,6 @@ image load_image(char *filename, int w, int h, int c)
         out = resized;
     }
 
-    int data_size = w*h*c;
-
-    for(int k = 0; k < data_size; k++){
-        if(k % (h*w) == 0){
-            printf("\n==================== %d channel ========================\n", (k / (h*w)) + 1);
-        }
-        printf("im_data[%d]: %f \t", k, out.data[k]);
-
-        if(k % h == 0) printf("\n");
-
-
-    }
-
-
     return out;
 }
 

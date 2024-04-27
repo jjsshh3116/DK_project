@@ -108,13 +108,7 @@ void forward_network_TA()
             }
         }
 
-        // if(i == netta.n - 1)  // ready to back REE for the rest forward pass
-        // {
-        //     ta_net_input = malloc(sizeof(float)*l.outputs*l.batch);
-        //     for(int z=0; z<l.outputs*l.batch; z++){
-        //         ta_net_input[z] = netta.input[z];
-        //     }
-        // }
+        
     }
 
     calc_network_cost_TA();
