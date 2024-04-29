@@ -69,7 +69,7 @@ void summary_array(char *print_name, float *arr, int n)
 
 TEE_Result TA_CreateEntryPoint(void)
 {
-    DMSG("has been called");
+    DMSG("has been called nimi");
 
     return TEE_SUCCESS;
 }
