@@ -496,7 +496,7 @@ static TEE_Result forward_network_TA_params(uint32_t param_types,
 {
     uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_INPUT,
                                                TEE_PARAM_TYPE_VALUE_INPUT,
-                                               TEE_PARAM_TYPE_VALUE_INPUT,
+                                               TEE_PARAM_TYPE_NONE,
                                                TEE_PARAM_TYPE_NONE);
 
     //DMSG("has been called");
@@ -506,7 +506,7 @@ static TEE_Result forward_network_TA_params(uint32_t param_types,
 
     float *net_input = params[0].memref.buffer;
     int net_train = params[1].value.a;
-    int net_index = params[2].value.a;
+    int net_index = params[1].value.b;
 
     netta.input = net_input;
     netta.train = net_train;
