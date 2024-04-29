@@ -79,37 +79,50 @@ void forward_network_TA()
     }
 
     roundnum++;
-    int i;
-    for(i = 0; i < netta.n; ++i){
-        netta.index = i;
-        layer_TA l = netta.layers[i];
 
-        if(l.delta){
-            fill_cpu_TA(l.outputs * l.batch, 0, l.delta, 1);
-        }
+    layer_TA l = netta.layers[i];
 
-        l.forward_TA(l, netta);
+    if(l.delta){
+        fill_cpu_TA(l.outputs * l.batch, 0, l.delta, 1);
+    }
 
-        if(debug_summary_pass == 1){
-            summary_array("forward_network / l.output", l.output, l.outputs*netta.batch);
-        }
+    l.forward_TA(l, netta);
 
-        netta.input = l.output;
+    if(debug_summary_pass == 1){
+        summary_array("forward_network / l.output", l.output, l.outputs*netta.batch);
+    }
+    
+    // int i;
+    // for(i = 0; i < netta.n; ++i){
+    //     netta.index = i;
+    //     layer_TA l = netta.layers[i];
 
-        if(l.truth) {
-            netta.truth = l.output;
-        }
-        //output of the network (for predict)
-        // &&
-        if(!netta.train && l.type == SOFTMAX_TA){
-            ta_net_output = malloc(sizeof(float)*l.outputs*1);
-            for(int z=0; z<l.outputs*1; z++){
-                ta_net_output[z] = l.output[z];
-            }
-        }
+    //     if(l.delta){
+    //         fill_cpu_TA(l.outputs * l.batch, 0, l.delta, 1);
+    //     }
+
+    //     l.forward_TA(l, netta);
+
+    //     if(debug_summary_pass == 1){
+    //         summary_array("forward_network / l.output", l.output, l.outputs*netta.batch);
+    //     }
+
+    //     netta.input = l.output;
+
+    //     if(l.truth) {
+    //         netta.truth = l.output;
+    //     }
+    //     //output of the network (for predict)
+    //     // &&
+    //     if(!netta.train && l.type == SOFTMAX_TA){
+    //         ta_net_output = malloc(sizeof(float)*l.outputs*1);
+    //         for(int z=0; z<l.outputs*1; z++){
+    //             ta_net_output[z] = l.output[z];
+    //         }
+    //     }
 
         
-    }
+    // }
 
     calc_network_cost_TA();
 }
