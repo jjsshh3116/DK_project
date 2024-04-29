@@ -750,6 +750,8 @@ float *network_predict(network *net, float *input)
     forward_network(net);
 
     float *out;
+
+    /*
     // this partition_point = (-pp) - 1
     // all layers are outside of TEE
     if(partition_point1 >= net->n-1){
@@ -773,6 +775,9 @@ float *network_predict(network *net, float *input)
              out = net_output_back;
          }
      }
+     */
+
+    out = net->output;
 
      *net = orig;
      return out;
