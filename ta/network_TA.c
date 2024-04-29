@@ -67,8 +67,6 @@ void make_network_TA(int n, float learning_rate, float momentum, float decay, in
 
 void forward_network_TA()
 {
-    printf("forward_network_TA enter.\n");
-
     if(roundnum == 0){
         // ta_net_input malloc so not destroy before addition backward
         ta_net_input = malloc(sizeof(float) * netta.layers[0].inputs * netta.layers[0].batch);
@@ -88,12 +86,10 @@ void forward_network_TA()
         fill_cpu_TA(l.outputs * l.batch, 0, l.delta, 1);
     }
 
-    printf("forward_network_TA l.forward start.\n");
 
     l.forward_TA(l, netta);
 
-    printf("forward_network_TA l.forward end.\n");
-    
+
     if(debug_summary_pass == 1){
         summary_array("forward_network / l.output", l.output, l.outputs*netta.batch);
     }

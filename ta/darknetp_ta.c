@@ -882,6 +882,8 @@ TEE_Result TA_InvokeCommandEntryPoint(void __maybe_unused *sess_ctx,
 {
     (void)&sess_ctx; /* Unused parameter */
 
+    DMSG("TA_EntryPoint\n");
+
     switch (cmd_id) {
         case MAKE_NETWORK_CMD:
         return make_netowork_TA_params(param_types, params);
