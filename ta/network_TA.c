@@ -80,7 +80,7 @@ void forward_network_TA()
 
     roundnum++;
 
-    layer_TA l = netta.layers[i];
+    layer_TA l = netta.layers[netta.index];
 
     if(l.delta){
         fill_cpu_TA(l.outputs * l.batch, 0, l.delta, 1);
@@ -91,7 +91,7 @@ void forward_network_TA()
     if(debug_summary_pass == 1){
         summary_array("forward_network / l.output", l.output, l.outputs*netta.batch);
     }
-    
+
     // int i;
     // for(i = 0; i < netta.n; ++i){
     //     netta.index = i;
