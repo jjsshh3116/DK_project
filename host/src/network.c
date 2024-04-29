@@ -241,9 +241,7 @@ void forward_network(network *netp)
 #endif
 
     network net = *netp;
-    network net_TA;
-    
-    net_TA = memcpy(&net_TA, &net, sizeof(network));
+    network net_TA = *netp;
 
     int i;
     for(i = 0; i < net.n; ++i){
