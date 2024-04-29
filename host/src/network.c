@@ -267,6 +267,11 @@ void forward_network(network *netp)
             net.truth = l.output;
         }
 
+         printf("############ REE calculation outputs ############\n");
+        for(int j = 0; j < l.outputs*net.batch; j++){
+            printf("%dREE//otuput[%d]: %f \n", net.index, j, l.output[j]);
+        }
+
         //TEE forward
         forward_network_CA(net_TA.input, l_TA.inputs, net_TA.batch, net_TA.train, net_TA.index);
 
@@ -276,10 +281,7 @@ void forward_network(network *netp)
 
         net_TA.input = TA_l_result.output;
 
-        printf("############ REE calculation outputs ############\n");
-        for(int j = 0; j < l.outputs*net.batch; j++){
-            printf("%dREE//otuput[%d]: %f \n", net.index, j, l.output[j]);
-        }
+       
         printf("\n\n");
 
         printf("############ TEE calculation outputs ############\n");
