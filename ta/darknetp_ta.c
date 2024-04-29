@@ -69,7 +69,7 @@ void summary_array(char *print_name, float *arr, int n)
 
 TEE_Result TA_CreateEntryPoint(void)
 {
-    DMSG("has been called nimi");
+    DMSG("has been called");
 
     return TEE_SUCCESS;
 }
@@ -882,7 +882,7 @@ TEE_Result TA_InvokeCommandEntryPoint(void __maybe_unused *sess_ctx,
 {
     (void)&sess_ctx; /* Unused parameter */
 
-    DMSG("TA_EntryPoint\n");
+   
 
     switch (cmd_id) {
         case MAKE_NETWORK_CMD:
