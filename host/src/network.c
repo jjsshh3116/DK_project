@@ -248,9 +248,12 @@ void forward_network(network *netp)
     int i;
     for(i = 0; i < net.n; ++i){
         net.index = i;
-        layer l = net.layers[i];
-        layer l_TA = net.layers[i];
+        net_TA.index = i;
 
+        layer l = net.layers[i];
+        layer l_TA = net_TA.layers[i];
+
+        //REE forward
         if(l.delta){
             fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
         }
@@ -266,13 +269,25 @@ void forward_network(network *netp)
             net.truth = l.output;
         }
 
-        forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
+        //TEE forward
+        forward_network_CA(net_TA.input, l_TA.inputs, net_TA.batch, net_TA.train, net_TA.index);
 
-        layer TA_l_result = net.layers[net.index];
+        layer TA_l_result = net_TA.layers[net_TA.index];
 
-        forward_network_back_CA(net.input, l.inputs, net.batch, net.train, net.index);
+        forward_network_back_CA(TA_l_result.output, l_TA.outputs, net_TA.batch, net_TA.index);
 
-        net.input = TA_l_result;
+        net_TA.input = TA_l_result.output;
+
+        printf("############ REE calculation outputs ############\n");
+        for(int j = 0; j < l.outputs*net.batch; j++){
+            printf("REE//otuput[%d]: %f \n", j, l.output[j]);
+        }
+        printf("\n\n");
+
+        printf("############ TEE calculation outputs ############\n");
+        for(int j = 0; j < l_TA.outputs*net_TA.batch; j++){
+            printf("TEE//otuput[%d]: %f \n", j, l_TA.output[j]);
+        }
 
         
     }

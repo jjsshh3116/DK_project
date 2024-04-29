@@ -67,9 +67,9 @@ void make_softmax_layer_CA(int batch, int inputs, int groups, float temperature,
 
 void make_cost_layer_CA(int batch, int inputs, COST_TYPE cost_type, float scale, float ratio, float noobject_scale, float thresh);
 
-void forward_network_CA(float *net_input, int net_inputs, int net_batch, int net_train);
+void forward_network_CA(float *net_input, int net_inputs, int net_batch, int net_train, int net_index);
 
-void forward_network_back_CA(float *l_output, int net_inputs, int net_batch);
+void forward_network_back_CA(float *l_output, int net_inputs, int net_batch, int net_index);
 
 void backward_network_CA_addidion(float *l_output, float *l_delta, int net_inputs, int net_batch);
 
