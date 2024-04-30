@@ -550,12 +550,12 @@ static TEE_Result forward_network_TA_params(uint32_t param_types,
 static TEE_Result forward_network_back_TA_params(uint32_t param_types,
                                            TEE_Param params[4])
 {
-    uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_OUTPUT,
-                                               TEE_PARAM_TYPE_VALUE_INPUT,
-                                               TEE_PARAM_TYPE_NONE,
-                                               TEE_PARAM_TYPE_NONE);
-    if (param_types != exp_param_types)
-        return TEE_ERROR_BAD_PARAMETERS;
+    // uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_OUTPUT,
+    //                                            TEE_PARAM_TYPE_VALUE_INPUT,
+    //                                            TEE_PARAM_TYPE_NONE,
+    //                                            TEE_PARAM_TYPE_NONE);
+    // if (param_types != exp_param_types)
+    //     return TEE_ERROR_BAD_PARAMETERS;
 
     float *params0 = params[0].memref.buffer;
     int buffersize = params[0].memref.size / sizeof(float);
