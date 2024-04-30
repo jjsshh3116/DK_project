@@ -584,14 +584,14 @@ void forward_network_back_CA(float *l_output, int net_inputs, int net_batch, int
 
 
   memset(&op, 0, sizeof(op));
-  op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_OUTPUT, TEEC_VALUE_INPUT,
+  op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_OUTPUT, TEEC_NONE,
                                    TEEC_NONE, TEEC_NONE);
 
 
 
    op.params[0].tmpref.buffer = net_input_back;
    op.params[0].tmpref.size = sizeof(float) * net_inputs*net_batch;
-   op.params[1].value.a = net_index;
+   //op.params[1].value.a = net_index;
 
    res = TEEC_InvokeCommand(&sess, FORWARD_BACK_CMD,
                             &op, &origin);
