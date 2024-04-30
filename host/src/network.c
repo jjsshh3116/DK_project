@@ -281,7 +281,7 @@ void forward_network(network *netp)
 
         layer TA_l = net.layers[net.index];
 
-        forward_network_back_CA(TA_l.output, TA_l.outputs, net.batch, net.index);
+        //forward_network_back_CA(TA_l.output, TA_l.outputs, net.batch, net.index);
 
         net.input = TA_l.output;
 
