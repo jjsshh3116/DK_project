@@ -291,8 +291,8 @@ void forward_network(network *netp)
         // printf("\n\n");
 
         printf("############ TEE calculation outputs ############\n");
-        for(int j = 0; j < l_TA.outputs*net.batch; j++){
-            printf("%dTEE//otuput[%d]: %f \n", net.index, j, l_TA.output[j]);
+        for(int j = 0; j < TA_l.outputs*net.batch; j++){
+            printf("%dTEE//otuput[%d]: %f \n", net.index, j, TA_l.output[j]);
         }
 
         
