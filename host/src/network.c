@@ -241,17 +241,18 @@ void forward_network(network *netp)
 #endif
 
     network net = *netp;
-    network net_TA = *netp;
+    //network net_TA = *netp;
 
     int i;
     for(i = 0; i < net.n; ++i){
         net.index = i;
-        net_TA.index = i;
+        //net_TA.index = i;
 
         layer l = net.layers[i];
-        layer l_TA = net_TA.layers[i];
+        //layer l_TA = net_TA.layers[i];
 
         //REE forward
+        /*
         if(l.delta){
             fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
         }
@@ -266,32 +267,33 @@ void forward_network(network *netp)
         if(l.truth){
             net.truth = l.output;
         }
+        */
 
         //  printf("############ REE calculation outputs ############\n");
         // for(int j = 0; j < l.outputs*net.batch; j++){
         //     printf("%dREE//otuput[%d]: %f \n", net.index, j, l.output[j]);
         // }
 
-        printf("REE %d layer end.\n", net.index);
+       // printf("REE %d layer end.\n", net.index);
 
         //TEE forward
-        // forward_network_CA(net_TA.input, l_TA.inputs, net_TA.batch, net_TA.train, net_TA.index);
+        forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
 
-        layer TA_l_result = net_TA.layers[net_TA.index];
+        layer TA_l = net.layers[net.index];
 
-        //forward_network_back_CA(TA_l_result.output, l_TA.outputs, net_TA.batch, net_TA.index);
+        forward_network_back_CA(TA_l.output, TA_l.outputs, net.batch, net.index);
 
-        // net_TA.input = TA_l_result.output;
+        net.input = TA_l.output;
 
-        // printf("TEE %d layer end.\n", net_TA.index);
+        printf("TEE %d layer end.\n", net.index);
 
        
         // printf("\n\n");
 
-        // printf("############ TEE calculation outputs ############\n");
-        // for(int j = 0; j < l_TA.outputs*net_TA.batch; j++){
-        //     printf("%dTEE//otuput[%d]: %f \n", net_TA.index, j, l_TA.output[j]);
-        // }
+        printf("############ TEE calculation outputs ############\n");
+        for(int j = 0; j < l_TA.outputs*net.batch; j++){
+            printf("%dTEE//otuput[%d]: %f \n", net.index, j, l_TA.output[j]);
+        }
 
         
     }
