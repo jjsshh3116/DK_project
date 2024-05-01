@@ -766,7 +766,8 @@ float *network_predict(network *net, float *input)
      }
      */
 
-    out = net->output;
+    net_output_return_CA(net->outputs, 1);
+    out = net_output_back;
 
      *net = orig;
      return out;
