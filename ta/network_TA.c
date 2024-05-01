@@ -89,6 +89,10 @@ void forward_network_TA()
 
     l.forward_TA(l, netta);
 
+    IMSG("############ TEE calculation outputs ############\n");
+        for(int j = 0; j < l.outputs*netta.batch; j++){
+            IMSG("%dTEE//otuput[%d]: %f \n", netta.index, j, l.output[j]);
+        }
 
     if(debug_summary_pass == 1){
         summary_array("forward_network / l.output", l.output, l.outputs*netta.batch);

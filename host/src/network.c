@@ -245,7 +245,7 @@ void forward_network(network *netp)
 
     int i;
     printf("net.n: %d\n", net.n);
-    
+
     for(i = 0; i < net.n; ++i){
         net.index = i;
         //net_TA.index = i;
@@ -282,13 +282,6 @@ void forward_network(network *netp)
         forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
        
         net.input = l.output;
-
-        printf("############ TEE calculation outputs ############\n");
-        for(int j = 0; j < l.outputs*net.batch; j++){
-            printf("%dTEE//otuput[%d]: %f \n", net.index, j, l.output[j]);
-        }
-        
-
         
     }
 
