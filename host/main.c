@@ -918,7 +918,7 @@ void net_output_return_CA(int net_outputs, int net_batch)
 
 void prepare_tee_session()
 {
-    TEEC_UUID uuid = TA_DARKNETP_UUID;
+    TEEC_UUID uuid = TA_BLACKNETZ_UUID;
     uint32_t origin;
     TEEC_Result res;
 

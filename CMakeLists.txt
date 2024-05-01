@@ -1,4 +1,4 @@
-project (darkneTZ C)
+project (blackneTZ C)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
