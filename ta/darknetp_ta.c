@@ -116,7 +116,8 @@ static TEE_Result make_netowork_TA_params(uint32_t param_types,
                                              TEE_PARAM_TYPE_NONE,
                                              TEE_PARAM_TYPE_NONE );
 
-  DMSG("has been called");
+  IMSG("Make_network_TA_params has been called");
+
   if (param_types != exp_param_types)
   return TEE_ERROR_BAD_PARAMETERS;
 
@@ -499,7 +500,7 @@ static TEE_Result forward_network_TA_params(uint32_t param_types,
                                                TEE_PARAM_TYPE_NONE,
                                                TEE_PARAM_TYPE_NONE);
 
-    //DMSG("has been called");
+    IMSG("forward_network_TA_params has been called");
 
     // if (param_types != exp_param_types)
     // return TEE_ERROR_BAD_PARAMETERS;
@@ -888,7 +889,7 @@ TEE_Result TA_InvokeCommandEntryPoint(void __maybe_unused *sess_ctx,
         case MAKE_NETWORK_CMD:
         return make_netowork_TA_params(param_types, params);
 
-        case WORKSPACE_NETWORK_CMD:
+        case WORKSPACE_NETWORK_CMD: 
         return update_net_agrv_TA_params(param_types, params);
 
         case MAKE_CONV_CMD:
