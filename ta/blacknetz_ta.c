@@ -116,8 +116,6 @@ static TEE_Result make_netowork_TA_params(uint32_t param_types,
                                              TEE_PARAM_TYPE_NONE,
                                              TEE_PARAM_TYPE_NONE );
 
-  IMSG("Make_network_TA_params has been called");
-
   if (param_types != exp_param_types)
   return TEE_ERROR_BAD_PARAMETERS;
 
@@ -499,8 +497,6 @@ static TEE_Result forward_network_TA_params(uint32_t param_types,
                                                TEE_PARAM_TYPE_VALUE_INPUT,
                                                TEE_PARAM_TYPE_NONE,
                                                TEE_PARAM_TYPE_NONE);
-
-    IMSG("forward_network_TA_params has been called");
 
     // if (param_types != exp_param_types)
     // return TEE_ERROR_BAD_PARAMETERS;
