@@ -7,7 +7,7 @@
 #include "network_TA.h"
 #include "math_TA.h"
 
-#include "darknetp_ta.h"
+#include "blacknetz_ta.h"
 #include <tee_internal_api.h>
 #include <tee_internal_api_extensions.h>
 
