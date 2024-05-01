@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "darknetp_ta.h"
+#include "blacknetz_ta.h"
 #include "network_TA.h"
 #include <parser_TA.h>
 #include <blas_TA.h>

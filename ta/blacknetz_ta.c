@@ -1,7 +1,7 @@
 #include <tee_internal_api.h>
 #include <tee_internal_api_extensions.h>
 
-#include "darknetp_ta.h"
+#include "blacknetz_ta.h"
 
 #include "convolutional_layer_TA.h"
 #include "maxpool_layer_TA.h"

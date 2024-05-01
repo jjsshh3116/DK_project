@@ -3,9 +3,9 @@
 #define USER_TA_HEADER_DEFINES_H
 
 /* To get the TA UUID definition */
-#include <darknetp_ta.h>
+#include "blacknetz_ta.h"
 
-#define TA_UUID				TA_DARKNETZ_UUID
+#define TA_UUID				TA_BLACKNETZ_UUID
 
 /*
  * TA properties: multi-instance TA, no specific attribute
