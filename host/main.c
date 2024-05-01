@@ -559,7 +559,7 @@ void forward_network_CA(float *net_input, int l_inputs, int net_batch, int net_t
     op.params[1].value.a = params1;
     op.params[1].value.b = net_index;
 
-    pinrtf("net_index: %d\n", op.params[1].value.b);
+    printf("net_index: %d\n", op.params[1].value.b);
 
     /////////  debug_plot  /////////
     if(debug_plot_bool == 1){
