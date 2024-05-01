@@ -278,17 +278,8 @@ void forward_network(network *netp)
 
         //TEE forward
         forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
-
-        layer TA_l = net.layers[net.index];
-
-        //forward_network_back_CA(TA_l.output, TA_l.outputs, net.batch, net.index);
-
-        net.input = TA_l.output;
-
-        printf("TEE %d layer end.\n", net.index);
-
        
-        // printf("\n\n");
+        net.input = l.output;
 
         printf("############ TEE calculation outputs ############\n");
         for(int j = 0; j < TA_l.outputs*net.batch; j++){

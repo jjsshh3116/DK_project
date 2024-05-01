@@ -116,7 +116,7 @@ static TEE_Result make_netowork_TA_params(uint32_t param_types,
                                              TEE_PARAM_TYPE_NONE,
                                              TEE_PARAM_TYPE_NONE );
 
-  //DMSG("has been called");
+  DMSG("has been called");
   if (param_types != exp_param_types)
   return TEE_ERROR_BAD_PARAMETERS;
 
