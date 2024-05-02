@@ -211,8 +211,6 @@ void forward_convolutional_layer_TA_new(convolutional_layer_TA l, network_TA net
         net.input = l.binary_input;
     }
 
-
-
     int m = l.n/l.groups;
     int k = l.size*l.size*l.c/l.groups;
     int n = l.out_w*l.out_h;

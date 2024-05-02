@@ -78,6 +78,10 @@ void forward_network_TA()
         }
     }
 
+    for(int z = 0; z < netta.inputs; z++){
+        IMSG("%d input[%d]: %d \n", netta.index, z, (int)(netta.input[j] * 1000.0));
+    }
+
     roundnum++;
 
     layer_TA l = netta.layers[netta.index];
@@ -88,6 +92,8 @@ void forward_network_TA()
 
 
     l.forward_TA(l, netta);
+
+    netta.input = l.output;
 
     if(netta.index == netta.n - 1){
         ta_net_output = malloc(sizeof(float)*l.outputs);
