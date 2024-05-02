@@ -254,7 +254,7 @@ void forward_network(network *netp)
         //layer l_TA = net_TA.layers[i];
 
         //REE forward
-        /*
+        
         if(l.delta){
             fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
         }
@@ -275,7 +275,7 @@ void forward_network(network *netp)
         for(int j = 0; j < l.outputs*net.batch; j++){
             printf("%dREE//otuput[%d]: %f \n", net.index, j, l.output[j]);
         }
-        */
+        
 
 
         //TEE forward
