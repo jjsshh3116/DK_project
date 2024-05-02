@@ -254,8 +254,12 @@ void forward_network(network *netp)
         layer l_TA = net_TA.layers[i];
 
         float *input_temp = (float *)malloc(sizeof(float) * net.inputs);
-        input_temp = *net.input;
 
+        for(int z = 0; z < net.inputs; z++){
+            input_temp[z] = net.input[z];
+
+        }
+        
         //REE forward
         
         if(l.delta){
@@ -269,7 +273,7 @@ void forward_network(network *netp)
         }
 
         net.input = l.output;
-        
+
         if(l.truth){
             net.truth = l.output;
         }
