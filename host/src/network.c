@@ -255,10 +255,14 @@ void forward_network(network *netp)
 
         float *input_temp = (float *)malloc(sizeof(float) * net.inputs);
 
+        printf("##### %d layer's input #####\n", net.index);
         for(int z = 0; z < net.inputs; z++){
             input_temp[z] = net.input[z];
+            printf("[%d] input_temp: %d\t net.input: %d\n", z, input_temp[z], net.input[z]);
 
         }
+        printf("##########################\n");
+        
         
         //REE forward
         
@@ -772,8 +776,10 @@ float *network_predict(network *net, float *input)
      }
      */
 
-    net_output_return_CA(net->outputs, 1);
-    out = net_output_back;
+    // net_output_return_CA(net->outputs, 1);
+    // out = net_output_back;
+
+    out = net->output;
 
      *net = orig;
      return out;
