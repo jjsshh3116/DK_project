@@ -241,17 +241,20 @@ void forward_network(network *netp)
 #endif
 
     network net = *netp;
-    //network net_TA = *netp;
+    network net_TA = *netp;
 
     int i;
     printf("net.n: %d\n", net.n);
 
     for(i = 0; i < net.n; ++i){
         net.index = i;
-        //net_TA.index = i;
+        net_TA.index = i;
 
         layer l = net.layers[i];
-        //layer l_TA = net_TA.layers[i];
+        layer l_TA = net_TA.layers[i];
+
+        float *input_temp = (float *)malloc(sizeof(float) * net.inputs);
+        input_temp = *net.input;
 
         //REE forward
         
@@ -266,6 +269,7 @@ void forward_network(network *netp)
         }
 
         net.input = l.output;
+        
         if(l.truth){
             net.truth = l.output;
         }
@@ -277,11 +281,9 @@ void forward_network(network *netp)
         }
         
 
-
         //TEE forward
-        forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
+        forward_network_CA(input_temp, l_TA.inputs, net.batch, net.train, net.index);
        
-        net.input = l.output;
         
     }
 
