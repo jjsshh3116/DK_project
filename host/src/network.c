@@ -258,7 +258,7 @@ void forward_network(network *netp)
         printf("##### %d layer's input #####\n", net.index);
         for(int z = 0; z < net.inputs; z++){
             input_temp[z] = net.input[z];
-            printf("[%d] input_temp: %d\t net.input: %d\n", z, input_temp[z], net.input[z]);
+            printf("[%d] input_temp: %f\t net.input: %f\n", z, input_temp[z], net.input[z]);
 
         }
         printf("##########################\n");
