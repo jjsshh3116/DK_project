@@ -244,8 +244,6 @@ void forward_network(network *netp)
     network net_TA = *netp;
 
     int i;
-    printf("net.n: %d\n", net.n);
-
     for(i = 0; i < net.n; ++i){
         net.index = i;
         net_TA.index = i;
@@ -254,15 +252,6 @@ void forward_network(network *netp)
         layer l_TA = net_TA.layers[i];
 
         float *input_temp = (float *)malloc(sizeof(float) * net.inputs);
-
-        printf("##### %d layer's input #####\n", net.index);
-        for(int z = 0; z < net.inputs; z++){
-            input_temp[z] = net.input[z];
-            printf("[%d] input_temp: %f\t net.input: %f\n", z, input_temp[z], net.input[z]);
-
-        }
-        printf("##########################\n");
-        
         
         //REE forward
         

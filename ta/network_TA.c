@@ -78,10 +78,6 @@ void forward_network_TA()
         }
     }
 
-    for(int z = 0; z < netta.inputs; z++){
-        IMSG("%d input[%d]: %d \n", netta.index, z, (int)(netta.input[z] * 1000.0));
-    }
-
     roundnum++;
 
     layer_TA l = netta.layers[netta.index];
