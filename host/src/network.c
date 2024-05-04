@@ -251,7 +251,8 @@ void forward_network(network *netp)
         layer l = net.layers[i];
         //layer l_TA = net_TA.layers[i];
 
-        //float *input_temp = (float *)malloc(sizeof(float) * net.inputs);
+        float *input_temp = (float *)malloc(sizeof(float) * net.inputs);
+        float *output_temp = (float *)malloc(sizeof(float) * l.outputs * net.batch);
         
         //REE forward
         
@@ -266,6 +267,7 @@ void forward_network(network *netp)
         }
 
         //net.input = l.output;
+        input_temp = *net.input;
 
         if(l.truth){
             net.truth = l.output;
@@ -280,6 +282,7 @@ void forward_network(network *netp)
       
         //TEE forward
         // forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
+        forward_network_CA(input_temp, l.inputs, net.batch, net.train, net.index);
 
         // layer l_TA = net.layers[i];
 
