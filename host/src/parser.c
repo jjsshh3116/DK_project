@@ -1018,8 +1018,8 @@ list *read_cfg(char *filename)
         }
     }
     fclose(file);
-    
-    partition_point1 = -1;
+    printf("layer_count = %d\n", layer_count);
+    partition_point1 = 0;
     partition_point2 = layer_count - 2;
 
     return options;
