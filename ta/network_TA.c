@@ -91,17 +91,13 @@ void forward_network_TA()
 
     netta.input = l.output;
 
-    if(netta.index == netta.n - 1){
-        ta_net_output = malloc(sizeof(float)*l.outputs);
-        for(int z = 0; z < l.outputs; z++){
-            ta_net_output[z] = l.output[z];
-        }
+    ta_net_output = malloc(sizeof(float)*l.outputs);
+    
+    for(int z = 0; z < l.outputs; z++){
+        ta_net_output[z] = l.output[z];
     }
+    
 
-    IMSG("############ TEE calculation outputs ############\n");
-        for(int j = 0; j < l.outputs*netta.batch; j++){
-            IMSG("%dTEE//otuput[%d]: %d \n", netta.index, j, (int)(l.output[j] * 1000.0));
-        }
 
     if(debug_summary_pass == 1){
         summary_array("forward_network / l.output", l.output, l.outputs*netta.batch);
