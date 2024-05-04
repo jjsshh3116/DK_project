@@ -282,7 +282,7 @@ void forward_network(network *netp)
       
         //TEE forward
         // forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
-        forward_network_CA(input_temp, l.inputs, net.batch, net.train, net.index);
+        forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
 
         // layer l_TA = net.layers[i];
 
