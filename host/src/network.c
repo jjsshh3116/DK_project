@@ -267,7 +267,7 @@ void forward_network(network *netp)
         }
 
         //net.input = l.output;
-        input_temp = *net.input;
+
 
         if(l.truth){
             net.truth = l.output;
@@ -778,10 +778,10 @@ float *network_predict(network *net, float *input)
      }
      */
 
-    // net_output_return_CA(net->outputs, 1);
-    // out = net_output_back;
+    net_output_return_CA(net->outputs, 1);
+    out = net_output_back;
 
-    out = net->output;
+    // out = net->output;
 
      *net = orig;
      return out;
