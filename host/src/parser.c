@@ -1737,8 +1737,10 @@ void load_weights_separate(network *net, char *filename0, int start, int cutoff)
 void load_weights(network *net, char *filename)
 {
     if(sepa_save_bool == 0 || sepa_save_bool == 2){
+        printf("load_weights_upto\n");
         load_weights_upto(net, filename, 0, net->n);
     }else{
+        printf("load_weights_separate\n");
         load_weights_separate(net, filename, 0, net->n);
     }
 }
