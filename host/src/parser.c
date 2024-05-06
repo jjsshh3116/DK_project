@@ -1636,6 +1636,8 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         layer l = net->layers[i];
         if (l.dontload) continue;
 
+        printf("%d\n", i);
+
         // load weights of the NW side
        
         load_weights_layer(l, fp, transpose);
