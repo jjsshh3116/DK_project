@@ -1644,7 +1644,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         
         
         //int layerTA_i = i - partition_point1 - 1;
-        int layyerTA_i = i;
+        int layerTA_i = i;
         comm_load_weights_layer(l, fp, layerTA_i, transpose);
         
     }
