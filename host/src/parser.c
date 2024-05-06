@@ -1644,7 +1644,6 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
 
         // load weights of the SW side
         
-        
         //int layerTA_i = i - partition_point1 - 1;
         if(i <= partition_point2){
             int layerTA_i = i;

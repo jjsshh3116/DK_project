@@ -65,8 +65,9 @@ void load_weights_TA(float *vec, int length, int layer_i, char type, int transpo
     // decrypt
     float *tempvec = malloc(length*sizeof(float));
     copy_cpu_TA(length, vec, 1, tempvec, 1);
+    IMSG("copy_cpu_TA done");
     aes_cbc_TA("decrypt", tempvec, length);
-
+    IMSG("aes_cbc_TA done");
     // copy
     layer_TA l = netta.layers[layer_i];
 
@@ -90,11 +91,13 @@ void load_weights_TA(float *vec, int length, int layer_i, char type, int transpo
     if(l.type == CONVOLUTIONAL_TA || l.type == DECONVOLUTIONAL_TA){
         if(l.flipped && type == 'w'){
             transpose_matrix_TA(l.weights, l.c*l.size*l.size, l.n);
+            IMSG("transpose_matrix_TA done");
         }
     }
     else if(l.type == CONNECTED_TA){
         if(transpose && type == 'w'){
             transpose_matrix_TA(l.weights, l.inputs, l.outputs);
+            IMSG("else if transpose_matrix_TA done");
         }
     }
 
