@@ -1637,15 +1637,16 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         if (l.dontload) continue;
 
         // load weights of the NW side
-        if(i <= partition_point1 || i > partition_point2){
-            load_weights_layer(l, fp, transpose);
+       
+        load_weights_layer(l, fp, transpose);
 
         // load weights of the SW side
-        }
-        else{
-            int layerTA_i = i - partition_point1 - 1;
-            comm_load_weights_layer(l, fp, layerTA_i, transpose);
-        }
+        
+        
+        //int layerTA_i = i - partition_point1 - 1;
+        int layyerTA_i = i;
+        comm_load_weights_layer(l, fp, layerTA_i, transpose);
+        
     }
 
     fprintf(stderr, "Done!\n");
@@ -1737,10 +1738,8 @@ void load_weights_separate(network *net, char *filename0, int start, int cutoff)
 void load_weights(network *net, char *filename)
 {
     if(sepa_save_bool == 0 || sepa_save_bool == 2){
-        printf("load_weights_upto\n");
         load_weights_upto(net, filename, 0, net->n);
     }else{
-        printf("load_weights_separate\n");
         load_weights_separate(net, filename, 0, net->n);
     }
 }
