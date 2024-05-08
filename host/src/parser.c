@@ -1517,6 +1517,7 @@ void load_weights_layer(layer l, FILE *fp, int transpose)
         load_convolutional_weights(l, fp);
     }
     if(l.type == CONNECTED){
+        printf("connected weight load pass.\n");
         load_connected_weights(l, fp, transpose);
     }
     if(l.type == BATCHNORM){
