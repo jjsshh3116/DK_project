@@ -1630,7 +1630,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         *net->seen = iseen;
     }
     int transpose = (major > 1000) || (minor > 1000);
-    printf("transpose: %d\n", transpose);
+    
 
     int i;
 
