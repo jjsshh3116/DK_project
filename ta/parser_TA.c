@@ -68,7 +68,6 @@ void load_weights_TA(float *vec, int length, int layer_i, char type, int transpo
     aes_cbc_TA("decrypt", tempvec, length);
 
     layer_TA l = netta.layers[layer_i];
-    IMSG("layer_i %d: %d", layer_i, l.type);
 
     if(type == 'b'){
         copy_cpu_TA(length, tempvec, 1, l.biases, 1);
@@ -97,6 +96,20 @@ void load_weights_TA(float *vec, int length, int layer_i, char type, int transpo
             transpose_matrix_TA(l.weights, l.inputs, l.outputs);
         }
     }
+
+    if(type == 'b'){
+        IMSG("######## %d/'s layer biases ########\n", layer_i);
+        for(int z = 0; z < length; z++){
+            IMSG("[%d]: %d\n", z, (int)(l.biases[z] * 10000.0));
+        }
+    }
+    else if(type == 'w'){
+        IMSG("######## %d/'s layer weights ########\n", layer_i);
+        for(int z = 0; z < length; z++){
+            IMSG("[%d]: %d\n", z, (int)(l.weights[z] * 10000.0));
+        }
+    }
+    
 
     free(tempvec);
 }

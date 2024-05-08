@@ -262,22 +262,25 @@ void forward_network(network *netp)
 
         l.forward(l, net);
 
+        for(int z = 0; z < l.outputs * net.batch; z++){
+            output_temp[z] = l.output[z];
+        }
+
         if(debug_summary_pass == 1){
             summary_array("forward_network / l.output", l.output, l.inputs*net.batch);
         }
 
         //net.input = l.output;
 
-
         if(l.truth){
             net.truth = l.output;
         }
         
 
-         printf("############ REE calculation outputs ############\n");
-        for(int j = 0; j < l.outputs*net.batch; j++){
-            printf("%d REE//otuput[%d]: %f \n", net.index, j, l.output[j]);
-        }
+        //  printf("############ REE calculation outputs ############\n");
+        // for(int j = 0; j < l.outputs*net.batch; j++){
+        //     printf("%d REE//otuput[%d]: %f \n", net.index, j, l.output[j]);
+        // }
 
       
         //TEE forward
@@ -293,7 +296,14 @@ void forward_network(network *netp)
         //     printf("%d TEE//otuput[%d]: %f \n", net.index, j, l_TA.output[j]);
         // }
 
-       net.input = l_TA.output;
+       // net.input = l_TA.output;
+       
+       for(int z = 0; z < l.outputs * net.batch; z++){
+            l.output[z] = output_temp[z];
+        }
+
+        free(output_temp);
+        free(input_temp);
         
     }
 
