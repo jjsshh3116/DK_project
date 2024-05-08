@@ -1619,13 +1619,14 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
     int major;
     int minor;
     int revision;
+    int dummy[5];
+
     fread(&major, sizeof(int), 1, fp);
     fread(&minor, sizeof(int), 1, fp);
     fread(&revision, sizeof(int), 1, fp);
 
-    fread(&major, sizeof(int), 1, fp_TA);
-    fread(&minor, sizeof(int), 1, fp_TA);
-    fread(&revision, sizeof(int), 3, fp_TA);
+    fread(dummy, sizeof(int), 5, fp_TA);
+    
 
     if ((major*10 + minor) >= 2 && major < 1000 && minor < 1000){
         //fread(net->seen, sizeof(size_t), 1, fp);
