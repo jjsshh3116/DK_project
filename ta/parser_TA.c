@@ -88,27 +88,29 @@ void load_weights_TA(float *vec, int length, int layer_i, char type, int transpo
 
     if(l.type == CONVOLUTIONAL_TA || l.type == DECONVOLUTIONAL_TA){
         if(l.flipped && type == 'w'){
+            IMSG("CNN transpose\n");
             transpose_matrix_TA(l.weights, l.c*l.size*l.size, l.n);
         }
     }
     else if(l.type == CONNECTED_TA){
         if(transpose && type == 'w'){
+            IMSG("CONNECTED transpose\n");
             transpose_matrix_TA(l.weights, l.inputs, l.outputs);
         }
     }
 
-    if(type == 'b'){
-        IMSG("######## %d/'s layer biases ########\n", layer_i);
-        for(int z = 0; z < length; z++){
-            IMSG("%d layer biases[%d]: %d\n", layer_i, z, (int)(l.biases[z] * 10000.0));
-        }
-    }
-    else if(type == 'w'){
-        IMSG("######## %d/'s layer weights ########\n", layer_i);
-        for(int z = 0; z < length; z++){
-            IMSG("%d layer weights[%d]: %d\n", layer_i, z, (int)(l.weights[z] * 10000.0));
-        }
-    }
+    // if(type == 'b'){
+    //     IMSG("######## %d/'s layer biases ########\n", layer_i);
+    //     for(int z = 0; z < length; z++){
+    //         IMSG("%d layer biases[%d]: %d\n", layer_i, z, (int)(l.biases[z] * 10000.0));
+    //     }
+    // }
+    // else if(type == 'w'){
+    //     IMSG("######## %d/'s layer weights ########\n", layer_i);
+    //     for(int z = 0; z < length; z++){
+    //         IMSG("%d layer weights[%d]: %d\n", layer_i, z, (int)(l.weights[z] * 10000.0));
+    //     }
+    // }
     
 
     free(tempvec);
