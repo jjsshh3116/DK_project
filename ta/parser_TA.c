@@ -34,8 +34,10 @@ void aes_cbc_TA(char* xcrypt, float* gradient, int org_len)
     for (int i = 0; i < enc_len; ++i)
     {
         if(strncmp(xcrypt, "encrypt", 2) == 0){
+            DMSG("really encrypt\n");
             AES_CBC_encrypt_buffer(&ctx, array + (i * 16), 16);
         }else if(strncmp(xcrypt, "decrypt", 2) == 0){
+             DMSG("really decrypt\n");
             AES_CBC_decrypt_buffer(&ctx, array + (i * 16), 16);
         }
     }
@@ -65,7 +67,7 @@ void load_weights_TA(float *vec, int length, int layer_i, char type, int transpo
     // decrypt
     float *tempvec = malloc(length*sizeof(float));
     copy_cpu_TA(length, vec, 1, tempvec, 1);
-    //aes_cbc_TA("decrypt", tempvec, length);
+    aes_cbc_TA("decrypt", tempvec, length);
 
     layer_TA l = netta.layers[layer_i];
 
