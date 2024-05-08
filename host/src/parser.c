@@ -1652,6 +1652,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
     int i;
     for(i = start; i < net->n && i < cutoff; ++i){
         layer l = net->layers[i];
+        l.index = i;
         if (l.dontload) continue;
 
         // load weights of the NW side
