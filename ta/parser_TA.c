@@ -100,13 +100,13 @@ void load_weights_TA(float *vec, int length, int layer_i, char type, int transpo
     if(type == 'b'){
         IMSG("######## %d/'s layer biases ########\n", layer_i);
         for(int z = 0; z < length; z++){
-            IMSG("[%d]: %d\n", z, (int)(l.biases[z] * 10000.0));
+            IMSG("%d layer biases[%d]: %d\n", layer_i, z, (int)(l.biases[z] * 10000.0));
         }
     }
     else if(type == 'w'){
         IMSG("######## %d/'s layer weights ########\n", layer_i);
         for(int z = 0; z < length; z++){
-            IMSG("[%d]: %d\n", z, (int)(l.weights[z] * 10000.0));
+            IMSG("%d layer weights[%d]: %d\n", layer_i, z, (int)(l.weights[z] * 10000.0));
         }
     }
     

@@ -1643,14 +1643,14 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
        
         load_weights_layer(l, fp, transpose);
         
-        printf("######## %d/'s layer biases ########\n", i);
+        printf("######## %d layer biases ########\n", i);
         for(int z = 0; z < l.n; z++){
-            printf("[%d]: %f\n", z, l.biases[z]);
+            printf("%d layer biases[%d]: %f\n", i, z, l.biases[z]);
         }
 
-        printf("######## %d/'s layer weights ########\n", i);
+        printf("######## %d layer weights ########\n", i);
         for(int z = 0; z < l.c/l.groups*l.n*l.size*l.size; z++){
-            printf("[%d]: %f\n", z, l.weights[z]);
+            printf("%d layer weights[%d]: %f\n", i, z, l.weights[z]);
         }
 
         // load weights of the SW side
