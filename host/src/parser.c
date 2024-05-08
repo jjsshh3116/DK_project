@@ -1343,6 +1343,16 @@ void load_connected_weights(layer l, FILE *fp, int transpose)
 {
     fread(l.biases, sizeof(float), l.outputs, fp);
     fread(l.weights, sizeof(float), l.outputs*l.inputs, fp);
+
+    for(int z = 0; z < l.outputs; z++){
+        printf("%d layer biases[%d]: %f\n", l.index, z, l.biases[z]);
+    }
+
+    for(int z = 0; z < l.outputs*l.inputs; z++){
+        printf("%d layer weights[%d]: %f\n", l.index, z, l.weights[z]);
+    }
+
+
     if(transpose){
         transpose_matrix(l.weights, l.inputs, l.outputs);
     }
@@ -1639,14 +1649,10 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
     }
     int transpose = (major > 1000) || (minor > 1000);
     
-
     int i;
-
     for(i = start; i < net->n && i < cutoff; ++i){
         layer l = net->layers[i];
         if (l.dontload) continue;
-
-        printf("%d\n", i);
 
         // load weights of the NW side
        
