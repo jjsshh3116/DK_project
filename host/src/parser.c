@@ -1612,6 +1612,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
     fprintf(stderr, "Loading weights from %s...", filename);
     fflush(stdout);
     FILE *fp = fopen(filename, "rb");
+    FILE *fp_TA = fopen(filename, "rb");
     if(!fp) file_error(filename);
 
     int major;
@@ -1658,7 +1659,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         //int layerTA_i = i - partition_point1 - 1;
         if(i <= partition_point2){
             int layerTA_i = i;
-            comm_load_weights_layer(l, fp, layerTA_i, transpose);
+            comm_load_weights_layer(l, fp_TA, layerTA_i, transpose);
         }
         
         
@@ -1666,6 +1667,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
 
     fprintf(stderr, "Done!\n");
     fclose(fp);
+    fclose(fp_TA);
 }
 
 
