@@ -266,9 +266,9 @@ void forward_network(network *netp)
 
         l.forward(l, net);
 
-        for(int z = 0; z < l.outputs * net.batch; z++){
-            output_temp[z] = l.output[z];
-        }
+        // for(int z = 0; z < l.outputs * net.batch; z++){
+        //     output_temp[z] = l.output[z];
+        // }
 
         if(debug_summary_pass == 1){
             summary_array("forward_network / l.output", l.output, l.inputs*net.batch);
