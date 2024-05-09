@@ -67,23 +67,23 @@ void load_weights_TA(float *vec, int length, int layer_i, char type, int transpo
     // decrypt
     float *tempvec = malloc(length*sizeof(float));
     copy_cpu_TA(length, vec, 1, tempvec, 1);
-    aes_cbc_TA("decrypt", tempvec, length);
+    //aes_cbc_TA("decrypt", tempvec, length);
 
     layer_TA l = netta.layers[layer_i];
 
     if(type == 'b'){
         copy_cpu_TA(length, tempvec, 1, l.biases, 1);
-        IMSG("######## %d/'s layer biases ########\n", layer_i);
-        for(int z = 0; z < length; z++){
-            IMSG("%d layer biases[%d]: %d\n", layer_i, z, (int)(l.biases[z] * 10000.0));
-        }
+        // IMSG("######## %d/'s layer biases ########\n", layer_i);
+        // for(int z = 0; z < length; z++){
+        //     IMSG("%d layer biases[%d]: %d\n", layer_i, z, (int)(l.biases[z] * 10000.0));
+        // }
     }
     else if(type == 'w'){
         copy_cpu_TA(length, tempvec, 1, l.weights, 1);
-        IMSG("######## %d/'s layer weights ########\n", layer_i);
-        for(int z = 0; z < length; z++){
-            IMSG("%d layer weights[%d]: %d\n", layer_i, z, (int)(l.weights[z] * 10000.0));
-        }
+        // IMSG("######## %d/'s layer weights ########\n", layer_i);
+        // for(int z = 0; z < length; z++){
+        //     IMSG("%d layer weights[%d]: %d\n", layer_i, z, (int)(l.weights[z] * 10000.0));
+        // }
     }
     else if(type == 's'){
         copy_cpu_TA(length, tempvec, 1, l.scales, 1);
@@ -108,20 +108,6 @@ void load_weights_TA(float *vec, int length, int layer_i, char type, int transpo
             transpose_matrix_TA(l.weights, l.inputs, l.outputs);
         }
     }
-
-    // if(type == 'b'){
-    //     IMSG("######## %d/'s layer biases ########\n", layer_i);
-    //     for(int z = 0; z < length; z++){
-    //         IMSG("%d layer biases[%d]: %d\n", layer_i, z, (int)(l.biases[z] * 10000.0));
-    //     }
-    // }
-    // else if(type == 'w'){
-    //     IMSG("######## %d/'s layer weights ########\n", layer_i);
-    //     for(int z = 0; z < length; z++){
-    //         IMSG("%d layer weights[%d]: %d\n", layer_i, z, (int)(l.weights[z] * 10000.0));
-    //     }
-    // }
-    
 
     free(tempvec);
 }

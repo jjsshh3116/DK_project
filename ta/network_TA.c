@@ -93,10 +93,6 @@ void forward_network_TA()
 
     ta_net_output = malloc(sizeof(float)*l.outputs);
 
-    // for(int z = 0; z < l.outputs; z++){
-    //     ta_net_output[z] = l.output[z];
-    //     IMSG("%d layer[%d]: %d\n", netta.index, z, (int)(l.output[z] * 10000.0));
-    // }
     
 
 

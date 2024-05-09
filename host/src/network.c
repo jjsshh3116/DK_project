@@ -241,18 +241,22 @@ void forward_network(network *netp)
 #endif
 
     network net = *netp;
-    //network net_TA = *netp;
+    network net_TA = *netp;
 
     int i;
     for(i = 0; i < net.n; ++i){
         net.index = i;
-        //net_TA.index = i;
+        net_TA.index = i;
 
         layer l = net.layers[i];
-        //layer l_TA = net_TA.layers[i];
 
-        float *input_temp = (float *)malloc(sizeof(float) * net.inputs);
-        float *output_temp = (float *)malloc(sizeof(float) * l.outputs * net.batch);
+        // float *input_temp = (float *)malloc(sizeof(float) * net.inputs * net.batch);
+        // float *output_temp = (float *)malloc(sizeof(float) * l.outputs * l.batch);
+
+        // //Copy input
+        // for(int z = 0; z < net.inputs * net.batch; z++){
+        //     input_temp[z] = net.input[z];
+        // }
         
         //REE forward
         
@@ -277,10 +281,7 @@ void forward_network(network *netp)
         }
         
 
-        //  printf("############ REE calculation outputs ############\n");
-        // for(int j = 0; j < l.outputs*net.batch; j++){
-        //     printf("%d REE//otuput[%d]: %f \n", net.index, j, l.output[j]);
-        // }
+       
 
       
         //TEE forward
@@ -291,19 +292,20 @@ void forward_network(network *netp)
 
         forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
 
-        // printf("############ TEE calculation outputs ############\n");
-        // for(int j = 0; j < l.outputs*net.batch; j++){
-        //     printf("%d TEE//otuput[%d]: %f \n", net.index, j, l_TA.output[j]);
-        // }
-
-       // net.input = l_TA.output;
-       
-       for(int z = 0; z < l.outputs * net.batch; z++){
-            l.output[z] = output_temp[z];
+        printf("############ REE & TEE calculation outputs ############\n");
+        for(int j = 0; j < l.outputs*net.batch; j++){
+            printf("%d REE//otuput[%d]: %f \n", net.index, j, l.output[j]);
+            printf("%d TEE//otuput[%d]: %f \n", net.index, j, l_TA.output[j]);
         }
 
-        free(output_temp);
-        free(input_temp);
+       net.input = l_TA.output;
+       
+    //    for(int z = 0; z < l.outputs * net.batch; z++){
+    //         l.output[z] = output_temp[z];
+    //     }
+
+        // free(output_temp);
+        // free(input_temp);
         
     }
 
@@ -791,7 +793,7 @@ float *network_predict(network *net, float *input)
     net_output_return_CA(net->outputs, 1);
     out = net_output_back;
 
-    // out = net->output;
+    out = net->output;
 
      *net = orig;
      return out;
