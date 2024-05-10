@@ -1687,7 +1687,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         if(l.type == CONVOLUTIONAL && i <= net->conv_pool_position.conv[net->conv_pool_position.n - 1]){
             comm_load_weights_layer(l, fp_TA, i, transpose);
         }
-        else if(l.type == MAXPOOL && net.index <= net.conv_pool_position.pool[net->conv_pool_position.n - 1]){
+        else if(l.type == MAXPOOL && net.index <= net->conv_pool_position.pool[net->conv_pool_position.n - 1]){
             comm_load_weights_layer(l, fp_TA, i, transpose);
         }
 
