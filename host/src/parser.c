@@ -985,11 +985,11 @@ network *parse_network_cfg(char *filename)
 #endif
     }
 
-    for(int z = 0; z < conv_pp; z++){
+    for(int z = 0; z < net->conv_pool_position.n; z++){
         printf("conv_position[%d]: %d\n", z, net->conv_pool_position.conv[z]);
     }
 
-    for(int z = 0; z < pool_pp; z++){
+    for(int z = 0; z < net->conv_pool_position.n; z++){
         printf("conv_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
     }
 
@@ -1043,6 +1043,8 @@ list *read_cfg(char *filename)
     partition_point1 = -1;
     //partition_point2 = layer_count - 2;
     partition_point2 = partition_point1 + 1;
+
+    options->conv_pool_position.n = conv_pp;
 
     return options;
 }
