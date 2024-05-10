@@ -216,11 +216,11 @@ convolutional_layer parse_convolutional(list *options, size_params params)
     layer.flipped = option_find_int_quiet(options, "flipped", 0);
     layer.dot = option_find_float_quiet(options, "dot", 0);
 
-    if(count_global > partition_point1 && count_global <= partition_point2){
-    make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
-    }
+    // if(count_global > partition_point1 && count_global <= partition_point2){
+    // make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
+    // }
 
-    //make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
+    make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
     
     return layer;
 
@@ -537,11 +537,11 @@ maxpool_layer parse_maxpool(list *options, size_params params)
 
     maxpool_layer layer = make_maxpool_layer(batch,h,w,c,size,stride,padding);
 
-    if(count_global > partition_point1 && count_global <= partition_point2){
-        make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
-    }
+    // if(count_global > partition_point1 && count_global <= partition_point2){
+    //     make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
+    // }
 
-    //make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
+    make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
 
     return layer;
 }
@@ -802,8 +802,8 @@ void parse_net_options(list *options, network *net)
     net->max_batches = option_find_int(options, "max_batches", 0);
 
     // net->n - partition_point1 - 1
-    //make_network_CA(partition_point2 - partition_point1, net->learning_rate, net->momentum, net->decay, net->time_steps, net->notruth, net->batch, net->subdivisions, net->random, net->adam, net->B1, net->B2, net->eps, net->h, net->w, net->c, net->inputs, net->max_crop, net->min_crop, net->max_ratio, net->min_ratio, net->center, net->clip, net->angle, net->aspect, net->saturation, net->exposure, net->hue, net->burn_in, net->power, net->max_batches);
-    make_network_CA(0, net->learning_rate, net->momentum, net->decay, net->time_steps, net->notruth, net->batch, net->subdivisions, net->random, net->adam, net->B1, net->B2, net->eps, net->h, net->w, net->c, net->inputs, net->max_crop, net->min_crop, net->max_ratio, net->min_ratio, net->center, net->clip, net->angle, net->aspect, net->saturation, net->exposure, net->hue, net->burn_in, net->power, net->max_batches);
+    make_network_CA(partition_point2 - partition_point1, net->learning_rate, net->momentum, net->decay, net->time_steps, net->notruth, net->batch, net->subdivisions, net->random, net->adam, net->B1, net->B2, net->eps, net->h, net->w, net->c, net->inputs, net->max_crop, net->min_crop, net->max_ratio, net->min_ratio, net->center, net->clip, net->angle, net->aspect, net->saturation, net->exposure, net->hue, net->burn_in, net->power, net->max_batches);
+    
 }
 
 int is_network(section *s)
@@ -1044,7 +1044,7 @@ list *read_cfg(char *filename)
     //printf("layer_count = %d\n", layer_count);
     partition_point1 = -1;
     //partition_point2 = layer_count - 2;
-    partition_point2 = partition_point1 + 1;
+    partition_point2 = pool_pp;
 
     options->conv_pool_position.n = conv_pp;
 
