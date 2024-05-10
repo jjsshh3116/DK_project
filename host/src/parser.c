@@ -997,13 +997,13 @@ list *read_cfg(char *filename)
     while((line=fgetl(file)) != 0){
         ++ nu;
         strip(line);
-        printf("[%d]: %s\n", nu, line);
         switch(line[0]){
             case '[':
                 current = malloc(sizeof(section));
                 list_insert(options, current);
                 current->options = make_list();
                 current->type = line;
+                printf("[%d]: %s\n", nu, line);
                 layer_count++;
                 break;
             case '\0':
