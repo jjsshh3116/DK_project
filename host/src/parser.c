@@ -818,6 +818,9 @@ network *parse_network_cfg(char *filename)
     if(!n) error("Config file has no sections");
     network *net = make_network(sections->size - 1);
 
+    net->conv_pool_position.conv = sections->conv_pool_position.conv;
+    net->conv_pool_position.pool = sections->conv_pool_position.pool;
+
     net->gpu_index = gpu_index;
     size_params params;
 
@@ -843,11 +846,6 @@ network *parse_network_cfg(char *filename)
     free_section(s);
     fprintf(stderr, "layer     filters    size              input                output\n");
 
-    net->conv_pool_position.conv = malloc(sizeof(int)*10);
-    net->conv_pool_position.pool = malloc(sizeof(int)*10);
-    int conv_pp = 0;
-    int pool_pp = 0;
-
     while(n){
         params.index = count;
         fprintf(stderr, "%5d ", count); //layer index 정수값 출력
@@ -858,7 +856,6 @@ network *parse_network_cfg(char *filename)
 
         if(lt == CONVOLUTIONAL){
             l = parse_convolutional(options, params);
-            net->conv_pool_position.conv[conv_pp++] = count;
         }else if(lt == DECONVOLUTIONAL){
             l = parse_deconvolutional(options, params);
         }else if(lt == LOCAL){
@@ -900,7 +897,6 @@ network *parse_network_cfg(char *filename)
             l = parse_batchnorm(options, params);
         }else if(lt == MAXPOOL){
             l = parse_maxpool(options, params);
-            net->conv_pool_position.pool[pool_pp++] = count;
         }else if(lt == REORG){
             l = parse_reorg(options, params);
         }else if(lt == AVGPOOL){
@@ -1005,7 +1001,7 @@ list *read_cfg(char *filename)
     FILE *file = fopen(filename, "r");
     if(file == 0) file_error(filename);
     char *line;
-    int nu = 0, layer_count = 0;
+    int nu = 0, layer_count = 0, conv_pp = 0, pool_pp = 0;
     list *options = make_list();
     section *current = 0;
     while((line=fgetl(file)) != 0){
@@ -1020,9 +1016,11 @@ list *read_cfg(char *filename)
                 if(!strcmp(line, "[convolutional]") || !strcmp(line, "[maxpool]")){
                     if(strcmp(line, "[convolutional]") == 0){
                         printf("[%d]: %s\n", layer_count - 1, line);
+                        options->conv_pool_position.conv[conv_pp++] = layer_count - 1;
                     }
                     else{
                         printf("[%d]: %s\n", layer_count - 1, line);
+                        options->conv_pool_position.pool[pool_pp++] = layer_count - 1;
                     }
                 }
                 layer_count++;

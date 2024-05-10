@@ -8,6 +8,8 @@ list *make_list()
 	l->size = 0;
 	l->front = 0;
 	l->back = 0;
+	l->conv_pool_position.conv = malloc(sizeof(int)*10);
+	l->conv_pool_position.pool = malloc(sizeof(int)*10);
 	return l;
 }
 

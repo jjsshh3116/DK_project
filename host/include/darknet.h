@@ -612,6 +612,7 @@ typedef struct list{
     int size;
     node *front;
     node *back;
+    conv_pool_position conv_pool_position;
 } list;
 
 pthread_t load_data(load_args args);
