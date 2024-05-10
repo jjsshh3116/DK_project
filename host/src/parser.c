@@ -1684,10 +1684,17 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         load_weights_layer(l, fp, transpose);
 
         // load weights of the SW side
-        if (i < net->conv_pool_position.pool[net->conv_pool_position.n - 1])
-        {
+        if(l.type == CONVOLUTIONAL && i <= net->conv_pool_position.conv[net->conv_pool_position.n - 1]){
             comm_load_weights_layer(l, fp_TA, i, transpose);
         }
+        else if(l.type == MAXPOOL && net.index <= net.conv_pool_position.pool[net->conv_pool_position.n - 1]){
+            comm_load_weights_layer(l, fp_TA, i, transpose);
+        }
+
+        // if (i < net->conv_pool_position.pool[net->conv_pool_position.n - 1])
+        // {
+        //     comm_load_weights_layer(l, fp_TA, i, transpose);
+        // }
         
         
         // printf("######## %d layer biases ########\n", i);
@@ -1803,7 +1810,6 @@ void load_weights(network *net, char *filename)
     if(sepa_save_bool == 0 || sepa_save_bool == 2){
         load_weights_upto(net, filename, 0, net->n);
     }else{
-        printf("load_weights_separate\n");
         load_weights_separate(net, filename, 0, net->n);
     }
 }
