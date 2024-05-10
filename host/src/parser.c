@@ -1003,8 +1003,8 @@ list *read_cfg(char *filename)
                 list_insert(options, current);
                 current->options = make_list();
                 current->type = line;
-                if(strcmp(line, "convolutional") == 0 || strcmp(line, "maxpool") == 0){
-                    if(strcmp(line, "convolutional") == 0){
+                if(!strcmp(line, "[convolutional]") || !strcmp(line, "[maxpool]")){
+                    if(strcmp(line, "[convolutional]") == 0){
                         printf("[%d]: %s\n", layer_count - 1, line);
                     }
                     else{
