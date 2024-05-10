@@ -434,6 +434,7 @@ typedef enum {
 } learning_rate_policy;
 
 typedef struct{
+    int n;
     int *conv;
     int *pool;
 } conv_pool_position;

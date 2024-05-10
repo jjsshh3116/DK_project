@@ -843,6 +843,10 @@ network *parse_network_cfg(char *filename)
     free_section(s);
     fprintf(stderr, "layer     filters    size              input                output\n");
 
+    net->conv_pool_position.conv = malloc(sizeof(int)*10);
+    net->conv_pool_position.pool = malloc(sizeof(int)*10);
+    int conv_pp = 0;
+    int pool_pp = 0;
 
     while(n){
         params.index = count;
@@ -854,6 +858,7 @@ network *parse_network_cfg(char *filename)
 
         if(lt == CONVOLUTIONAL){
             l = parse_convolutional(options, params);
+            net->conv_pool_position.conv[conv_pp++] = count;
         }else if(lt == DECONVOLUTIONAL){
             l = parse_deconvolutional(options, params);
         }else if(lt == LOCAL){
@@ -895,6 +900,7 @@ network *parse_network_cfg(char *filename)
             l = parse_batchnorm(options, params);
         }else if(lt == MAXPOOL){
             l = parse_maxpool(options, params);
+            net->conv_pool_position.pool[pool_pp++] = count;
         }else if(lt == REORG){
             l = parse_reorg(options, params);
         }else if(lt == AVGPOOL){
@@ -981,6 +987,14 @@ network *parse_network_cfg(char *filename)
 
         //netta.workspace = net->workspace;
 #endif
+    }
+
+    for(int z = 0; z < conv_pp; z++){
+        printf("conv_position[%d]: %d\n", z, net->conv_pool_position.conv[z]);
+    }
+
+    for(int z = 0; z < pool_pp; z++){
+        printf("conv_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
     }
 
     return net;
