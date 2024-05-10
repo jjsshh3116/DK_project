@@ -999,12 +999,19 @@ list *read_cfg(char *filename)
         strip(line);
         switch(line[0]){
             case '[':
-                layer_count++;
                 current = malloc(sizeof(section));
                 list_insert(options, current);
                 current->options = make_list();
                 current->type = line;
-                printf("[%d]: %s\n", layer_count, line);
+                if(!strcmp(line, "convolutional") || !strcmp(line, "maxpool")){
+                    if(!strcmp(line, "convolutional")){
+                        printf("[%d]: %s\n", layer_count - 1, line);
+                    }
+                    else{
+                        printf("[%d]: %s\n", layer_count - 1, line);
+                    }
+                }
+                layer_count++;
                 break;
             case '\0':
             case '#':
