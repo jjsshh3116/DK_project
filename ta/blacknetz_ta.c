@@ -913,7 +913,7 @@ TEE_Result TA_InvokeCommandEntryPoint(void __maybe_unused *sess_ctx,
         return transfer_weights_TA_params(param_types, params);
 
         case SAVE_WEI_CMD:
-            return save_weights_TA_params(param_types, params);
+        return save_weights_TA_params(param_types, params);
 
         case FORWARD_CMD:
         return forward_network_TA_params(param_types, params);

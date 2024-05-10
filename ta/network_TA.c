@@ -67,16 +67,16 @@ void make_network_TA(int n, float learning_rate, float momentum, float decay, in
 
 void forward_network_TA()
 {
-    if(roundnum == 0){
-        // ta_net_input malloc so not destroy before addition backward
-        ta_net_input = malloc(sizeof(float) * netta.layers[0].inputs * netta.layers[0].batch);
-        ta_net_delta = malloc(sizeof(float) * netta.layers[0].inputs * netta.layers[0].batch);
+    // if(roundnum == 0){
+    //     // ta_net_input malloc so not destroy before addition backward
+    //     ta_net_input = malloc(sizeof(float) * netta.layers[0].inputs * netta.layers[0].batch);
+    //     ta_net_delta = malloc(sizeof(float) * netta.layers[0].inputs * netta.layers[0].batch);
 
-        if(netta.workspace_size){
-            printf("workspace_size=%.2lfMB\n", (double)netta.workspace_size / 1048576.0);
-            netta.workspace = calloc(1, netta.workspace_size);
-        }
-    }
+    //     if(netta.workspace_size){
+    //         printf("workspace_size=%.2lfMB\n", (double)netta.workspace_size / 1048576.0);
+    //         netta.workspace = calloc(1, netta.workspace_size);
+    //     }
+    // }
 
     roundnum++;
 

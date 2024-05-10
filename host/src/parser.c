@@ -216,11 +216,12 @@ convolutional_layer parse_convolutional(list *options, size_params params)
     layer.flipped = option_find_int_quiet(options, "flipped", 0);
     layer.dot = option_find_float_quiet(options, "dot", 0);
 
-    // if(count_global > partition_point1 && count_global <= partition_point2){
-    // make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
-    // }
-
+    if(count_global > partition_point1 && count_global <= partition_point2){
     make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
+    }
+
+    //make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
+    
     return layer;
 
 }
@@ -285,11 +286,11 @@ layer parse_connected(list *options, size_params params)
     layer l = make_connected_layer(params.batch, params.inputs, output, activation, batch_normalize, params.net->adam);
 
     // send parameters into TA
-    // if(count_global > partition_point1 && count_global <= partition_point2){
-    //     make_connected_layer_CA(params.batch, params.inputs, output, activation, batch_normalize, params.net->adam);
-    // }
+    if(count_global > partition_point1 && count_global <= partition_point2){
+        make_connected_layer_CA(params.batch, params.inputs, output, activation, batch_normalize, params.net->adam);
+    }
 
-    make_connected_layer_CA(params.batch, params.inputs, output, activation, batch_normalize, params.net->adam);
+    //make_connected_layer_CA(params.batch, params.inputs, output, activation, batch_normalize, params.net->adam);
 
     return l;
 }
@@ -307,11 +308,11 @@ layer parse_softmax(list *options, size_params params)
     l.spatial = option_find_float_quiet(options, "spatial", 0);
     l.noloss =  option_find_int_quiet(options, "noloss", 0);
 
-    // if(count_global > partition_point1 && count_global <= partition_point2){
-    //     make_softmax_layer_CA(params.batch, params.inputs, groups, l.temperature, l.w, l.h, l.c, l.spatial, l.noloss);
-    // }
+    if(count_global > partition_point1 && count_global <= partition_point2){
+        make_softmax_layer_CA(params.batch, params.inputs, groups, l.temperature, l.w, l.h, l.c, l.spatial, l.noloss);
+    }
 
-    make_softmax_layer_CA(params.batch, params.inputs, groups, l.temperature, l.w, l.h, l.c, l.spatial, l.noloss);
+    //make_softmax_layer_CA(params.batch, params.inputs, groups, l.temperature, l.w, l.h, l.c, l.spatial, l.noloss);
 
     return l;
 }
@@ -470,11 +471,11 @@ cost_layer parse_cost(list *options, size_params params)
     layer.noobject_scale =  option_find_float_quiet(options, "noobj", 1);
     layer.thresh =  option_find_float_quiet(options, "thresh",0);
 
-    // if(count_global > partition_point1 && count_global <= partition_point2){
-    //     make_cost_layer_CA(params.batch, params.inputs, type, scale, layer.ratio, layer.noobject_scale, layer.thresh);
-    // }
+    if(count_global > partition_point1 && count_global <= partition_point2){
+        make_cost_layer_CA(params.batch, params.inputs, type, scale, layer.ratio, layer.noobject_scale, layer.thresh);
+    }
 
-    make_cost_layer_CA(params.batch, params.inputs, type, scale, layer.ratio, layer.noobject_scale, layer.thresh);
+    //make_cost_layer_CA(params.batch, params.inputs, type, scale, layer.ratio, layer.noobject_scale, layer.thresh);
 
     return layer;
 }
@@ -536,11 +537,11 @@ maxpool_layer parse_maxpool(list *options, size_params params)
 
     maxpool_layer layer = make_maxpool_layer(batch,h,w,c,size,stride,padding);
 
-    // if(count_global > partition_point1 && count_global <= partition_point2){
-    //     make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
-    // }
+    if(count_global > partition_point1 && count_global <= partition_point2){
+        make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
+    }
 
-    make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
+    //make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
 
     return layer;
 }
@@ -556,11 +557,11 @@ avgpool_layer parse_avgpool(list *options, size_params params)
 
     avgpool_layer layer = make_avgpool_layer(batch,w,h,c);
 
-    // if(count_global > partition_point1 && count_global <= partition_point2){
-    //     make_avgpool_layer_CA(batch,h,w,c);
-    // }
+    if(count_global > partition_point1 && count_global <= partition_point2){
+        make_avgpool_layer_CA(batch,h,w,c);
+    }
 
-    make_avgpool_layer_CA(batch,h,w,c);
+    //make_avgpool_layer_CA(batch,h,w,c);
 
     return layer;
 }
@@ -576,11 +577,11 @@ dropout_layer parse_dropout(list *options, size_params params, float *net_prev_o
     layer.output = net_prev_output;
     layer.delta = net_prev_delta;
 
-    // if(count_global > partition_point1 && count_global <= partition_point2){
-    //     make_dropout_layer_CA(params.batch, params.inputs, probability, params.w, params.h, params.c, net_prev_output, net_prev_delta);
-    // }
+    if(count_global > partition_point1 && count_global <= partition_point2){
+        make_dropout_layer_CA(params.batch, params.inputs, probability, params.w, params.h, params.c, net_prev_output, net_prev_delta);
+    }
 
-    make_dropout_layer_CA(params.batch, params.inputs, probability, params.w, params.h, params.c, net_prev_output, net_prev_delta);
+    //make_dropout_layer_CA(params.batch, params.inputs, probability, params.w, params.h, params.c, net_prev_output, net_prev_delta);
 
     return layer;
 }
@@ -1020,7 +1021,8 @@ list *read_cfg(char *filename)
     fclose(file);
     //printf("layer_count = %d\n", layer_count);
     partition_point1 = -1;
-    partition_point2 = layer_count - 2;
+    //partition_point2 = layer_count - 2;
+    partition_point2 = partition_point1;
 
     return options;
 }
