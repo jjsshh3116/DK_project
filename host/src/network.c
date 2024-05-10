@@ -248,13 +248,11 @@ void forward_network(network *netp)
         //net_TA.index = i;
 
         layer l = net.layers[i];
+        layer l_TA = net.layers[i];
 
         if(net.index == 0 && l.type == CONVOLUTIONAL){
             //TEE forward
             forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
-
-            layer l_TA = net.layers[i];
-
             forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
 
             printf("############ TEE calculation outputs ############\n");
