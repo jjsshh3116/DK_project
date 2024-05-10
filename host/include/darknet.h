@@ -433,6 +433,11 @@ typedef enum {
     CONSTANT, STEP, EXP, POLY, STEPS, SIG, RANDOM
 } learning_rate_policy;
 
+typedef struct{
+    int *conv;
+    int *pool;
+} conv_pool_position;
+
 typedef struct network{
     int n;
     int batch;
@@ -443,6 +448,7 @@ typedef struct network{
     layer *layers;
     float *output;
     learning_rate_policy policy;
+    conv_pool_position conv_pool_position;
 
     float learning_rate;
     float momentum;
