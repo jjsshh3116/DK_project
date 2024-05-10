@@ -1004,7 +1004,7 @@ list *read_cfg(char *filename)
                 list_insert(options, current);
                 current->options = make_list();
                 current->type = line;
-                printf("[%d]: %s\n", nu, line);
+                printf("[%d]: %s\n", layer_count, line);
                 break;
             case '\0':
             case '#':
