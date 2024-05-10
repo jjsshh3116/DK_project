@@ -1044,7 +1044,7 @@ list *read_cfg(char *filename)
     //printf("layer_count = %d\n", layer_count);
     partition_point1 = -1;
     //partition_point2 = layer_count - 2;
-    partition_point2 = pool_pp;
+    partition_point2 = options->conv_pool_position.pool[pool_pp - 1];
 
     options->conv_pool_position.n = conv_pp;
 
@@ -1681,8 +1681,14 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         if (l.dontload) continue;
 
         // load weights of the NW side
-       
         load_weights_layer(l, fp, transpose);
+
+        // load weights of the SW side
+        if (i < net->conv_pool_position.n)
+        {
+            comm_load_weights_layer(l, fp_TA, i, transpose);
+        }
+        
         
         // printf("######## %d layer biases ########\n", i);
         // for(int z = 0; z < l.n; z++){
@@ -1696,10 +1702,11 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
 
         // load weights of the SW side
         //int layerTA_i = i - partition_point1 - 1;
-        if(i <= partition_point2){
-            int layerTA_i = i;
-            comm_load_weights_layer(l, fp_TA, layerTA_i, transpose);
-        }
+
+        // if(i <= partition_point2){
+        //     int layerTA_i = i;
+        //     comm_load_weights_layer(l, fp_TA, layerTA_i, transpose);
+        // }
         
         
     }
