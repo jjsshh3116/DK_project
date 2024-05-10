@@ -802,7 +802,7 @@ void parse_net_options(list *options, network *net)
     net->max_batches = option_find_int(options, "max_batches", 0);
 
     // net->n - partition_point1 - 1
-    make_network_CA(partition_point2 - partition_point1, net->learning_rate, net->momentum, net->decay, net->time_steps, net->notruth, net->batch, net->subdivisions, net->random, net->adam, net->B1, net->B2, net->eps, net->h, net->w, net->c, net->inputs, net->max_crop, net->min_crop, net->max_ratio, net->min_ratio, net->center, net->clip, net->angle, net->aspect, net->saturation, net->exposure, net->hue, net->burn_in, net->power, net->max_batches);
+    //make_network_CA(partition_point2 - partition_point1, net->learning_rate, net->momentum, net->decay, net->time_steps, net->notruth, net->batch, net->subdivisions, net->random, net->adam, net->B1, net->B2, net->eps, net->h, net->w, net->c, net->inputs, net->max_crop, net->min_crop, net->max_ratio, net->min_ratio, net->center, net->clip, net->angle, net->aspect, net->saturation, net->exposure, net->hue, net->burn_in, net->power, net->max_batches);
     make_network_CA(0, net->learning_rate, net->momentum, net->decay, net->time_steps, net->notruth, net->batch, net->subdivisions, net->random, net->adam, net->B1, net->B2, net->eps, net->h, net->w, net->c, net->inputs, net->max_crop, net->min_crop, net->max_ratio, net->min_ratio, net->center, net->clip, net->angle, net->aspect, net->saturation, net->exposure, net->hue, net->burn_in, net->power, net->max_batches);
 }
 
