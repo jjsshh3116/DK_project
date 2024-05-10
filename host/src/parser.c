@@ -992,7 +992,7 @@ network *parse_network_cfg(char *filename)
     }
 
     for(int z = 0; z < net->conv_pool_position.n; z++){
-        printf("conv_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
+        printf("pool_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
     }
 
     return net;
@@ -1684,7 +1684,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         load_weights_layer(l, fp, transpose);
 
         // load weights of the SW side
-        if (i < net->conv_pool_position.n)
+        if (i < net->conv_pool_position.pool[net->conv_pool_position.n - 1])
         {
             comm_load_weights_layer(l, fp_TA, i, transpose);
         }

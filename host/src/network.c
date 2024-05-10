@@ -242,6 +242,10 @@ void forward_network(network *netp)
 
     network net = *netp;
 
+    int n;
+    printf("Select conv_maxpool in TEE (MAX num: %d): ", net.conv_pool_position.n - 1);
+    scanf("%d", &n);
+
     int i;
     for(i = 0; i < net.n; ++i){
         net.index = i;
@@ -250,7 +254,7 @@ void forward_network(network *netp)
         layer l = net.layers[i];
         layer l_TA = net.layers[i];
 
-        if(net.index == 0 && l.type == CONVOLUTIONAL){
+        if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
             //TEE forward
             forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
             forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
@@ -262,8 +266,13 @@ void forward_network(network *netp)
 
             net.input = l_TA.output;
 
-        }else
-        {
+        }
+        else if(l.type == MAXPOOL && net.index <= net.conv_pool_position.pool[n]){
+            //TEE forward
+            forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
+            forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
+        }
+        else{
             //REE forward
             if(l.delta){
                 fill_cpu(l.outputs * l.batch, 0, l.delta, 1);
