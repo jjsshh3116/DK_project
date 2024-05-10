@@ -1022,7 +1022,7 @@ list *read_cfg(char *filename)
     //printf("layer_count = %d\n", layer_count);
     partition_point1 = -1;
     //partition_point2 = layer_count - 2;
-    partition_point2 = partition_point1;
+    partition_point2 = partition_point1 + 1;
 
     return options;
 }
