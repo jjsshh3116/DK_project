@@ -1344,13 +1344,13 @@ void load_connected_weights(layer l, FILE *fp, int transpose)
     fread(l.biases, sizeof(float), l.outputs, fp);
     fread(l.weights, sizeof(float), l.outputs*l.inputs, fp);
 
-    for(int z = 0; z < l.outputs; z++){
-        printf("%d layer biases[%d]: %f\n", l.index, z, l.biases[z]);
-    }
+    // for(int z = 0; z < l.outputs; z++){
+    //     printf("%d layer biases[%d]: %f\n", l.index, z, l.biases[z]);
+    // }
 
-    for(int z = 0; z < l.outputs*l.inputs; z++){
-        printf("%d layer weights[%d]: %f\n", l.index, z, l.weights[z]);
-    }
+    // for(int z = 0; z < l.outputs*l.inputs; z++){
+    //     printf("%d layer weights[%d]: %f\n", l.index, z, l.weights[z]);
+    // }
 
 
     if(transpose){
@@ -1527,7 +1527,6 @@ void load_weights_layer(layer l, FILE *fp, int transpose)
         load_convolutional_weights(l, fp);
     }
     if(l.type == CONNECTED){
-        printf("connected weight load pass.\n");
         load_connected_weights(l, fp, transpose);
     }
     if(l.type == BATCHNORM){
