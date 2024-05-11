@@ -243,8 +243,12 @@ void forward_network(network *netp)
     network net = *netp;
 
     int n;
-    printf("Select conv_maxpool in TEE (MAX num: %d): ", net.conv_pool_position.n - 1);
+    printf("Select conv_maxpool in TEE (default: 0 ~ MAX num: %d): ", net.conv_pool_position.n - 1);
     scanf("%d", &n);
+    if(n < 0 || net.conv_pool_position.n - 1 < n){
+        printf("Run default (0) mode...\n");
+        n = 0;
+    }
 
     int i;
     for(i = 0; i < net.n; ++i){
