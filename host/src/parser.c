@@ -996,6 +996,7 @@ network *parse_network_cfg(char *filename)
     }
 
     for(int z = 0; z < count_global; z++){
+        printf("layer[%d] inputs: %d\n", z, net->layers[z].inputs);
         printf("layer[%d] ouputs: %d\n", z, net->layers[z].outputs);
     }
 
