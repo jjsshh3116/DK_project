@@ -995,6 +995,10 @@ network *parse_network_cfg(char *filename)
         printf("pool_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
     }
 
+    for(int z = 0; z < count_global; z++){
+        printf("layer[%d] ouputs: %d\n", z, net->layers[z].outputs);
+    }
+
     return net;
 }
 
@@ -1017,11 +1021,11 @@ list *read_cfg(char *filename)
                 current->type = line;
                 if(!strcmp(line, "[convolutional]") || !strcmp(line, "[maxpool]")){
                     if(strcmp(line, "[convolutional]") == 0){
-                        printf("[%d]: %s\n", layer_count - 1, line);
+                        //printf("[%d]: %s\n", layer_count - 1, line);
                         options->conv_pool_position.conv[conv_pp++] = layer_count - 1;
                     }
                     else{
-                        printf("[%d]: %s\n", layer_count - 1, line);
+                        //printf("[%d]: %s\n", layer_count - 1, line);
                         options->conv_pool_position.pool[pool_pp++] = layer_count - 1;
                     }
                 }
