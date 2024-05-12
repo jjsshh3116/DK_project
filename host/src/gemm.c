@@ -86,7 +86,35 @@ void gemm_nn(int M, int N, int K, float ALPHA,
              float *A, int lda,
              float *B, int ldb,
              float *C, int ldc)
-{
+{/* 
+    M: filter의 수(l.n).  N: feature map size. K: filter의 크기 = weight 값의 수.
+    ALPHA: 1.0  *A: 가중치 값 pointer.  lda = K
+                *B: im2col을 통해 재배열된 input data pointer.  ldb = N
+    BETA: 1.0   *C: 계산된 output을 가리키는 pointer. ldc = N
+    */ 
+        int i,j,k;
+#pragma omp parallel for
+    for(i = 0; i < M; ++i){// filter 수 만큼 반복
+        for(k = 0; k < K; ++k){ // 한 filter의 크기만큼 반복
+            register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 가중치 값을 담는다.
+            for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
+                C[i*ldc+j] += A_PART*B[k*ldb+j];
+            }
+        }
+    }
+
+}
+
+void semi_gemm_nn(int M, int N, int K, float ALPHA,
+             float *A, int lda,
+             float *B, int ldb,
+             float *C, int ldc)
+{/* 
+    M: filter의 수(l.n).  N: feature map size. K: filter의 크기 = weight 값의 수.
+    ALPHA: 1.0  *A: 가중치 값 pointer.  lda = K
+                *B: im2col을 통해 재배열된 input data pointer.  ldb = N
+    BETA: 1.0   *C: 계산된 output을 가리키는 pointer. ldc = N
+    */ 
         int i,j,k;
 #pragma omp parallel for
     for(i = 0; i < M; ++i){// filter 수 만큼 반복
@@ -196,12 +224,18 @@ void gemm_cpu(int TA, int TB, int M, int N, int K, float ALPHA,
               float *B, int ldb,
               float BETA,
               float *C, int ldc)
-{
+{/* 
+    M: filter의 수(l.n).  N: feature map size. K: filter의 크기 = weight 값의 수.
+    ALPHA: 1.0  *A: 가중치 값 pointer.  lda = K
+                *B: im2col을 통해 재배열된 input data pointer.  ldb = N
+    BETA: 1.0   *C: 계산된 output을 가리키는 pointer. ldc = N
+    */ 
     //printf("cpu: %d %d %d %d %d %f %d %d %f %d\n",TA, TB, M, N, K, ALPHA, lda, ldb, BETA, ldc);
+    
     int i, j;
     for(i = 0; i < M; ++i){
         for(j = 0; j < N; ++j){
-            C[i*ldc + j] *= BETA;
+            C[i*ldc + j] *= BETA; // -> output 배열의 값들에 1.0을 곱함.(initialize)
         }
     }
     if(!TA && !TB)
@@ -219,7 +253,7 @@ void gemm_cpu_diff(int TA, int TB, int M, int N, int K, float ALPHA,
                    float *B, int ldb,
                    float BETA,
                    float *C, int ldc)
-{
+{ 
     //printf("cpu: %d %d %d %d %d %f %d %d %f %d\n",TA, TB, M, N, K, ALPHA, lda, ldb, BETA, ldc);
     int i, j;
     for(i = 0; i < M; ++i){
