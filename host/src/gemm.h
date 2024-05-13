@@ -28,7 +28,7 @@ void gemm_cpu_diff(int TA, int TB, int M, int N, int K, float ALPHA,
                    float BETA,
                    float *C, int ldc);
 
-void semi_gemm_nn(int M, int N, int K, float ALPHA,
+void black_gemm_nn(int M, int N, int K, float ALPHA,
              float *A, int lda,
              float *B, int ldb,
              float *C, int ldc);

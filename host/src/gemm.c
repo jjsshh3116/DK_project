@@ -105,7 +105,7 @@ void gemm_nn(int M, int N, int K, float ALPHA,
 
 }
 
-void semi_gemm_nn(int M, int N, int K, float ALPHA,
+void black_gemm_nn(int M, int N, int K, float ALPHA,
              float *A, int lda,
              float *B, int ldb,
              float *C, int ldc)
@@ -119,7 +119,7 @@ void semi_gemm_nn(int M, int N, int K, float ALPHA,
 #pragma omp parallel for
     for(i = 0; i < M; ++i){// filter 수 만큼 반복
         for(k = 0; k < K; ++k){ // 한 filter의 크기만큼 반복
-            register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 가중치 값을 담는다.
+            register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 filter의 가중치 값을 담는다.
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
                 C[i*ldc+j] += A_PART*B[k*ldb+j];
             }
