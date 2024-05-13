@@ -517,31 +517,32 @@ static TEE_Result forward_network_TA_params(uint32_t param_types,
     return TEE_SUCCESS;
 }
 
-//
-// static TEE_Result forward_network_TA_params(uint32_t param_types,
-//                                           TEE_Param params[4])
-// {
-//     uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_INPUT,
-//                                                TEE_PARAM_TYPE_VALUE_INPUT,
-//                                                TEE_PARAM_TYPE_NONE,
-//                                                TEE_PARAM_TYPE_NONE);
-//     //TEE_PARAM_TYPE_VALUE_INPUT
-//
-//     //DMSG("has been called");
-//
-//     if (param_types != exp_param_types)
-//     return TEE_ERROR_BAD_PARAMETERS;
-//
-//     float *net_input = params[0].memref.buffer;
-//     int net_train = params[1].value.a;
-//
-//     netta.input = net_input;
-//     netta.train = net_train;
-//
-//     forward_network_TA();
-//
-//     return TEE_SUCCESS;
-// }
+static TEE_Result black_forward_network_TA_params(uint32_t param_types,
+                                          TEE_Param params[4])
+{
+    uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_INPUT,
+                                               TEE_PARAM_TYPE_MEMREF_INPUT,
+                                               TEE_PARAM_TYPE_MEMREF_INPUT,
+                                               TEE_PARAM_TYPE_VALUE_INPUT);
+
+    if (param_types != exp_param_types)
+        return TEE_ERROR_BAD_PARAMETERS;
+
+    float *net_input = params[0].memref.buffer;
+    int net_train = params[1].value.a;
+    int net_index = params[1].value.b;
+
+    netta.input = net_input;
+    netta.train = net_train;
+    netta.index = net_index;
+
+    if(debug_summary_com == 1){
+        summary_array("forward_network / net.input", netta.input, params[0].memref.size / sizeof(float));
+    }
+    forward_network_TA();
+
+    return TEE_SUCCESS;
+}
 
 
 static TEE_Result forward_network_back_TA_params(uint32_t param_types,
@@ -917,6 +918,9 @@ TEE_Result TA_InvokeCommandEntryPoint(void __maybe_unused *sess_ctx,
 
         case FORWARD_CMD:
         return forward_network_TA_params(param_types, params);
+
+        case BLACK_FORWARD_CMD:
+        return black_forward_network_TA_params(param_types, params);
 
         case BACKWARD_CMD:
         return backward_network_TA_params(param_types, params);

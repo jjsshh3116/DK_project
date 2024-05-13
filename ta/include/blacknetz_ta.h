@@ -41,6 +41,8 @@ extern int debug_summary_pass;
 
 #define MAKE_AVG_CMD 21
 
+#define BLACK_FORWARD_CMD 22
+
 void summary_array(char *print_name, float *arr, int n);
 
 #endif /*TA_DARKNETP_H*/

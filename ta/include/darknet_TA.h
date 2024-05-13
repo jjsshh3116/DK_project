@@ -74,6 +74,13 @@ typedef struct{
     int t;
 } update_args_TA;
 
+typedef struct{
+    int C_index;
+    float weight;
+    int B_index;
+
+} black_pixels_TA;
+
 struct network_TA;
 typedef struct network_TA network_TA;
 
@@ -298,6 +305,9 @@ struct layer_TA{
     tree_TA *softmax_tree;
 
     size_t workspace_size;
+
+    black_pixels_TA *black_in_TEE;
+    int black_size;
 };
 
 void free_layer_TA(layer_TA);

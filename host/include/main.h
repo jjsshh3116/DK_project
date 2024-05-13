@@ -33,6 +33,8 @@
 
 #define MAKE_AVG_CMD 21
 
+#define BLACK_FORWARD_CMD 22
+
 #define TA_BLACKNETZ_UUID \
 	{ 0xec9f2f40, 0x4a46, 0x49bf, \
 		{ 0x99, 0xf8, 0xaf, 0xe2, 0x49, 0xe1, 0xed, 0x07} }
@@ -68,6 +70,8 @@ void make_softmax_layer_CA(int batch, int inputs, int groups, float temperature,
 void make_cost_layer_CA(int batch, int inputs, COST_TYPE cost_type, float scale, float ratio, float noobject_scale, float thresh);
 
 void forward_network_CA(float *net_input, int net_inputs, int net_batch, int net_train, int net_index);
+
+void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, layer l, int net_index);
 
 void forward_network_back_CA(float *l_output, int net_inputs, int net_batch, int net_index);
 

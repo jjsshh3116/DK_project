@@ -106,6 +106,13 @@ typedef struct{
     int t;
 } update_args;
 
+typedef struct{
+    int C_index;
+    float weight;
+    int B_index;
+
+} black_pixels;
+
 struct network;
 typedef struct network network;
 
@@ -335,6 +342,9 @@ struct layer{
     tree *softmax_tree;
 
     size_t workspace_size;
+
+    black_pixels *black_in_TEE;
+    int black_size;
 
 #ifdef GPU
     int *indexes_gpu;

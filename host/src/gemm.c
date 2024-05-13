@@ -1,11 +1,14 @@
 #include "gemm.h"
 #include "utils.h"
 #include "cuda.h"
+#include "darknet.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
 #include "diffprivate.h"
+
+int global_count;
 
 void gemm_bin(int M, int N, int K, float ALPHA,
               char  *A, int lda,
@@ -108,19 +111,37 @@ void gemm_nn(int M, int N, int K, float ALPHA,
 void black_gemm_nn(int M, int N, int K, float ALPHA,
              float *A, int lda,
              float *B, int ldb,
-             float *C, int ldc)
+             float *C, int ldc,
+             black_pixels *black_in_TEE)
 {/* 
     M: filter의 수(l.n).  N: feature map size. K: filter의 크기 = weight 값의 수.
     ALPHA: 1.0  *A: 가중치 값 pointer.  lda = K
                 *B: im2col을 통해 재배열된 input data pointer.  ldb = N
     BETA: 1.0   *C: 계산된 output을 가리키는 pointer. ldc = N
     */ 
-        int i,j,k;
+
+   int i,j,k;
+   global_count = 0;
+
+   for(i = 0; i < M; ++i){
+        for(j = 0; j < N; ++j){
+            C[i*ldc + j] *= 1.0; // -> output 배열의 값들에 1.0을 곱함.(initialize)
+        }
+    }
+
 #pragma omp parallel for
     for(i = 0; i < M; ++i){// filter 수 만큼 반복
         for(k = 0; k < K; ++k){ // 한 filter의 크기만큼 반복
             register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 filter의 가중치 값을 담는다.
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
+                if(B[k*ldb+j] == BLACK_NUM){
+                    black_in_TEE[global_count].C_index = i*ldc+j;
+                    black_in_TEE[global_count].weight = A_PART;
+                    black_in_TEE[global_count].B_index = k*ldb+j;
+                    global_count++;
+                    continue;
+                }
+
                 C[i*ldc+j] += A_PART*B[k*ldb+j];
             }
         }

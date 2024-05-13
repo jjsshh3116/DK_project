@@ -1,5 +1,8 @@
 #include "im2col.h"
 #include <stdio.h>
+
+int global_count = 0;
+
 float im2col_get_pixel(float *im, int height, int width, int channels,
                         int row, int col, int channel, int pad)
 {
@@ -39,19 +42,27 @@ void im2col_cpu(float* data_im,
 }
 
 float black_im2col_get_pixel(float *im, int height, int width, int channels,
-                        int row, int col, int channel, int pad)
+                        int row, int col, int channel, int pad, int* black_pixel, int black_pixel_size)
 {
     row -= pad;
     col -= pad;
 
     if (row < 0 || col < 0 ||
         row >= height || col >= width) return 0;
+
+        for(int z = 0; z < black_pixel_size; z++){
+            if(col + width*(row + height*channel) == black_pixel[z]){
+                global_count++;
+                return BLACK_NUM;
+            } 
+        }
+
     return im[col + width*(row + height*channel)];
 }
 
-void black_im2col_cpu(float* data_im,
+int black_im2col_cpu(float* data_im,
      int channels,  int height,  int width,
-     int ksize,  int stride, int pad, float* data_col) 
+     int ksize,  int stride, int pad, float* data_col, int* black_pixel, int black_pixel_size) 
 {
     int c,h,w;
     int height_col = (height + 2*pad - ksize) / stride + 1;
@@ -68,9 +79,10 @@ void black_im2col_cpu(float* data_im,
                 int im_col = w_offset + w * stride;
                 int col_index = (c * height_col + h) * width_col + w;
                 data_col[col_index] = black_im2col_get_pixel(data_im, height, width, channels,
-                        im_row, im_col, c_im, pad);
+                        im_row, im_col, c_im, pad, black_pixel, black_pixel_size);
             }
         }
     }
+    return global_count;
 }
 

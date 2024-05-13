@@ -573,6 +573,58 @@ void forward_network_CA(float *net_input, int l_inputs, int net_batch, int net_t
     free(params0);
 }
 
+void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, layer l, int net_index)
+{
+    //invoke op and transfer paramters
+    TEEC_Operation op;
+    uint32_t origin;
+    TEEC_Result res;
+
+    memset(&op, 0, sizeof(op));
+    op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_INPUT, 
+                                     TEEC_MEMREF_TEMP_INPUT,
+                                     TEEC_MEMREF_TEMP_INPUT, 
+                                     TEEC_VALUE_INPUT);
+
+    float *params0 = malloc(sizeof(float)*l.outputs);
+    for(int z=0; z<l.outputs; z++){
+        params0[z] = c[z];
+    }
+
+    int height_col = (l.h + 2*l.pad - l.size) / l.stride + 1;
+    int width_col = (l.w + 2*l.pad - l.size) / l.stride + 1;
+    int channels_col = (l.c/l.groups) * l.size * l.size;
+    int col_index = ((channels_col - 1) * height_col + (height_col - 1)) * width_col + (width_col - 1);
+
+    float *params1 = malloc(sizeof(float)*col_index);
+    for(int z=0; z<l.outputs; z++){
+        params1[z] = b[z];
+    }
+
+    float *params2 = malloc(sizeof(black_pixels)*l.black_size);
+    for(int z=0; z<l.black_size; z++){
+        params2[z] = black_in_TEE[z];
+    }
+
+    op.params[0].tmpref.buffer = params0;
+    op.params[0].tmpref.size = sizeof(float) * l.outputs;
+    op.params[1].tmpref.buffer = params1;
+    op.params[1].tmpref.size = sizeof(float) * col_index;
+    op.params[2].tmpref.buffer = params2;
+    op.params[2].tmpref.size = sizeof(black_pixels)*l.black_size;
+    op.params[3].value.a = net_index;
+
+ 
+    res = TEEC_InvokeCommand(&sess, BLACK_FORWARD_CMD,
+                             &op, &origin);
+
+    if (res != TEEC_SUCCESS)
+    errx(1, "TEEC_InvokeCommand(forward) failed 0x%x origin 0x%x",
+         res, origin);
+
+    free(params0);
+}
+
 
 void forward_network_back_CA(float *l_output, int net_inputs, int net_batch, int net_index)
 {
