@@ -603,7 +603,7 @@ void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, la
         params1[z] = b[z];
     }
 
-    float *params2 = malloc(sizeof(black_pixels)*l.black_size);
+    black_pixels *params2 = malloc(sizeof(black_pixels)*l.black_size);
     for(int z=0; z<l.black_size; z++){
         params2[z] = black_in_TEE[z];
     }
