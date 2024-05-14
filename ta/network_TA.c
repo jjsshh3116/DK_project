@@ -6,6 +6,7 @@
 #include "blas_TA.h"
 #include "network_TA.h"
 #include "math_TA.h"
+#include "activations_TA.h"
 
 #include "blacknetz_ta.h"
 #include <tee_internal_api.h>
@@ -100,37 +101,43 @@ void forward_network_TA()
         summary_array("forward_network / l.output", l.output, l.outputs*netta.batch);
     }
 
-    // int i;
-    // for(i = 0; i < netta.n; ++i){
-    //     netta.index = i;
-    //     layer_TA l = netta.layers[i];
 
-    //     if(l.delta){
-    //         fill_cpu_TA(l.outputs * l.batch, 0, l.delta, 1);
-    //     }
+    calc_network_cost_TA();
+}
 
-    //     l.forward_TA(l, netta);
+void black_forward_network_TA(float *c, int c_size, float *b, int b_size, black_pixels_TA *black_in_TEE, int black_size)
+{
+    if(roundnum == 0){
+        // ta_net_input malloc so not destroy before addition backward
+        ta_net_input = malloc(sizeof(float) * netta.layers[0].inputs * netta.layers[0].batch);
+        ta_net_delta = malloc(sizeof(float) * netta.layers[0].inputs * netta.layers[0].batch);
 
-    //     if(debug_summary_pass == 1){
-    //         summary_array("forward_network / l.output", l.output, l.outputs*netta.batch);
-    //     }
+        if(netta.workspace_size){
+            printf("workspace_size=%.2lfMB\n", (double)netta.workspace_size / 1048576.0);
+            netta.workspace = calloc(1, netta.workspace_size);
+        }
+    }
 
-    //     netta.input = l.output;
+    roundnum++;
 
-    //     if(l.truth) {
-    //         netta.truth = l.output;
-    //     }
-    //     //output of the network (for predict)
-    //     // &&
-    //     if(!netta.train && l.type == SOFTMAX_TA){
-    //         ta_net_output = malloc(sizeof(float)*l.outputs*1);
-    //         for(int z=0; z<l.outputs*1; z++){
-    //             ta_net_output[z] = l.output[z];
-    //         }
-    //     }
+    layer_TA l = netta.layers[netta.index];
+    l.black_in_TEE = black_in_TEE;
+    l.black_size = black_size;
 
-        
-    // }
+    for(int z = 0; z < l.black_size; z++){
+        int c_index = l.black_in_TEE[z].C_index;
+        float A_PART = l.black_in_TEE[z].weight;
+        int b_index = l.black_in_TEE[z].B_index;
+
+        c[c_index] = A_PART * b[b_index];
+    }
+
+    l.output = c;
+    activate_array_TA(l.output, l.outputs*l.batch, l.activation);
+    netta.input = l.output;
+
+    ta_net_output = malloc(sizeof(float)*l.outputs);
+
 
     calc_network_cost_TA();
 }

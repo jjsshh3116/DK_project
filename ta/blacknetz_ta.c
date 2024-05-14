@@ -208,13 +208,14 @@ static TEE_Result make_convolutional_layer_TA_params(uint32_t param_types,
     int xnor = params0[11];
     int adam = params0[12];
     int flipped = params0[13];
+    int index = params0[14];
     float dot = params1;
     char *acti = params2;
 
     ACTIVATION_TA activation = get_activation_TA(acti);
 
     layer_TA lta = make_convolutional_layer_TA_new(batch, h, w, c, n, groups, size, stride, padding, activation, batch_normalize, binary, xnor, adam, flipped, dot);
-    netta.layers[netnum] = lta;
+    netta.layers[index] = lta;
     if (lta.workspace_size > netta.workspace_size) netta.workspace_size = lta.workspace_size;
     netnum++;
 
@@ -242,9 +243,10 @@ static TEE_Result make_maxpool_layer_TA_params(uint32_t param_types,
     int size = params0[4];
     int stride = params0[5];
     int padding = params0[6];
+    int index = params0[7];
 
     layer_TA lta = make_maxpool_layer_TA(batch, h, w, c, size, stride, padding);
-    netta.layers[netnum] = lta;
+    netta.layers[index] = lta;
     netnum++;
 
     return TEE_SUCCESS;
@@ -528,18 +530,18 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
     if (param_types != exp_param_types)
         return TEE_ERROR_BAD_PARAMETERS;
 
-    float *net_input = params[0].memref.buffer;
-    int net_train = params[1].value.a;
-    int net_index = params[1].value.b;
+    float *c = params[0].memref.buffer;
+    int c_size = params[0].memref.size / sizeof(float);
+    float *b = params[1].memref.buffer;
+    int b_size = params[1].memref.size / sizeof(float);
+    black_pixels_TA *black_in_TEE = params[2].memref.buffer;
+    int black_size = params[2].memref.size / sizeof(black_pixels_TA);
+    int net_index = params[3].value.a;
 
-    netta.input = net_input;
-    netta.train = net_train;
     netta.index = net_index;
-
-    if(debug_summary_com == 1){
-        summary_array("forward_network / net.input", netta.input, params[0].memref.size / sizeof(float));
-    }
-    forward_network_TA();
+    // netta.layers[netta.index].output = c;
+    
+    black_forward_network_TA(c, c_size, b, b_size, black_in_TEE, black_size);
 
     return TEE_SUCCESS;
 }

@@ -205,13 +205,13 @@ void update_net_agrv_CA(int cond, int workspace_size, float *workspace)
 }
 
 
-void make_convolutional_layer_CA(int batch, int h, int w, int c, int n, int groups, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int binary, int xnor, int adam, int flipped, float dot)
+void make_convolutional_layer_CA(int batch, int h, int w, int c, int n, int groups, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int binary, int xnor, int adam, int flipped, float dot, int index)
 {
   TEEC_Operation op;
   uint32_t origin;
   TEEC_Result res;
 
-    int passint[14];
+    int passint[15];
     passint[0] = batch;
     passint[1] = h;
     passint[2] = w;
@@ -226,6 +226,7 @@ void make_convolutional_layer_CA(int batch, int h, int w, int c, int n, int grou
     passint[11] = xnor;
     passint[12] = adam;
     passint[13] = flipped;
+    passint[14] = index;
 
     float passflo = dot;
     char *acti = get_activation_string(activation);
@@ -251,14 +252,14 @@ void make_convolutional_layer_CA(int batch, int h, int w, int c, int n, int grou
          res, origin);
 }
 
-void make_maxpool_layer_CA(int batch, int h, int w, int c, int size, int stride, int padding)
+void make_maxpool_layer_CA(int batch, int h, int w, int c, int size, int stride, int padding, int index)
 {
   //invoke op and transfer paramters
   TEEC_Operation op;
   uint32_t origin;
   TEEC_Result res;
 
-    int passint[7];
+    int passint[8];
     passint[0] = batch;
     passint[1] = h;
     passint[2] = w;
@@ -266,6 +267,7 @@ void make_maxpool_layer_CA(int batch, int h, int w, int c, int size, int stride,
     passint[4] = size;
     passint[5] = stride;
     passint[6] = padding;
+    passint[7] = index;
 
     memset(&op, 0, sizeof(op));
     op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_INPUT, TEEC_NONE,
@@ -597,7 +599,7 @@ void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, la
     int col_index = ((channels_col - 1) * height_col + (height_col - 1)) * width_col + (width_col - 1);
 
     float *params1 = malloc(sizeof(float)*col_index);
-    for(int z=0; z<l.outputs; z++){
+    for(int z=0; z<col_index; z++){
         params1[z] = b[z];
     }
 

@@ -220,7 +220,7 @@ convolutional_layer parse_convolutional(list *options, size_params params)
     // make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
     // }
 
-    make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
+    make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot, params.index);
     
     return layer;
 
@@ -541,7 +541,7 @@ maxpool_layer parse_maxpool(list *options, size_params params)
     //     make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
     // }
 
-    make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
+    make_maxpool_layer_CA(batch,h,w,c,size,stride,padding,params.index);
 
     return layer;
 }
@@ -1048,10 +1048,10 @@ list *read_cfg(char *filename)
     fclose(file);
     //printf("layer_count = %d\n", layer_count);
     partition_point1 = -1;
-    //partition_point2 = layer_count - 2;
+    // partition_point2 = layer_count - 2;
     partition_point2 = options->conv_pool_position.pool[pool_pp - 1];
 
-    options->conv_pool_position.n = conv_pp;
+    options->conv_pool_position.n = pool_pp;
 
     return options;
 }

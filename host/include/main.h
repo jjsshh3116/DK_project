@@ -55,9 +55,9 @@ void update_net_agrv_CA_allocateSM(int workspace_size, float *workspace);
 
 void update_net_agrv_CA(int cond, int workspace_size, float *workspace);
 
-void make_convolutional_layer_CA(int batch, int h, int w, int c, int n, int groups, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int binary, int xnor, int adam, int flipped, float dot);
+void make_convolutional_layer_CA(int batch, int h, int w, int c, int n, int groups, int size, int stride, int padding, ACTIVATION activation, int batch_normalize, int binary, int xnor, int adam, int flipped, float dot, int index);
 
-void make_maxpool_layer_CA(int batch, int h, int w, int c, int size, int stride, int padding);
+void make_maxpool_layer_CA(int batch, int h, int w, int c, int size, int stride, int padding, int index);
 
 void make_avgpool_layer_CA(int batch, int h, int w, int c);
 
