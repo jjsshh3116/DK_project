@@ -269,7 +269,6 @@ void forward_network(network *netp)
             }
 
             net.input = l_TA.output;
-            // net.input = l.output;
 
         }
         else if(l.type == MAXPOOL && net.index <= net.conv_pool_position.pool[n]){

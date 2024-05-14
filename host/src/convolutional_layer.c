@@ -7,6 +7,7 @@
 #include "col2im.h"
 #include "blas.h"
 #include "gemm.h"
+#include "main.h"
 
 #include "parser.h"
 
