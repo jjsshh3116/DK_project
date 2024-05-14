@@ -4,6 +4,7 @@
         "bitset": "c",
         "initializer_list": "c",
         "string": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "cuda.h": "c"
     }
 }

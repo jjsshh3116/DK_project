@@ -1,6 +1,7 @@
 #ifndef GEMM_H
 #define GEMM_H
 #define BLACK_NUM -9999.99
+#include "darknet.h"
 
 
 void gemm_bin(int M, int N, int K, float ALPHA,
