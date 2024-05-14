@@ -2,12 +2,6 @@
 #define GEMM_H
 #define BLACK_NUM -9999.99
 
-typedef struct{
-    int C_index;
-    float weight;
-    int B_index;
-
-} black_pixels;
 
 void gemm_bin(int M, int N, int K, float ALPHA,
               char  *A, int lda,
