@@ -261,6 +261,7 @@ void forward_network(network *netp)
         if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
             //TEE forward
             black_forward_convolutional_layer(l, net);
+            forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
             forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
 
             printf("############ TEE calculation outputs ############\n");
