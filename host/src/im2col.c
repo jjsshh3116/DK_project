@@ -1,7 +1,7 @@
 #include "im2col.h"
 #include <stdio.h>
 
-int global_count = 0;
+int black_count = 0;
 
 float im2col_get_pixel(float *im, int height, int width, int channels,
                         int row, int col, int channel, int pad)
@@ -52,7 +52,7 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
 
         for(int z = 0; z < black_pixel_size; z++){
             if(col + width*(row + height*channel) == black_pixel[z]){
-                global_count++;
+                black_count++;
                 return BLACK_NUM;
             } 
         }
@@ -83,6 +83,6 @@ int black_im2col_cpu(float* data_im,
             }
         }
     }
-    return global_count;
+    return black_count;
 }
 
