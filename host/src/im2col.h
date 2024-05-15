@@ -1,6 +1,7 @@
 #ifndef IM2COL_H
 #define IM2COL_H
-#define BLACK_NUM -9.99
+
+#include "darknet.h"
 
 void im2col_cpu(float* data_im,
         int channels, int height, int width,

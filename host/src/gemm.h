@@ -1,6 +1,6 @@
 #ifndef GEMM_H
 #define GEMM_H
-#define BLACK_NUM -9.99
+
 #include "darknet.h"
 
 

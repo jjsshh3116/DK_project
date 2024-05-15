@@ -22,6 +22,8 @@ extern "C" {
 #endif
 
 #define SECRET_NUM -1234
+#define BLACK_NUM -9.99
+
 extern int gpu_index;
 
 typedef struct{
