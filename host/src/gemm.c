@@ -138,7 +138,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
                     black_in_TEE[global_count].B_index = k*ldb+j;
-                    printf("black_gemm_nn/black_num detected... C_index: %d\tweight: %f\tB_index: %d\n", 
+                    //printf("black_gemm_nn/black_num detected... C_index: %d\tweight: %f\tB_index: %d\n", 
                     black_in_TEE[global_count].C_index, black_in_TEE[global_count].weight, black_in_TEE[global_count].B_index);
 
                     global_count++;
@@ -146,12 +146,11 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                 }
 
                 C[i*ldc+j] += A_PART*B[k*ldb+j];
-                // printf("B[%d]: %f\n", k*ldb+j, B[k*ldb+j]);
                 // printf("C[%d]: %f\n", i*ldc+j, C[i*ldc+j]);
             }
         }
     }
-   // printf("#######################################################\n");
+//    printf("#######################################################\n");
 
 }
 
