@@ -106,6 +106,7 @@ void gemm_nn(int M, int N, int K, float ALPHA,
             }
         }
     }
+    printf("#######################################################\n");
 
 }
 
@@ -147,10 +148,12 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                 }
 
                 C[i*ldc+j] += A_PART*B[k*ldb+j];
+                printf("B[%d]: %f\n", k*ldb+j, B[k*ldb+j]);
                 printf("C[%d]: %f\n", i*ldc+j, C[i*ldc+j]);
             }
         }
     }
+    printf("#######################################################\n");
 
 }
 
