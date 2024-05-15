@@ -102,6 +102,7 @@ void gemm_nn(int M, int N, int K, float ALPHA,
             register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 가중치 값을 담는다.
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
                 C[i*ldc+j] += A_PART*B[k*ldb+j];
+                printf("Normal C[%d]: %f\n", i*ldc+j, C[i*ldc+j]);
             }
         }
     }
@@ -138,11 +139,15 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
                     black_in_TEE[global_count].B_index = k*ldb+j;
+                    printf("black_gemm_nn/black_num detected... C_index: %d\tweight: %f\tB_index: %d\n", 
+                    black_in_TEE[global_count].C_index, black_in_TEE[global_count].weight, black_in_TEE[global_count].B_index);
+
                     global_count++;
                     continue;
                 }
 
                 C[i*ldc+j] += A_PART*B[k*ldb+j];
+                printf("C[%d]: %f\n", i*ldc+j, C[i*ldc+j]);
             }
         }
     }
