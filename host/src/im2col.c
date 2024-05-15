@@ -44,6 +44,7 @@ void im2col_cpu(float* data_im,
 float black_im2col_get_pixel(float *im, int height, int width, int channels,
                         int row, int col, int channel, int pad, int* black_pixel, int black_pixel_size)
 {
+    int pixel = col + width*(row + height*channel);
     row -= pad;
     col -= pad;
 
@@ -51,7 +52,8 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
         row >= height || col >= width) return 0;
 
         for(int z = 0; z < black_pixel_size; z++){
-            if(col + width*(row + height*channel) == black_pixel[z]){
+            if(pixel == black_pixel[z]){
+                printf("%d\n", pixel);
                 //printf("BLACK_NUM detected. z: %d\t index: %d\tblack_pixel: %d\n", z, col + width*(row + height*channel), black_pixel[z]);
                 black_count++;
             } 
