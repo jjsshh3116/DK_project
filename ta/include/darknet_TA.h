@@ -77,6 +77,7 @@ typedef struct{
 typedef struct{
     int C_index;
     float weight;
+    float B;
     int B_index;
 
 } black_pixels_TA;

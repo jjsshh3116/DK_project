@@ -560,7 +560,7 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
                 l.black_size = black_im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b, black_pixel, black_pixel_size);
                 l.black_in_TEE = malloc(sizeof(black_pixels)*l.black_size);
             }
-            black_gemm_nn(m,n,k,1,a,k,b,n,c,n, l.black_in_TEE);
+            black_gemm_nn(m,n,k,1,a,k,b,n,c,n, l.black_in_TEE, black_pixel, black_pixel_size);
             // for(int z = 0; z < l.outputs; z++){
             //     printf("black %d: %f\n", z, c[z]);
             // }

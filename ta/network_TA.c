@@ -127,9 +127,9 @@ void black_forward_network_TA(float *c, int c_size, float *b, int b_size, black_
     for(int z = 0; z < l.black_size; z++){
         int c_index = l.black_in_TEE[z].C_index;
         float A_PART = l.black_in_TEE[z].weight;
-        int b_index = l.black_in_TEE[z].B_index;
+        float b = l.black_in_TEE[z].B;
 
-        c[c_index] = A_PART * b[b_index];
+        c[c_index] = A_PART * b;
     }
 
     l.output = c;

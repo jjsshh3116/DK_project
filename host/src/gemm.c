@@ -112,7 +112,8 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
              float *A, int lda,
              float *B, int ldb,
              float *C, int ldc,
-             black_pixels *black_in_TEE)
+             black_pixels *black_in_TEE,
+             int *black_pixel, int black_pixel_size)
 {/* 
     M: filter의 수(l.n).  N: feature map size. K: filter의 크기 = weight 값의 수.
     ALPHA: 1.0  *A: 가중치 값 pointer.  lda = K
@@ -122,6 +123,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
 
    int i,j,k;
    global_count = 0;
+   int TF = 0;
 
    for(i = 0; i < M; ++i){
         for(j = 0; j < N; ++j){
@@ -134,20 +136,30 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
         for(k = 0; k < K; ++k){ // 한 filter의 크기만큼 반복
             register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 filter의 가중치 값을 담는다.
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
-                if(B[k*ldb+j] == -9.0){
+                int temp = k*ldb+j;
+                for(int z = 0; z < black_pixel_size; z++){
+                    if(temp == black_pixel[z]){
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
+                    black_in_TEE[global_count].B = B[temp];
                     black_in_TEE[global_count].B_index = k*ldb+j;
                     //printf("black_gemm_nn/black_num detected... C_index: %d\tweight: %f\tB_index: %d\n", 
                     // black_in_TEE[global_count].C_index, black_in_TEE[global_count].weight, black_in_TEE[global_count].B_index);
 
                     global_count++;
-                    printf("BLACK_NUM detect: %f\n", B[k*ldb+j]);
+                    printf("BLACK_NUM detect: index: %d  weight: %f\n", temp, B[temp]);
+                    TF = 1;
+                    break;
+                    }
+                }
+                if(TF == 0){
+                    C[i*ldc+j] += A_PART*B[k*ldb+j];
+                    TF = 0;
                 }
                 else{
-                     C[i*ldc+j] += A_PART*B[k*ldb+j];
-                     //printf("%f * %f: %f\n", B[k*ldb+j], A_PART, C[i*ldc+j]);
+                    TF = 0;
                 }
+                
                 // printf("C[%d]: %f\n", i*ldc+j, C[i*ldc+j]);
             }
         }

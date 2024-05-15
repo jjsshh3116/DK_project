@@ -54,7 +54,6 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
             if(col + width*(row + height*channel) == black_pixel[z]){
                 //printf("BLACK_NUM detected. z: %d\t index: %d\tblack_pixel: %d\n", z, col + width*(row + height*channel), black_pixel[z]);
                 black_count++;
-                return -9.0;
             } 
         }
 
