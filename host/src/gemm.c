@@ -144,8 +144,9 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     global_count++;
                     continue;
                 }
-
-                C[i*ldc+j] += A_PART*B[k*ldb+j];
+                else{
+                     C[i*ldc+j] += A_PART*B[k*ldb+j];
+                }
                 // printf("C[%d]: %f\n", i*ldc+j, C[i*ldc+j]);
             }
         }
