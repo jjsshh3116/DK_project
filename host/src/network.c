@@ -261,7 +261,13 @@ void forward_network(network *netp)
         if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
             //TEE forward
             black_forward_convolutional_layer(l, net);
-            // l.forward(l, net);
+            l.forward(l, net);
+
+            printf("############ Normal conv outputs ############\n");
+            for(int z = 0; z < l.outputs*net.batch; z++){
+                 printf("%d Normal//conv otuput[%d]: %f \n", net.index, z, l.output[z]);
+            }
+
             // forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
             forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
 
@@ -298,7 +304,7 @@ void forward_network(network *netp)
             }
 
             // printf("############ REE calculation outputs ############\n");
-            // for(int z = 0; z < l_TA.outputs*net.batch; z++){
+            // for(int z = 0; z < l.outputs*net.batch; z++){
             //      printf("%d REE//otuput[%d]: %f \n", net.index, z, l.output[z]);
             // }
 
