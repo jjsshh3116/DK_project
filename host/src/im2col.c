@@ -80,6 +80,7 @@ int black_im2col_cpu(float* data_im,
                 int col_index = (c * height_col + h) * width_col + w;
                 data_col[col_index] = black_im2col_get_pixel(data_im, height, width, channels,
                         im_row, im_col, c_im, pad, black_pixel, black_pixel_size);
+                printf("data_col[%d] = %f\n", data_col[col_index]);
             }
         }
     }

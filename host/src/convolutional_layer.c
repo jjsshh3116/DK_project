@@ -506,9 +506,9 @@ void forward_convolutional_layer(convolutional_layer l, network net)
                 im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b);
             }
             gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);
-            for(int z = 0; z < l.outputs; z++){
-                printf("normal %d: %f\n", z, c[z]);
-            }
+            // for(int z = 0; z < l.outputs; z++){
+            //     printf("normal %d: %f\n", z, c[z]);
+            // }
         }
     }
 
@@ -561,9 +561,9 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
                 l.black_in_TEE = malloc(sizeof(black_pixels)*l.black_size);
             }
             black_gemm_nn(m,n,k,1,a,k,b,n,c,n, l.black_in_TEE);
-            for(int z = 0; z < l.outputs; z++){
-                printf("black %d: %f\n", z, c[z]);
-            }
+            // for(int z = 0; z < l.outputs; z++){
+            //     printf("black %d: %f\n", z, c[z]);
+            // }
             black_forward_network_CA(c, b, l.black_in_TEE, l, net.index);
         }
     }
