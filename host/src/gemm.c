@@ -134,7 +134,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
         for(k = 0; k < K; ++k){ // 한 filter의 크기만큼 반복
             register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 filter의 가중치 값을 담는다.
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
-                if(B[k*ldb+j] == -9.99){
+                if(B[k*ldb+j] == -9){
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
                     black_in_TEE[global_count].B_index = k*ldb+j;
