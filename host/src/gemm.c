@@ -142,6 +142,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     // black_in_TEE[global_count].C_index, black_in_TEE[global_count].weight, black_in_TEE[global_count].B_index);
 
                     global_count++;
+                    printf("BLACK_NUM detect: %f\n", B[k*ldb+j]);
                 }
                 else{
                      C[i*ldc+j] += A_PART*B[k*ldb+j];
