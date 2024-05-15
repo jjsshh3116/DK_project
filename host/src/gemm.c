@@ -147,7 +147,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     // black_in_TEE[global_count].C_index, black_in_TEE[global_count].weight, black_in_TEE[global_count].B_index);
 
                     global_count++;
-                    printf("BLACK_NUM detect: index: %d  weight: %f\n", temp, B[temp]);
+                   // printf("BLACK_NUM detect: index: %d  weight: %f\n", temp, B[temp]);
                     TF = 1;
                     break;
                     }

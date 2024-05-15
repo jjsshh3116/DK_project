@@ -263,10 +263,10 @@ void forward_network(network *netp)
             black_forward_convolutional_layer(l, net);
             l.forward(l, net);
 
-            // printf("############ Normal conv outputs ############\n");
-            // for(int z = 0; z < l.outputs*net.batch; z++){
-            //      printf("%d Normal//conv otuput[%d]: %f \n", net.index, z, l.output[z]);
-            // }
+            printf("############ Normal conv outputs ############\n");
+            for(int z = 0; z < l.outputs*net.batch; z++){
+                 printf("%d Normal//conv otuput[%d]: %f \n", net.index, z, l.output[z]);
+            }
 
             // forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
             forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
