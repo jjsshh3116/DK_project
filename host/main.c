@@ -591,6 +591,7 @@ void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, la
     float *params0 = malloc(sizeof(float)*l.outputs);
     for(int z=0; z<l.outputs; z++){
         params0[z] = c[z];
+        printf("params0[%d]: %f\n", z, c[z]);
     }
 
     int height_col = (l.h + 2*l.pad - l.size) / l.stride + 1;
