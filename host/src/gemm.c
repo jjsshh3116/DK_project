@@ -139,7 +139,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     black_in_TEE[global_count].weight = A_PART;
                     black_in_TEE[global_count].B_index = k*ldb+j;
                     //printf("black_gemm_nn/black_num detected... C_index: %d\tweight: %f\tB_index: %d\n", 
-                    black_in_TEE[global_count].C_index, black_in_TEE[global_count].weight, black_in_TEE[global_count].B_index);
+                    // black_in_TEE[global_count].C_index, black_in_TEE[global_count].weight, black_in_TEE[global_count].B_index);
 
                     global_count++;
                     continue;
