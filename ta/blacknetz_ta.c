@@ -541,15 +541,19 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
 
     netta.index = net_index;
     // netta.layers[netta.index].output = c;
+
+    for(int z = 0; z < c_size; z++){
+        IMSG("%d C otuput[%d]: %d \n", net_index, z, (int)(c[z] * 1000.0));
+    }
     
     black_forward_network_TA(c, c_size, b, b_size, black_in_TEE, black_size);
 
     layer_TA l_TA = netta.layers[net_index];
 
-    IMSG("black conv output");
-    for(int z = 0; z < l_TA.outputs; z++){
-        IMSG("%d Normal//conv otuput[%d]: %d \n", net_index, z, (int)(l_TA.output[z] * 1000.0));
-    }
+    // IMSG("black conv output");
+    // for(int z = 0; z < l_TA.outputs; z++){
+    //     IMSG("%d black//conv otuput[%d]: %d \n", net_index, z, (int)(l_TA.output[z] * 1000.0));
+    // }
 
     return TEE_SUCCESS;
 }
