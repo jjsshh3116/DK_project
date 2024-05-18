@@ -84,10 +84,10 @@ int black_im2col_cpu(float* data_im,
                 data_col[col_index] = black_im2col_get_pixel(data_im, height, width, channels,
                         im_row, im_col, c_im, pad, black_pixel, black_pixel_size);
                 //printf("data_col[%d] = %f\n", col_index, data_col[col_index]);
-                printf("#############################################\n");
             }
         }
     }
+    printf("#############################################\n");
     return black_count;
 }
 
