@@ -141,9 +141,11 @@ void black_forward_network_TA(float *c, int c_size, float *b, int b_size, black_
     add_bias_TA(l.output, l.biases, l.batch, l.n, l.out_h*l.out_w);
    
     activate_array_TA(l.output, l.outputs*l.batch, l.activation);
-    for(int z = 0; z < c_size; z++){
-        IMSG("%d After activate_layer otuput[%d]: %d \n", l.index, z, (int)(l.output[z] * 1000000.0));
-    }
+    // for(int z = 0; z < c_size; z++){
+    //     IMSG("%d After activate_layer otuput[%d]: %d \n", l.index, z, (int)(l.output[z] * 1000000.0));
+    // }
+
+    IMSG("black_farward_network_TA l.output memory address: %d\n", &l.output);
     netta.input = l.output;
 
     ta_net_output = malloc(sizeof(float)*l.outputs);
