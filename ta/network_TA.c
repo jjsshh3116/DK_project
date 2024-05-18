@@ -7,6 +7,7 @@
 #include "network_TA.h"
 #include "math_TA.h"
 #include "activations_TA.h"
+#include "convolutional_layer_TA.h"
 
 #include "blacknetz_ta.h"
 #include <tee_internal_api.h>
