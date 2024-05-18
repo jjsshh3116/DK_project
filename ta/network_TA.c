@@ -145,7 +145,8 @@ void black_forward_network_TA(float *c, int c_size, float *b, int b_size, black_
     //     IMSG("%d After activate_layer otuput[%d]: %d \n", l.index, z, (int)(l.output[z] * 1000000.0));
     // }
 
-    IMSG("black_farward_network_TA l.output memory address: %d\n", &l.output);
+    IMSG("black_farward_network_TA l.output memory address: %d\n", l.output);
+    IMSG("black_farward_network_TA c memory address: %d\n", c);
     netta.input = l.output;
 
     ta_net_output = malloc(sizeof(float)*l.outputs);

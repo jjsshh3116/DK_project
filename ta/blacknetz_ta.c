@@ -550,7 +550,8 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
 
     layer_TA l = netta.layers[net_index];
 
-    IMSG("black_forward_network_TA_params l.output memory address: %d\n", &netta.layers[net_index].output);
+    IMSG("black_forward_network_TA_params l.output memory address: %d\n", netta.layers[net_index].output);
+    IMSG("black_forward_network_TA_params c memory address: %d\n", c;
 
     // IMSG("black conv output");
     // for(int z = 0; z < l.outputs; z++){
