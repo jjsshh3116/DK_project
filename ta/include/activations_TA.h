@@ -3,8 +3,6 @@
 #include "darknet_TA.h"
 #include "math_TA.h"
 #include <stdio.h>
-#include <tee_internal_api.h>
-#include <tee_internal_api_extensions.h>
 
 char *get_activation_string_TA(ACTIVATION_TA a);
 
@@ -34,7 +32,7 @@ static inline float hardtan_activate_TA(float x)
 static inline float linear_activate_TA(float x){return x;}
 static inline float logistic_activate_TA(float x){return 1./(1. + ta_exp(-x));}
 static inline float loggy_activate_TA(float x){return 2./(1. + ta_exp(-x)) - 1;}
-static inline float relu_activate_TA(float x){if(x > 0) IMSG("Possitive\n"); return x*(x>0);}
+static inline float relu_activate_TA(float x){return x*(x>0);}
 static inline float elu_activate_TA(float x){return (x >= 0)*x + (x < 0)*(ta_exp(x)-1);}
 static inline float selu_activate_TA(float x){return (x >= 0)*1.0507*x + (x < 0)*1.0507*1.6732*(ta_exp(x)-1);}
 static inline float relie_activate_TA(float x){return (x>0) ? x : .01*x;}
