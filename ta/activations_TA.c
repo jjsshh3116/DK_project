@@ -1,8 +1,5 @@
 #include "activations_TA.h"
 
-#include <tee_internal_api.h>
-#include <tee_internal_api_extensions.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

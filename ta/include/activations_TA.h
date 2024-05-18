@@ -3,6 +3,8 @@
 #include "darknet_TA.h"
 #include "math_TA.h"
 #include <stdio.h>
+#include <tee_internal_api.h>
+#include <tee_internal_api_extensions.h>
 
 char *get_activation_string_TA(ACTIVATION_TA a);
 
