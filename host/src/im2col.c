@@ -53,8 +53,8 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
 
         for(int z = 0; z < black_pixel_size; z++){
             if(pixel == black_pixel[z]){
-                printf("%d\n", pixel);
-                //printf("BLACK_NUM detected. z: %d\t index: %d\tblack_pixel: %d\n", z, col + width*(row + height*channel), black_pixel[z]);
+               // printf("%d\n", pixel);
+                printf("BLACK_NUM detected. z: %d\t index: %d\tblack_pixel: %d\n", z, col + width*(row + height*channel), black_pixel[z]);
                 black_count++;
             } 
         }
@@ -69,6 +69,7 @@ int black_im2col_cpu(float* data_im,
     int c,h,w;
     int height_col = (height + 2*pad - ksize) / stride + 1;
     int width_col = (width + 2*pad - ksize) / stride + 1;
+    black_count = 0;
 
     int channels_col = channels * ksize * ksize;
     for (c = 0; c < channels_col; ++c) {
@@ -83,6 +84,7 @@ int black_im2col_cpu(float* data_im,
                 data_col[col_index] = black_im2col_get_pixel(data_im, height, width, channels,
                         im_row, im_col, c_im, pad, black_pixel, black_pixel_size);
                 //printf("data_col[%d] = %f\n", col_index, data_col[col_index]);
+                printf("#############################################\n");
             }
         }
     }
