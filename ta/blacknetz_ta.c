@@ -552,7 +552,7 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
 
     IMSG("black conv output");
     for(int z = 0; z < l_TA.outputs; z++){
-        IMSG("%d black//conv otuput[%d]: %d \n", net_index, z, (int)(l_TA.output[z] * 100000.0));
+        IMSG("%d black//conv otuput[%d]: %d \n", net_index, z, (int)(netta.input[z] * 100000.0));
     }
 
     return TEE_SUCCESS;
