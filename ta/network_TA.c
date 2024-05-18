@@ -146,6 +146,7 @@ void black_forward_network_TA(float *c, int c_size, float *b, int b_size, black_
     // }
 
     IMSG("black_farward_network_TA l.output memory address: %d\n", l.output);
+    IMSG("black_farward_network_TA netta.layers[netta.index].output memory address: %d\n", netta.layers[netta.index].output);
     IMSG("black_farward_network_TA c memory address: %d\n", c);
     netta.input = l.output;
 

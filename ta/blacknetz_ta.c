@@ -216,7 +216,7 @@ static TEE_Result make_convolutional_layer_TA_params(uint32_t param_types,
 
     layer_TA lta = make_convolutional_layer_TA_new(batch, h, w, c, n, groups, size, stride, padding, activation, batch_normalize, binary, xnor, adam, flipped, dot);
     netta.layers[index] = lta;
-    DMSG("convolutional index: %d", index);
+    //DMSG("convolutional index: %d", index);
     if (lta.workspace_size > netta.workspace_size) netta.workspace_size = lta.workspace_size;
     netnum++;
 
