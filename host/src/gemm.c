@@ -144,7 +144,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     black_in_TEE[global_count].B = B[temp];
                     black_in_TEE[global_count].B_index = k*ldb+j;
                     global_count++;
-                    printf("gemm.c//: pixel: %d  B_weight: %f\n", temp, B[temp]);
+                    printf("gemm.c//: pixel: %d  black_picel: %d\n", temp, black_pixel[z]);
                     TF = 1;
                     break;
                     }
