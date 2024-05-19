@@ -42,11 +42,13 @@ void im2col_cpu(float* data_im,
 }
 
 float black_im2col_get_pixel(float *im, int height, int width, int channels,
-                        int row, int col, int channel, int pad, int* black_pixel, int black_pixel_size)
+                        int row, int col, int channel, int pad, int* black_pixel, int black_pixel_size, float* black_pixel_data)
 {
     int pixel = col + width*(row + height*channel);
     row -= pad;
     col -= pad;
+
+    printf("pixel: %d\t", pixel);
 
     if (row < 0 || col < 0 ||
         row >= height || col >= width) return 0;
@@ -55,16 +57,17 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
             if(pixel == black_pixel[z]){
                // printf("%d\n", pixel);
                 //printf("im2col//: pixel: %d\tblack_pixel: %d\n", pixel, black_pixel[z]);
-                black_count++;
+                black_pixel_data[black_count++] = im[pixel];
+               // return -9;
             } 
         }
 
-    return im[col + width*(row + height*channel)];
+    return im[pixel];
 }
 
 int black_im2col_cpu(float* data_im,
      int channels,  int height,  int width,
-     int ksize,  int stride, int pad, float* data_col, int* black_pixel, int black_pixel_size) 
+     int ksize,  int stride, int pad, float* data_col, int* black_pixel, int black_pixel_size, float* black_pixel_data) 
 {
     int c,h,w;
     int height_col = (height + 2*pad - ksize) / stride + 1;
@@ -82,8 +85,8 @@ int black_im2col_cpu(float* data_im,
                 int im_col = w_offset + w * stride;
                 int col_index = (c * height_col + h) * width_col + w;
                 data_col[col_index] = black_im2col_get_pixel(data_im, height, width, channels,
-                        im_row, im_col, c_im, pad, black_pixel, black_pixel_size);
-                //printf("data_col[%d] = %f\n", col_index, data_col[col_index]);
+                        im_row, im_col, c_im, pad, black_pixel, black_pixel_size, black_pixel_data);
+                printf("col_index: %d\n", col_index);
             }
         }
     }

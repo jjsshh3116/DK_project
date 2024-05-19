@@ -137,6 +137,8 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
             register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 filter의 가중치 값을 담는다.
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
                 int temp = k*ldb+j;
+                printf("B[%d]: %f\n", temp, B[temp]);
+                
                 for(int z = 0; z < black_pixel_size; z++){
                     if(temp == black_pixel[z]){
                     black_in_TEE[global_count].C_index = i*ldc+j;

@@ -547,6 +547,11 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
     int k = l.size*l.size*l.c/l.groups; //l.size -> filter의 크기. k는 한 filter의 가중치 수(한 filter당 3 channel)
     int n = l.out_w*l.out_h; // 한 차원의 feature map의 크기
 
+    int height_col = (l.h + 2*l.pad - l.size) / l.stride + 1;
+    int width_col = (l.w + 2*l.pad - l.size) / l.stride + 1;
+    int channels_col = l.c/l.group * l.size * l.size;
+    float *black_pixel_data = malloc(sizeof(float)*height_col*width_col*channels_col);
+
     for(i = 0; i < l.batch; ++i){
         for(j = 0; j < l.groups; ++j){ //groups값이 1이여서 이 for문은 한번만 실행
             float *a = l.weights + j*l.nweights/l.groups; //현재 가중치의 위치를 나타냄
@@ -557,9 +562,13 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
             if (l.size == 1) { //filter의 크기가 1일 때
                 b = im;
             } else {// filter의 크기가 1인 경우가 거의 없어서, 대부분 연산에서 im2col를 실행.
-                l.black_size = black_im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b, black_pixel, black_pixel_size);
+                printf("########## im2col index inform ########## \n");
+                l.black_size = black_im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b, black_pixel, black_pixel_size, black_pixel_data);
+                printf("############################################ \n");
                 l.black_in_TEE = malloc(sizeof(black_pixels)*l.black_size);
             }
+            printf("########## gemm index inform ########## \n");
+            
             black_gemm_nn(m,n,k,1,a,k,b,n,c,n, l.black_in_TEE, black_pixel, black_pixel_size);
             // for(int z = 0; z < l.outputs; z++){
             //     printf("black %d: %f\n", z, c[z]);
@@ -569,7 +578,8 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
     }
 
 
-
+    free(black_pixel_data);
+    free(black_pixel);
     debug_num++;
 }
 
