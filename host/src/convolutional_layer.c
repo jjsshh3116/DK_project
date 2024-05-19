@@ -549,7 +549,7 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
 
     int height_col = (l.h + 2*l.pad - l.size) / l.stride + 1;
     int width_col = (l.w + 2*l.pad - l.size) / l.stride + 1;
-    int channels_col = l.c/l.group * l.size * l.size;
+    int channels_col = l.c/l.groups * l.size * l.size;
     float *black_pixel_data = malloc(sizeof(float)*height_col*width_col*channels_col);
 
     for(i = 0; i < l.batch; ++i){
@@ -568,7 +568,7 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
                 l.black_in_TEE = malloc(sizeof(black_pixels)*l.black_size);
             }
             printf("########## gemm index inform ########## \n");
-            
+
             black_gemm_nn(m,n,k,1,a,k,b,n,c,n, l.black_in_TEE, black_pixel, black_pixel_size);
             // for(int z = 0; z < l.outputs; z++){
             //     printf("black %d: %f\n", z, c[z]);
