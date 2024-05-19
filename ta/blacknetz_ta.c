@@ -548,15 +548,20 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
     
     black_forward_network_TA(c, c_size, b, b_size, black_in_TEE, black_size);
 
+
+    // IMSG("black_forward_network_TA_params netta.layers[net_index].output memory address: %d\n", netta.layers[net_index].output);
+    // IMSG("black_forward_network_TA_params c memory address: %d\n", c);
+
     layer_TA l = netta.layers[net_index];
 
-    IMSG("black_forward_network_TA_params netta.layers[net_index].output memory address: %d\n", netta.layers[net_index].output);
-    IMSG("black_forward_network_TA_params c memory address: %d\n", c);
+    for(int z = 0; z < l.outputs; z++){
+        netta.layers[net_index].output[z] = c[z];
+    }
 
-    // IMSG("black conv output");
-    // for(int z = 0; z < l.outputs; z++){
-    //     IMSG("%d black//conv otuput[%d]: %d \n", net_index, z, (int)(l.output[z] * 100000.0));
-    // }
+    IMSG("black conv output");
+    for(int z = 0; z < l.outputs; z++){
+        IMSG("%d black//conv otuput[%d]: %d \n", net_index, z, (int)(l.output[z] * 100000.0));
+    }
 
     return TEE_SUCCESS;
 }
