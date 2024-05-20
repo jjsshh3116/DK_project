@@ -256,16 +256,9 @@ void forward_network(network *netp)
         //net_TA.index = i;
 
         layer l = net.layers[i];
-        layer l_TA = net.layers[i];
+        //layer l_TA = net.layers[i];
 
         if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
-            if(net.index == net.conv_pool_position.conv[1]){
-                forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
-                forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
-                net.input = l.output;
-
-            }
-            else{
             //TEE forward
             black_forward_convolutional_layer(l, net);
             //l.forward(l, net);
@@ -277,10 +270,10 @@ void forward_network(network *netp)
 
             // forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
             forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
-            }
+            
 
             printf("############ TEE calculation outputs ############\n");
-            for(int z = 0; z < l_TA.outputs*net.batch; z++){
+            for(int z = 0; z < l.outputs*net.batch; z++){
                  printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
             }
 
@@ -295,7 +288,7 @@ void forward_network(network *netp)
 
             printf("############ TEE calculation outputs ############\n");
             for(int z = 0; z < l_TA.outputs*net.batch; z++){
-                 printf("%d TEE//otuput[%d]: %f \n", net.index, z, l_TA.output[z]);
+                 printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
             }
 
             net.input = l.output;
