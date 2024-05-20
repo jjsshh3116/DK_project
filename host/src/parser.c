@@ -987,18 +987,14 @@ network *parse_network_cfg(char *filename)
 #endif
     }
 
-    // for(int z = 0; z < net->conv_pool_position.n; z++){
-    //     printf("conv_position[%d]: %d\n", z, net->conv_pool_position.conv[z]);
-    // }
+    for(int z = 0; z < net->conv_pool_position.n; z++){
+        printf("conv_position[%d]: %d\n", z, net->conv_pool_position.conv[z]);
+    }
 
-    // for(int z = 0; z < net->conv_pool_position.n; z++){
-    //     printf("pool_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
-    // }
+    for(int z = 0; z < net->conv_pool_position.n; z++){
+        printf("pool_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
+    }
 
-    // for(int z = 0; z < count_global; z++){
-    //     printf("layer[%d] inputs: %d\n", z, net->layers[z].inputs);
-    //     printf("layer[%d] ouputs: %d\n", z, net->layers[z].outputs);
-    // }
 
     return net;
 }
@@ -1026,7 +1022,7 @@ list *read_cfg(char *filename)
                         //printf("[%d]: %s\n", layer_count - 1, line);
                         options->conv_pool_position.conv[conv_pp++] = layer_count - 1;
                     }
-                    else{
+                    else if(!strcmp(line, "[maxpool]"){
                         //printf("[%d]: %s\n", layer_count - 1, line);
                         options->conv_pool_position.pool[pool_pp++] = layer_count - 1;
                         current_pool = pool_pp - 1;
