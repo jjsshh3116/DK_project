@@ -263,6 +263,12 @@ void forward_network(network *netp)
             black_forward_convolutional_layer(l, net);
             //l.forward(l, net);
 
+            printf("##### index: %d ######################\n", i);
+            for(int z = 0; z < l.black_size; z++){
+                printf("c_index: %d  weights: %f  B: %f\n", l.black_in_TEE->C_index[z], l.black_in_TEE->weight[z], l.black_in_TEE->B[z]);
+            }
+            printf("####################################\n");
+
             // printf("############ Normal conv outputs ############\n");
             // for(int z = 0; z < l.outputs*net.batch; z++){
             //      printf("%d Normal//conv otuput[%d]: %f \n", net.index, z, l.output[z]);
@@ -272,10 +278,10 @@ void forward_network(network *netp)
             forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
             
 
-            printf("############ TEE calculation outputs ############\n");
-            for(int z = 0; z < l.outputs*net.batch; z++){
-                 printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
-            }
+            // printf("############ TEE calculation outputs ############\n");
+            // for(int z = 0; z < l.outputs*net.batch; z++){
+            //      printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
+            // }
 
             net.input = l.output;
             
@@ -286,10 +292,10 @@ void forward_network(network *netp)
             forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
             forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
 
-            printf("############ TEE calculation outputs ############\n");
-            for(int z = 0; z < l.outputs*net.batch; z++){
-                 printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
-            }
+            // printf("############ TEE calculation outputs ############\n");
+            // for(int z = 0; z < l.outputs*net.batch; z++){
+            //      printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
+            // }
 
             net.input = l.output;
         }
@@ -305,10 +311,10 @@ void forward_network(network *netp)
                 summary_array("forward_network / l.output", l.output, l.inputs*net.batch);
             }
 
-            printf("############ REE calculation outputs ############\n");
-            for(int z = 0; z < l.outputs*net.batch; z++){
-                 printf("%d REE//otuput[%d]: %f \n", net.index, z, l.output[z]);
-            }
+            // printf("############ REE calculation outputs ############\n");
+            // for(int z = 0; z < l.outputs*net.batch; z++){
+            //      printf("%d REE//otuput[%d]: %f \n", net.index, z, l.output[z]);
+            // }
 
             net.input = l.output;
 
