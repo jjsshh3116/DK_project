@@ -90,6 +90,7 @@ int black_im2col_cpu(float* data_im,
         }
     }
     //printf("#############################################\n");
+    printf("im2col retrun black_count: %d\n", black_count);
     return black_count;
 }
 
