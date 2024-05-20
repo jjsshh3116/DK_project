@@ -1006,7 +1006,7 @@ list *read_cfg(char *filename)
     char *line;
     int nu = 0, layer_count = 0, conv_pp = 0, pool_pp = 0;
     list *options = make_list();
-    options->conv_pool_position.pool[0] = 999;
+    //options->conv_pool_position.pool[0] = 999;
     section *current = 0;
     while((line=fgetl(file)) != 0){
         ++ nu;
@@ -1019,7 +1019,7 @@ list *read_cfg(char *filename)
                 current->type = line;
                 if(!strcmp(line, "[convolutional]") || !strcmp(line, "[maxpool]")){
                     if(strcmp(line, "[convolutional]") == 0){
-                        if(options->conv_pool_position.pool[0] == 999){
+                        if(conv_pp == 0){
                             options->conv_pool_position.conv[conv_pp++] = layer_count - 1;
                         }
                         else if(conv_pp == pool_pp){
