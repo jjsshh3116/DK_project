@@ -49,8 +49,6 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
     row -= pad;
     col -= pad;
 
-    printf("pixel: %d\t", pixel);
-
     if (row < 0 || col < 0 ||
         row >= height || col >= width) return 0;
 
