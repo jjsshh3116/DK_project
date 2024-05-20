@@ -540,6 +540,11 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
         black_pixel[z] = pixel;
         // printf("[%d]: %d\n", z, black_pixel[z]);
     }
+    if(net.index == 2){
+        for(int z = 0; z < black_pixel_size; z++){
+        printf("black pixel[%d]: %d\n", z, black_pixel[z]);
+    }
+    }
 
     fill_cpu(l.outputs*l.batch, 0, l.output, 1); //l.output을 0으로 초기화
 
