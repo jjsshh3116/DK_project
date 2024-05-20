@@ -1009,8 +1009,8 @@ list *read_cfg(char *filename)
     if(file == 0) file_error(filename);
     char *line;
     int nu = 0, layer_count = 0, conv_pp = 0, pool_pp = 0, current_pool = 0;
-    options->conv_pool_position.pool[0] = 999;
     list *options = make_list();
+    options->conv_pool_position.pool[0] = 999;
     section *current = 0;
     while((line=fgetl(file)) != 0){
         ++ nu;
