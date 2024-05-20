@@ -987,13 +987,13 @@ network *parse_network_cfg(char *filename)
 #endif
     }
 
-    for(int z = 0; z < net->conv_pool_position.n; z++){
-        printf("conv_position[%d]: %d\n", z, net->conv_pool_position.conv[z]);
-    }
+    // for(int z = 0; z < net->conv_pool_position.n; z++){
+    //     printf("conv_position[%d]: %d\n", z, net->conv_pool_position.conv[z]);
+    // }
 
-    for(int z = 0; z < net->conv_pool_position.n; z++){
-        printf("pool_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
-    }
+    // for(int z = 0; z < net->conv_pool_position.n; z++){
+    //     printf("pool_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
+    // }
 
 
     return net;
