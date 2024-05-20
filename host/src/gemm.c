@@ -137,7 +137,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
                 int temp = k*ldb+j;
                 if(B[temp] == -999){
-                    printf("global_count: %d\n", global_count);
+                    //printf("global_count: %d\n", global_count);
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
                     //printf("Before pixel_data referenced, index: %d\n", temp);
@@ -155,6 +155,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
         }
     }
     //printf("#######################################################\n");
+    printf("global_count: %d\n", global_count);
 
 }
 
