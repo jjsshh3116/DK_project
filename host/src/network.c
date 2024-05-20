@@ -269,27 +269,27 @@ void forward_network(network *netp)
             // }
 
             // forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
-            forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
+            forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
 
             printf("############ TEE calculation outputs ############\n");
             for(int z = 0; z < l_TA.outputs*net.batch; z++){
-                 printf("%d TEE//otuput[%d]: %f \n", net.index, z, l_TA.output[z]);
+                 printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
             }
 
-            net.input = l_TA.output;
+            net.input = l.output;
 
         }
         else if(l.type == MAXPOOL && net.index <= net.conv_pool_position.pool[n]){
             //TEE forward
             forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
-            forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
+            forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
 
             // printf("############ TEE calculation outputs ############\n");
             // for(int z = 0; z < l_TA.outputs*net.batch; z++){
             //      printf("%d TEE//otuput[%d]: %f \n", net.index, z, l_TA.output[z]);
             // }
 
-            net.input = l_TA.output;
+            net.input = l.output;
         }
         else{
             //REE forward
