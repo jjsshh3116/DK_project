@@ -258,6 +258,12 @@ void forward_network(network *netp)
         layer l = net.layers[i];
         //layer l_TA = net.layers[i];
 
+        if(net.index == 2){
+            for(int z = 0; z < l.inputs; z++){
+                printf("net.index:2 input[%d]: %f\n", z, net.input[z]);
+            }
+        }
+
         if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
             //TEE forward
             black_forward_convolutional_layer(l, net);
