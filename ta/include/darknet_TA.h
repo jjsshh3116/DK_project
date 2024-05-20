@@ -78,9 +78,9 @@ typedef struct{
     int C_index;
     float weight;
     float B;
-    int B_index;
 
 } black_pixels_TA;
+
 
 struct network_TA;
 typedef struct network_TA network_TA;

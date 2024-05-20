@@ -1,5 +1,6 @@
 #include "im2col.h"
 #include <stdio.h>
+#include "darknet.h"
 
 int black_count = 0;
 
@@ -42,7 +43,7 @@ void im2col_cpu(float* data_im,
 }
 
 float black_im2col_get_pixel(float *im, int height, int width, int channels,
-                        int row, int col, int channel, int pad, int* black_pixel, int black_pixel_size, float* black_pixel_data)
+                        int row, int col, int channel, int pad, int* black_pixel, int black_pixel_size, float *pixel_data, int col_index)
 {
     int pixel = col + width*(row + height*channel);
     row -= pad;
@@ -57,8 +58,8 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
             if(pixel == black_pixel[z]){
                // printf("%d\n", pixel);
                 //printf("im2col//: pixel: %d\tblack_pixel: %d\n", pixel, black_pixel[z]);
-                black_pixel_data[black_count++] = im[pixel];
-               // return -9;
+                pixel_data[col_index] = im[pixel];
+                return -999;
             } 
         }
 
@@ -67,7 +68,7 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
 
 int black_im2col_cpu(float* data_im,
      int channels,  int height,  int width,
-     int ksize,  int stride, int pad, float* data_col, int* black_pixel, int black_pixel_size, float* black_pixel_data) 
+     int ksize,  int stride, int pad, float* data_col, int* black_pixel, int black_pixel_size, float *pixel_data) 
 {
     int c,h,w;
     int height_col = (height + 2*pad - ksize) / stride + 1;
@@ -85,8 +86,7 @@ int black_im2col_cpu(float* data_im,
                 int im_col = w_offset + w * stride;
                 int col_index = (c * height_col + h) * width_col + w;
                 data_col[col_index] = black_im2col_get_pixel(data_im, height, width, channels,
-                        im_row, im_col, c_im, pad, black_pixel, black_pixel_size, black_pixel_data);
-                printf("col_index: %d\n", col_index);
+                        im_row, im_col, c_im, pad, black_pixel, black_pixel_size, pixel_data, col_index);
             }
         }
     }

@@ -36,7 +36,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
              float *B, int ldb,
              float *C, int ldc,
              black_pixels *black_in_TEE,
-             int *black_pixel, int black_pixel_size);
+             pixel_data *pixel_data);
 
 #ifdef GPU
 void gemm_gpu(int TA, int TB, int M, int N, int K, float ALPHA,
