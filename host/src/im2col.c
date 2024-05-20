@@ -57,6 +57,7 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
                // printf("%d\n", pixel);
                 //printf("im2col//: pixel: %d\tblack_pixel: %d\n", pixel, black_pixel[z]);
                 pixel_data[col_index] = im[pixel];
+                black_count++;
                 return -999;
             } 
         }

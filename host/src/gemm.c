@@ -141,7 +141,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     black_in_TEE[global_count].weight = A_PART;
                     black_in_TEE[global_count].B = pixel_data[temp];
                     global_count++;
-                    printf("gemm.c//: pixel: %d  black_picel_data: %d\n", temp, pixel_data[temp]);     
+                    printf("gemm.c//: pixel: %d  black_picel_data: %f\n", temp, pixel_data[temp]);     
                 }
                 else{
                     C[i*ldc+j] += A_PART*B[temp];
