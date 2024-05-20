@@ -576,7 +576,7 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
 
     free(pixel_data);
     free(black_pixel);
-    free(l.black_in_TEE);
+    //free(l.black_in_TEE);
     debug_num++;
 }
 
