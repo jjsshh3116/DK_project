@@ -265,7 +265,7 @@ void forward_network(network *netp)
 
             printf("##### index: %d ######################\n", i);
             for(int z = 0; z < l.black_size; z++){
-                printf("c_index: %d  weights: %f  B: %f\n", l.black_in_TEE->C_index[z], l.black_in_TEE->weight[z], l.black_in_TEE->B[z]);
+                printf("c_index: %d  weights: %f  B: %f\n", l.black_in_TEE.C_index[z], l.black_in_TEE.weight[z], l.black_in_TEE.B[z]);
             }
             printf("####################################\n");
 
