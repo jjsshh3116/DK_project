@@ -573,11 +573,11 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
         }
     }
 
-             printf("##### index: %d ######################\n", net.index);
-            for(int z = 0; z < l.black_size; z++){
-                printf("c_index: %d  weights: %f  B: %f\n", l.black_in_TEE[z].C_index, l.black_in_TEE[z].weight, l.black_in_TEE[z].B);
-            }
-            printf("####################################\n");
+            //  printf("##### index: %d ######################\n", net.index);
+            // for(int z = 0; z < l.black_size; z++){
+            //     printf("c_index: %d  weights: %f  B: %f\n", l.black_in_TEE[z].C_index, l.black_in_TEE[z].weight, l.black_in_TEE[z].B);
+            // }
+            // printf("####################################\n");
 
 
     free(pixel_data);
