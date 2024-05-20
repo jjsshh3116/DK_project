@@ -584,7 +584,7 @@ static TEE_Result forward_network_back_TA_params(uint32_t param_types,
         params0[z] = netta.layers[net_index].output[z];
     }
 
-    // ?????
+   
     //free(ta_net_input);
     if(debug_summary_com == 1){
         summary_array("forward_network_back / l_pp2.output", netta.layers[netta.index-1].output, buffersize);
