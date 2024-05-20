@@ -261,7 +261,7 @@ void forward_network(network *netp)
         if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
             if(net.index == net.conv_pool_position.conv[1]){
                 forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
-                forward_network_back_CA(l_pp2.output, l_pp2.outputs, net.batch, net.index);
+                forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
                 net.input = l.output;
 
             }
@@ -278,7 +278,7 @@ void forward_network(network *netp)
             // forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
             forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
             }
-            
+
             printf("############ TEE calculation outputs ############\n");
             for(int z = 0; z < l_TA.outputs*net.batch; z++){
                  printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
