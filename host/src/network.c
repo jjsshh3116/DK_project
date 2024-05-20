@@ -261,7 +261,7 @@ void forward_network(network *netp)
         if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
             //TEE forward
             black_forward_convolutional_layer(l, net);
-            l.forward(l, net);
+            //l.forward(l, net);
 
             // printf("############ Normal conv outputs ############\n");
             // for(int z = 0; z < l.outputs*net.batch; z++){
@@ -744,8 +744,8 @@ float *network_predict(network *net, float *input)
      }
      */
 
-    net_output_return_CA(net->outputs, 1);
-    out = net_output_back;
+    // net_output_return_CA(net->outputs, 1);
+    // out = net_output_back;
 
     out = net->output;
 

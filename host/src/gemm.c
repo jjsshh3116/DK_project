@@ -155,7 +155,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
         }
     }
     //printf("#######################################################\n");
-    printf("global_count: %d\n", global_count);
+    //printf("global_count: %d\n", global_count);
 
 }
 
