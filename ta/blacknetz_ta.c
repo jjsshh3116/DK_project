@@ -524,7 +524,7 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
                                           TEE_Param params[4])
 {
     uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_INPUT,
-                                               TEE_PARAM_TYPE_MEMREF_INPUT,
+                                               TEE_PARAM_TYPE_NONE,
                                                TEE_PARAM_TYPE_MEMREF_INPUT,
                                                TEE_PARAM_TYPE_VALUE_INPUT);
 
@@ -533,8 +533,8 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
 
     float *c = params[0].memref.buffer;
     int c_size = params[0].memref.size / sizeof(float);
-    float *b = params[1].memref.buffer;
-    int b_size = params[1].memref.size / sizeof(float);
+    // float *b = params[1].memref.buffer;
+    // int b_size = params[1].memref.size / sizeof(float);
     black_pixels_TA *black_in_TEE = params[2].memref.buffer;
     int black_size = params[2].memref.size / sizeof(black_pixels_TA);
     int net_index = params[3].value.a;
@@ -547,7 +547,7 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
         IMSG("%d C otuput[%d]: %d \n", net_index, z, (int)(c[z] * 100000.0));
     } }
     
-    black_forward_network_TA(c, c_size, b, b_size, black_in_TEE, black_size);
+    black_forward_network_TA(c, c_size, black_in_TEE, black_size);
 
 
     // IMSG("black_forward_network_TA_params netta.layers[net_index].output memory address: %d\n", netta.layers[net_index].output);

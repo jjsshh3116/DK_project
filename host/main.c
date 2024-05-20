@@ -575,7 +575,7 @@ void forward_network_CA(float *net_input, int l_inputs, int net_batch, int net_t
     free(params0);
 }
 
-void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, layer l, int net_index)
+void black_forward_network_CA(float *c, black_pixels *black_in_TEE, layer l, int net_index)
 {
     //invoke op and transfer paramters
     TEEC_Operation op;
@@ -584,7 +584,7 @@ void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, la
 
     memset(&op, 0, sizeof(op));
     op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_INPUT, 
-                                     TEEC_MEMREF_TEMP_INPUT,
+                                     TEEC_NONE,
                                      TEEC_MEMREF_TEMP_INPUT, 
                                      TEEC_VALUE_INPUT);
 
@@ -594,15 +594,21 @@ void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, la
        // printf("params0[%d]: %f\n", z, c[z]);
     }
 
-    int height_col = (l.h + 2*l.pad - l.size) / l.stride + 1;
-    int width_col = (l.w + 2*l.pad - l.size) / l.stride + 1;
-    int channels_col = (l.c/l.groups) * l.size * l.size;
-    int col_index = ((channels_col - 1) * height_col + (height_col - 1)) * width_col + (width_col - 1);
-
-    float *params1 = malloc(sizeof(float)*col_index);
-    for(int z=0; z<col_index; z++){
-        params1[z] = b[z];
+    if(net.index == 2){
+        for(int z = 0; z < l.outputs; z++){
+            printf("C[%d]: %f\n", z, c[z]);
+        }
     }
+
+    // int height_col = (l.h + 2*l.pad - l.size) / l.stride + 1;
+    // int width_col = (l.w + 2*l.pad - l.size) / l.stride + 1;
+    // int channels_col = (l.c/l.groups) * l.size * l.size;
+    // int col_index = ((channels_col - 1) * height_col + (height_col - 1)) * width_col + (width_col - 1);
+
+    // float *params1 = malloc(sizeof(float)*col_index);
+    // for(int z=0; z<col_index; z++){
+    //     params1[z] = b[z];
+    // }
 
     black_pixels *params2 = malloc(sizeof(black_pixels)*l.black_size);
     for(int z=0; z<l.black_size; z++){
@@ -611,8 +617,8 @@ void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, la
 
     op.params[0].tmpref.buffer = params0;
     op.params[0].tmpref.size = sizeof(float) * l.outputs;
-    op.params[1].tmpref.buffer = params1;
-    op.params[1].tmpref.size = sizeof(float) * col_index;
+    // op.params[1].tmpref.buffer = params1;
+    // op.params[1].tmpref.size = sizeof(float) * col_index;
     op.params[2].tmpref.buffer = params2;
     op.params[2].tmpref.size = sizeof(black_pixels)*l.black_size;
     op.params[3].value.a = net_index;

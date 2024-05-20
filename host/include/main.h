@@ -71,7 +71,7 @@ void make_cost_layer_CA(int batch, int inputs, COST_TYPE cost_type, float scale,
 
 void forward_network_CA(float *net_input, int net_inputs, int net_batch, int net_train, int net_index);
 
-void black_forward_network_CA(float *c, float *b, black_pixels *black_in_TEE, layer l, int net_index);
+void black_forward_network_CA(float *c, black_pixels *black_in_TEE, layer l, int net_index);
 
 void forward_network_back_CA(float *l_output, int net_inputs, int net_batch, int net_index);
 

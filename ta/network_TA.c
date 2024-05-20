@@ -106,7 +106,7 @@ void forward_network_TA()
     calc_network_cost_TA();
 }
 
-void black_forward_network_TA(float *c, int c_size, float *b, int b_size, black_pixels_TA *black_in_TEE, int black_size)
+void black_forward_network_TA(float *c, int c_size, black_pixels_TA *black_in_TEE, int black_size)
 {
     if(roundnum == 0){
         // ta_net_input malloc so not destroy before addition backward

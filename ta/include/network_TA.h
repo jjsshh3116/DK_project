@@ -14,7 +14,7 @@ void calc_network_loss_TA(int n, int batch);
 
 void forward_network_TA();
 
-void black_forward_network_TA(float *c, int c_size, float *b, int b_size, black_pixels_TA *black_in_TEE, int black_size);
+void black_forward_network_TA(float *c, int c_size, black_pixels_TA *black_in_TEE, int black_size);
 
 void backward_network_TA(float *ca_net_input);
 
