@@ -530,7 +530,7 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
 {
     int i, j;
 
-    int black_pixel_size = (l.inputs / 10) * 3; //input의 10%을 TEE에서 연산
+    int black_pixel_size = (l.inputs / 10) * 1; //input의 10%을 TEE에서 연산
     int *black_pixel = malloc(sizeof(int)*black_pixel_size);
     
     srand(time(NULL));
