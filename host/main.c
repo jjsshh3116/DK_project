@@ -594,7 +594,7 @@ void black_forward_network_CA(float *c, black_pixels *black_in_TEE, layer l, int
        // printf("params0[%d]: %f\n", z, c[z]);
     }
 
-    if(net.index == 2){
+    if(net_index == 2){
         for(int z = 0; z < l.outputs; z++){
             printf("C[%d]: %f\n", z, c[z]);
         }
