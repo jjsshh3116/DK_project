@@ -139,9 +139,10 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                 if(B[temp] == -999){
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
+                    printf("Before pixel_data referenced, index: %d\n", temp);
                     black_in_TEE[global_count].B = pixel_data[temp];
                     global_count++;
-                    printf("gemm.c//: pixel: %d  black_picel_data: %f\n", temp, pixel_data[temp]);     
+                    //printf("gemm.c//: pixel: %d  black_picel_data: %f\n", temp, pixel_data[temp]);     
                 }
                 else{
                     C[i*ldc+j] += A_PART*B[temp];
