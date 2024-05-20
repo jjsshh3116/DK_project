@@ -572,7 +572,7 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
                 l.black_size = black_im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b, black_pixel, black_pixel_size, pixel_data);
                 if(net.index == 2){
                     for(int z = 0; z < height_col*width_col*channels_col; z++){
-                        printf("B[%d]: %d\n", z, b[z]);
+                        printf("B[%d]: %f\n", z, b[z]);
 
                     }
                 }
