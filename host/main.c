@@ -594,12 +594,6 @@ void black_forward_network_CA(float *c, black_pixels *black_in_TEE, layer l, int
        // printf("params0[%d]: %f\n", z, c[z]);
     }
 
-    if(net_index == 2){
-        for(int z = 0; z < l.outputs; z++){
-            printf("C[%d]: %f\n", z, c[z]);
-        }
-    }
-
     // int height_col = (l.h + 2*l.pad - l.size) / l.stride + 1;
     // int width_col = (l.w + 2*l.pad - l.size) / l.stride + 1;
     // int channels_col = (l.c/l.groups) * l.size * l.size;
