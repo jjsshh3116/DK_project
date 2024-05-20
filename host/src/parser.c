@@ -1022,7 +1022,7 @@ list *read_cfg(char *filename)
                         //printf("[%d]: %s\n", layer_count - 1, line);
                         options->conv_pool_position.conv[conv_pp++] = layer_count - 1;
                     }
-                    else if(!strcmp(line, "[maxpool]"){
+                    else if(!strcmp(line, "[maxpool]")){
                         //printf("[%d]: %s\n", layer_count - 1, line);
                         options->conv_pool_position.pool[pool_pp++] = layer_count - 1;
                         current_pool = pool_pp - 1;
