@@ -1018,12 +1018,15 @@ list *read_cfg(char *filename)
                 current->options = make_list();
                 current->type = line;
                 if(!strcmp(line, "[convolutional]") || !strcmp(line, "[maxpool]")){
-                    if(strcmp(line, "[convolutional]") == 0 && options->conv_pool_position.pool[current_pool] < (layer_count - 1)){
-                        //printf("[%d]: %s\n", layer_count - 1, line);
-                        options->conv_pool_position.conv[conv_pp++] = layer_count - 1;
+                    if(strcmp(line, "[convolutional]") == 0){
+                        if(options->conv_pool_position.pool[current_pool] == 999){
+                            options->conv_pool_position.conv[conv_pp++] = layer_count - 1;
+                        }
+                        else if(options->conv_pool_position.pool[current_pool] < (layer_count - 1)){
+                             options->conv_pool_position.conv[conv_pp++] = layer_count - 1;
+                        }
                     }
                     else if(!strcmp(line, "[maxpool]")){
-                        //printf("[%d]: %s\n", layer_count - 1, line);
                         options->conv_pool_position.pool[pool_pp++] = layer_count - 1;
                         current_pool = pool_pp - 1;
                     }
