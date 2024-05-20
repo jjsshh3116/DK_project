@@ -564,7 +564,7 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
                 b = im;
             } else {// filter의 크기가 1인 경우가 거의 없어서, 대부분 연산에서 im2col를 실행.
                 l.black_size = black_im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b, black_pixel, black_pixel_size, pixel_data);
-                l.black_size = height_col*width_col*channels_col;
+                l.black_size = l.black_size * (l.size + 1);
                 l.black_in_TEE = malloc(sizeof(black_pixels)*height_col*width_col*channels_col);
                // printf("l.black_size: %d\n", l.black_size);
             }
