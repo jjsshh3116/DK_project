@@ -507,6 +507,8 @@ void forward_convolutional_layer(convolutional_layer l, network net)
 
                 if(net.index == 2){
                     printf("####################################\n");
+                    printf("//normal// h:%d w:%d size:%d strid:%d pad:%d ", l.h, l.w, l.size, l.stride, l.pad);
+                    printf("####################################\n");
                     for(int z = 0; z < 500; z++){
                         printf("normal im data[%d]: %f\n", z, im[z]);
                     }
@@ -590,6 +592,8 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
                // printf("l.black_size: %d\n", l.black_size);
 
                if(net.index == 2){
+                    printf("####################################\n");
+                    printf("//black// h:%d w:%d size:%d strid:%d pad:%d ", l.h, l.w, l.size, l.stride, l.pad);
                     printf("####################################\n");
                     for(int z = 0; z < 500; z++){
                         printf("black im data[%d]: %f\n", z, im[z]);
