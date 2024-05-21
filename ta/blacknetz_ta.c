@@ -553,6 +553,16 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
         netta.layers[net_index].output[z] = c[z];
     }
     netta.input = netta.layers[net_index].output;
+
+    while(netta.layers[++net_index].type == CONVOLUTIONAL_TA){
+        netta.index = net_index;
+        forward_network_TA();
+    }
+
+    //MAXPOOL_TA
+    netta.index = net_index;
+    forward_network_TA();
+    
     
     return TEE_SUCCESS;
 }
