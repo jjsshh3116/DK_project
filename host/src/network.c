@@ -274,10 +274,10 @@ void forward_network(network *netp)
             forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
             
 
-            // printf("############ TEE calculation outputs ############\n");
-            // for(int z = 0; z < l.outputs*net.batch; z++){
-            //      printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
-            // }
+            printf("############ TEE calculation outputs ############\n");
+            for(int z = 0; z < l.outputs*net.batch; z++){
+                 printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
+            }
 
             net.input = l.output;
             
@@ -288,10 +288,10 @@ void forward_network(network *netp)
             forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
             forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
 
-            // printf("############ TEE calculation outputs ############\n");
-            // for(int z = 0; z < l.outputs*net.batch; z++){
-            //      printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
-            // }
+            printf("############ TEE calculation outputs ############\n");
+            for(int z = 0; z < l.outputs*net.batch; z++){
+                 printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
+            }
 
             net.input = l.output;
         }
@@ -307,10 +307,10 @@ void forward_network(network *netp)
                 summary_array("forward_network / l.output", l.output, l.inputs*net.batch);
             }
 
-            // printf("############ REE calculation outputs ############\n");
-            // for(int z = 0; z < l.outputs*net.batch; z++){
-            //      printf("%d REE//otuput[%d]: %f \n", net.index, z, l.output[z]);
-            // }
+            printf("############ REE calculation outputs ############\n");
+            for(int z = 0; z < l.outputs*net.batch; z++){
+                 printf("%d REE//otuput[%d]: %f \n", net.index, z, l.output[z]);
+            }
 
             net.input = l.output;
 

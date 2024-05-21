@@ -542,10 +542,6 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
     netta.index = net_index;
     // netta.layers[netta.index].output = c;
 
-    if(net_index == 2){
-    for(int z = 0; z < c_size; z++){
-        IMSG("%d C otuput[%d]: %d \n", net_index, z, (int)(c[z] * 100000.0));
-    } }
     
     black_forward_network_TA(c, c_size, black_in_TEE, black_size);
 
