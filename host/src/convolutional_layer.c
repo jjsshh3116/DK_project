@@ -504,8 +504,29 @@ void forward_convolutional_layer(convolutional_layer l, network net)
                 b = im;
             } else {// filter의 크기가 1인 경우가 거의 없어서, 대부분 연산에서 im2col를 실행.
                 im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b);
+
+                if(net.index == 2){
+                    printf("####################################\n");
+                    for(int z = 0; z < 500; z++){
+                        printf("normal im data[%d]: %f\n", z, im[z]);
+                    }
+                     printf("####################################\n");
+                    for(int z = 0; z < 500; z++){
+                        printf("normal im2col data[%d]: %f\n", z, b[z]);
+                    }
+                     printf("####################################\n");
+                }
+
             }
             gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);
+
+             if(net.index == 2){
+                    printf("####################################\n");
+                    for(int z = 0; z < 500; z++){
+                        printf("normal C output[%d]: %f\n", z, c[z]);
+                    }
+                     printf("####################################\n");
+                }
             // for(int z = 0; z < l.outputs; z++){
             //     printf("normal C output[%d]: %f\n", z, c[z]);
             // }
@@ -567,6 +588,19 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
                 l.black_size = l.black_size * (l.size + 1);
                 l.black_in_TEE = malloc(sizeof(black_pixels)*l.black_size);
                // printf("l.black_size: %d\n", l.black_size);
+
+               if(net.index == 2){
+                    printf("####################################\n");
+                    for(int z = 0; z < 500; z++){
+                        printf("black im data[%d]: %f\n", z, im[z]);
+                    }
+                     printf("####################################\n");
+                    for(int z = 0; z < 500; z++){
+                        printf("black im2col data[%d]: %f\n", z, b[z]);
+                    }
+                     printf("####################################\n");
+                }
+
             }
             black_gemm_nn(m,n,k,1,a,k,b,n,c,n, l.black_in_TEE, pixel_data);
             black_forward_network_CA(c, l.black_in_TEE, l, net.index);
