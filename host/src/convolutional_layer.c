@@ -522,13 +522,13 @@ void forward_convolutional_layer(convolutional_layer l, network net)
             }
             gemm(0,0,m,n,k,1,a,k,b,n,1,c,n);
 
-             if(net.index == 2){
-                    printf("####################################\n");
-                    for(int z = 0; z < 500; z++){
-                        printf("normal C output[%d]: %f\n", z, c[z]);
-                    }
-                     printf("####################################\n");
-                }
+            //  if(net.index == 2){
+            //         printf("####################################\n");
+            //         for(int z = 0; z < 500; z++){
+            //             printf("normal C output[%d]: %f\n", z, c[z]);
+            //         }
+            //          printf("####################################\n");
+            //     }
             // for(int z = 0; z < l.outputs; z++){
             //     printf("normal C output[%d]: %f\n", z, c[z]);
             // }

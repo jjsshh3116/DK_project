@@ -45,7 +45,7 @@ void im2col_cpu(float* data_im,
 float black_im2col_get_pixel(float *im, int height, int width, int channels,
                         int row, int col, int channel, int pad, int* black_pixel, int black_pixel_size, float *pixel_data, int col_index)
 {
-    int pixel = col + width*(row + height*channel);
+    //int pixel = col + width*(row + height*channel);
     row -= pad;
     col -= pad;
 
@@ -53,16 +53,16 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
         row >= height || col >= width) return 0;
 
         for(int z = 0; z < black_pixel_size; z++){
-            if(pixel == black_pixel[z]){
+            if(col + width*(row + height*channel) == black_pixel[z]){
                // printf("%d\n", pixel);
                 //printf("im2col//: pixel: %d\tblack_pixel: %d\n", pixel, black_pixel[z]);
-                pixel_data[col_index] = im[pixel];
+                pixel_data[col_index] = im[col + width*(row + height*channel)];
                 black_count++;
                 return -999;
             } 
         }
 
-    return im[pixel];
+    return im[col + width*(row + height*channel)];
 }
 
 int black_im2col_cpu(float* data_im,
