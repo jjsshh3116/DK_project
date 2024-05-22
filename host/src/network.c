@@ -261,42 +261,15 @@ void forward_network(network *netp)
         if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
             //TEE forward
             black_forward_convolutional_layer(l, net);
-            l.forward(l, net);
 
             i = net.conv_pool_position.pool[s++];
             net.index = i;
+
             layer l_TA = net.layers[net.index];
 
-            // printf("############ Normal conv outputs ############\n");
-            // for(int z = 0; z < l.outputs*net.batch; z++){
-            //      printf("%d Normal//conv otuput[%d]: %f \n", net.index, z, l.output[z]);
-            // }
-
-            // forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
             forward_network_back_CA(l_TA.output, l_TA.outputs, net.batch, net.index);
-            
-
-            // printf("############ TEE calculation outputs ############\n");
-            // for(int z = 0; z < l_TA.outputs*net.batch; z++){
-            //      printf("%d TEE//otuput[%d]: %f \n", net.index, z, l_TA.output[z]);
-            // }
-
             net.input = l_TA.output;
-            
-
         }
-        // else if(l.type == MAXPOOL && net.index <= net.conv_pool_position.pool[n]){
-        //     //TEE forward
-        //     forward_network_CA(net.input, l.inputs, net.batch, net.train, net.index);
-        //     forward_network_back_CA(l.output, l.outputs, net.batch, net.index);
-
-        //     printf("############ TEE calculation outputs ############\n");
-        //     for(int z = 0; z < l.outputs*net.batch; z++){
-        //          printf("%d TEE//otuput[%d]: %f \n", net.index, z, l.output[z]);
-        //     }
-
-        //     net.input = l.output;
-        // }
         else{
             //REE forward
             if(l.delta){
@@ -309,11 +282,6 @@ void forward_network(network *netp)
                 summary_array("forward_network / l.output", l.output, l.inputs*net.batch);
             }
 
-            // printf("############ REE calculation outputs ############\n");
-            // for(int z = 0; z < l.outputs*net.batch; z++){
-            //      printf("%d REE//otuput[%d]: %f \n", net.index, z, l.output[z]);
-            // }
-
             net.input = l.output;
 
             if(l.truth){
@@ -321,13 +289,6 @@ void forward_network(network *netp)
             }
 
         }
-
-        // printf("############ REE & TEE calculation outputs ############\n");
-        // for(int j = 0; j < l.outputs*net.batch; j++){
-        //     printf("%d REE//otuput[%d]: %f \n", net.index, j, l.output[j]);
-        //     printf("%d TEE//otuput[%d]: %f \n", net.index, j, l_TA.output[j]);
-        // }
-        
     }
 
     calc_network_cost(netp);

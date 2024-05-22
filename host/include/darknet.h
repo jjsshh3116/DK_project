@@ -22,7 +22,6 @@ extern "C" {
 #endif
 
 #define SECRET_NUM -1234
-#define BLACK_NUM -9
 
 extern int gpu_index;
 

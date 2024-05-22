@@ -831,9 +831,6 @@ network *parse_network_cfg(char *filename)
     if(!is_network(s)) error("First section must be [net] or [network]");
     parse_net_options(options, net);
 
-    //partition_point1 = 999;
-    //partition_point2 = 999;
-
     params.h = net->h;
     params.w = net->w;
     params.c = net->c;
@@ -987,15 +984,6 @@ network *parse_network_cfg(char *filename)
 #endif
     }
 
-    // for(int z = 0; z < net->conv_pool_position.n; z++){
-    //     printf("conv_position[%d]: %d\n", z, net->conv_pool_position.conv[z]);
-    // }
-
-    // for(int z = 0; z < net->conv_pool_position.n; z++){
-    //     printf("pool_position[%d]: %d\n", z, net->conv_pool_position.pool[z]);
-    // }
-
-
     return net;
 }
 
@@ -1006,7 +994,6 @@ list *read_cfg(char *filename)
     char *line;
     int nu = 0, layer_count = 0, conv_pp = 0, pool_pp = 0;
     list *options = make_list();
-    //options->conv_pool_position.pool[0] = 999;
     section *current = 0;
     while((line=fgetl(file)) != 0){
         ++ nu;
@@ -1046,11 +1033,9 @@ list *read_cfg(char *filename)
         }
     }
     fclose(file);
-    //printf("layer_count = %d\n", layer_count);
-    partition_point1 = -1;
-    // partition_point2 = layer_count - 2;
-    partition_point2 = options->conv_pool_position.pool[pool_pp - 1];
 
+    partition_point1 = -1;
+    partition_point2 = options->conv_pool_position.pool[pool_pp - 1];
     options->conv_pool_position.n = pool_pp;
 
     return options;

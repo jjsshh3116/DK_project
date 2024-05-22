@@ -533,21 +533,12 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
 
     float *c = params[0].memref.buffer;
     int c_size = params[0].memref.size / sizeof(float);
-    // float *b = params[1].memref.buffer;
-    // int b_size = params[1].memref.size / sizeof(float);
     black_pixels_TA *black_in_TEE = params[2].memref.buffer;
     int black_size = params[2].memref.size / sizeof(black_pixels_TA);
     int net_index = params[3].value.a;
-
     netta.index = net_index;
-    // netta.layers[netta.index].output = c;
 
-    
     black_forward_network_TA(c, c_size, black_in_TEE, black_size);
-
-
-    // IMSG("black_forward_network_TA_params netta.layers[net_index].output memory address: %d\n", netta.layers[net_index].output);
-    // IMSG("black_forward_network_TA_params c memory address: %d\n", c);
 
     for(int z = 0; z < netta.layers[net_index].outputs; z++){
         netta.layers[net_index].output[z] = c[z];
@@ -593,36 +584,6 @@ static TEE_Result forward_network_back_TA_params(uint32_t param_types,
     }
     return TEE_SUCCESS;
 }
-
-
-//
-// static TEE_Result backward_network_TA_params(uint32_t param_types,
-//                                            TEE_Param params[4])
-// {
-//     uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_OUTPUT,
-//                                                TEE_PARAM_TYPE_MEMREF_OUTPUT,
-//                                                TEE_PARAM_TYPE_NONE,
-//                                                TEE_PARAM_TYPE_NONE);
-//     if (param_types != exp_param_types)
-//         return TEE_ERROR_BAD_PARAMETERS;
-//     //float *ltaoutput_diff = diff_private(lta.output, lta.outputs*lta.batch, 4.0f, 4.0f);
-//     //float *ltadelta_diff = diff_private(lta.delta, lta.outputs*lta.batch, 4.0f, 4.0f);
-//     //IMSG("diff");
-//
-//
-//     float *params0 = params[0].memref.buffer;
-//     float *params1 = params[1].memref.buffer;
-//     float *buffersize = params[0].memref.size / sizeof(float);
-//     for(int z=0; z<buffersize; z++){
-//         params0[z] = ta_net_input[z];
-//         params1[z] = ta_net_delta[z];
-//     }
-//
-//     //free(ltaoutput_diff);
-//     //free(ltadelta_diff);
-//     return TEE_SUCCESS;
-// }
-
 
 
 static TEE_Result backward_network_TA_params(uint32_t param_types,
@@ -753,33 +714,7 @@ static TEE_Result backward_network_back_TA_addidion_params(uint32_t param_types,
     }
     return TEE_SUCCESS;
 }
-//
-// static TEE_Result backward_network_back_TA_params(uint32_t param_types,
-//                                            TEE_Param params[4])
-// {
-//
-//
-//     uint32_t exp_param_types = TEE_PARAM_TYPES( TEE_PARAM_TYPE_MEMREF_INPUT,
-//                                                TEE_PARAM_TYPE_MEMREF_INPUT,
-//                                                TEE_PARAM_TYPE_VALUE_INPUT,
-//                                                TEE_PARAM_TYPE_NONE);
-//     //TEE_PARAM_TYPE_VALUE_INPUT
-//
-//     //DMSG("has been called");
-//
-//     if (param_types != exp_param_types)
-//     return TEE_ERROR_BAD_PARAMETERS;
-//
-//     float *ca_net_input = params[0].memref.buffer;
-//     float *ca_net_delta = params[1].memref.buffer;
-//     int net_train = params[2].value.a;
-//
-//     netta.train = net_train;
-//
-//     backward_network_TA(ca_net_input, ca_net_delta);
-//
-//     return TEE_SUCCESS;
-// }
+
 
 static TEE_Result update_network_TA_params(uint32_t param_types,
                                          TEE_Param params[4])

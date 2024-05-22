@@ -134,23 +134,11 @@ void black_forward_network_TA(float *c, int c_size, black_pixels_TA *black_in_TE
     }
 
     l.output = c;
-    // for(int z = 0; z < c_size; z++){
-    //     IMSG("%d After C otuput[%d]: %d \n", l.index, z, (int)(l.output[z] * 1000000.0));
-    // }
-
+   
     add_bias_TA(l.output, l.biases, l.batch, l.n, l.out_h*l.out_w);
    
     activate_array_TA(l.output, l.outputs*l.batch, l.activation);
-    // for(int z = 0; z < c_size; z++){
-    //     IMSG("%d After activate_layer otuput[%d]: %d \n", l.index, z, (int)(l.output[z] * 1000000.0));
-    // }
-
-    // IMSG("black_farward_network_TA l.output memory address: %d\n", l.output);
-    // IMSG("black_farward_network_TA netta.layers[netta.index].output memory address: %d\n", netta.layers[netta.index].output);
-    // IMSG("black_farward_network_TA c memory address: %d\n", c);
-    // netta.input = l.output;
-    //netta.layers[netta.index].output = l.output;
-
+   
     ta_net_output = malloc(sizeof(float)*l.outputs);
 
 
