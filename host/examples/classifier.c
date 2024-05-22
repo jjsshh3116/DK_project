@@ -1,6 +1,7 @@
 #include "darknet.h"
 #include "main.h"
 #include "parser.h"
+#include "classifier.h"
 
 #include <sys/time.h>
 #include <assert.h>
@@ -14,6 +15,7 @@
 
 #include "tcp_transfer.h"
 
+clock_t global_time_variable = 0;
 
 void getMemory(FILE *output_file) {
 
@@ -787,8 +789,8 @@ void predict_classifier(char *datacfg, char *cfgfile, char *weightfile, char *fi
                 printf("output file: %s\n", output_dir);
                 FILE *output_file = fopen(output_dir, "a");
 
-                fprintf(stderr, "%s: Predicted in %f seconds.\n", input, sec(end-time));
-                fprintf(output_file, "%s: Predicted in %f seconds.\n", input, sec(end-time));
+                fprintf(stderr, "%s: Predicted in %f seconds.\n", input, sec(end-time-global_time_variable));
+                fprintf(output_file, "%s: Predicted in %f seconds.\n", input, sec(end-time-global_time_variable));
 
                 for(i = 0; i < top; ++i) {
                         int index = indexes[i];
@@ -817,8 +819,6 @@ void predict_classifier(char *datacfg, char *cfgfile, char *weightfile, char *fi
                 if (filename) break;
         }
 }
-
-// sa
 
 
 
