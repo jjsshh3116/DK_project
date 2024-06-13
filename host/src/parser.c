@@ -217,7 +217,7 @@ convolutional_layer parse_convolutional(list *options, size_params params)
     layer.dot = option_find_float_quiet(options, "dot", 0);
 
     if(count_global > partition_point1 && count_global <= partition_point2){
-    make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
+    make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot, params.index);
     }
 
     //make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot, params.index);
@@ -538,7 +538,7 @@ maxpool_layer parse_maxpool(list *options, size_params params)
     maxpool_layer layer = make_maxpool_layer(batch,h,w,c,size,stride,padding);
 
     if(count_global > partition_point1 && count_global <= partition_point2){
-        make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
+        make_maxpool_layer_CA(batch,h,w,c,size,stride,padding,params.index);
     }
 
     //make_maxpool_layer_CA(batch,h,w,c,size,stride,padding,params.index);
