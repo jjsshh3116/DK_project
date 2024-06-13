@@ -826,7 +826,7 @@ network *parse_network_cfg(char *filename)
     int conv_pool_num;
     printf("Select conv_maxpool in TEE (default: 0 ~ MAX num: %d): ", net->conv_pool_position.n - 1);
     scanf("%d", &conv_pool_num);
-    if(conv_pool_num < 0 || net.conv_pool_position->n - 1 < conv_pool_num){
+    if(conv_pool_num < 0 || net->conv_pool_position.n - 1 < conv_pool_num){
         printf("Run default (0) mode...\n");
         conv_pool_num = 0;
     }
