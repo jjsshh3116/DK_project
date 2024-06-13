@@ -216,11 +216,11 @@ convolutional_layer parse_convolutional(list *options, size_params params)
     layer.flipped = option_find_int_quiet(options, "flipped", 0);
     layer.dot = option_find_float_quiet(options, "dot", 0);
 
-    // if(count_global > partition_point1 && count_global <= partition_point2){
-    // make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
-    // }
+    if(count_global > partition_point1 && count_global <= partition_point2){
+    make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot);
+    }
 
-    make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot, params.index);
+    //make_convolutional_layer_CA(batch,h,w,c,n,groups,size,stride,padding,activation, batch_normalize, binary, xnor, params.net->adam, layer.flipped, layer.dot, params.index);
     
     return layer;
 
@@ -537,11 +537,11 @@ maxpool_layer parse_maxpool(list *options, size_params params)
 
     maxpool_layer layer = make_maxpool_layer(batch,h,w,c,size,stride,padding);
 
-    // if(count_global > partition_point1 && count_global <= partition_point2){
-    //     make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
-    // }
+    if(count_global > partition_point1 && count_global <= partition_point2){
+        make_maxpool_layer_CA(batch,h,w,c,size,stride,padding);
+    }
 
-    make_maxpool_layer_CA(batch,h,w,c,size,stride,padding,params.index);
+    //make_maxpool_layer_CA(batch,h,w,c,size,stride,padding,params.index);
 
     return layer;
 }
@@ -822,6 +822,21 @@ network *parse_network_cfg(char *filename)
     net->conv_pool_position.conv = sections->conv_pool_position.conv;
     net->conv_pool_position.pool = sections->conv_pool_position.pool;
     net->conv_pool_position.n = sections->conv_pool_position.n;
+
+    int conv_pool_num;
+    printf("Select conv_maxpool in TEE (default: 0 ~ MAX num: %d): ", net.conv_pool_position.n - 1);
+    scanf("%d", &conv_pool_num);
+    if(conv_pool_num < 0 || net.conv_pool_position.n - 1 < conv_pool_num){
+        printf("Run default (0) mode...\n");
+        conv_pool_num = 0;
+    }
+
+    net->conv_pool_num = conv_pool_num;
+
+    partition_point1 = -1;
+    partition_point2 = net->conv_pool_position.pool[conv_pool_num];
+
+   
 
     net->gpu_index = gpu_index;
     size_params params;

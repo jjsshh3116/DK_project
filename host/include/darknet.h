@@ -461,6 +461,7 @@ typedef struct network{
     float *output;
     learning_rate_policy policy;
     conv_pool_position conv_pool_position;
+    int conv_pool_num;
 
     float learning_rate;
     float momentum;
