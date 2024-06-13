@@ -985,6 +985,9 @@ void terminate_tee_session()
 
 int main(int argc, char **argv)
 {
+    clock_t time;
+
+    time = clock();
 
     printf("Prepare session with the TA\n");
     prepare_tee_session();
@@ -993,5 +996,7 @@ int main(int argc, char **argv)
     darknet_main(argc, argv);
 
     terminate_tee_session();
+
+    printf("Total program time: %f seconds\n", sec(clock() - time));
     return 0;
 }

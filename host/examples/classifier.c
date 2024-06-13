@@ -723,7 +723,7 @@ void predict_classifier(char *datacfg, char *cfgfile, char *weightfile, char *fi
 
         int i = 0;
         char **names = get_labels(name_list);
-        clock_t time, end;
+        // clock_t time, end;
         int *indexes = calloc(top, sizeof(int));
         char buff[256];
         char *input = buff;
@@ -746,9 +746,9 @@ void predict_classifier(char *datacfg, char *cfgfile, char *weightfile, char *fi
 
                 float *X = r.data;
 
-                time=clock();
+                // time=clock();
                 float *predictions = network_predict(net, X);
-                end =clock();
+                // end =clock();
                 if(net->hierarchy) hierarchy_predictions(predictions, net->outputs, net->hierarchy, 1, 1);
 
                 top_k(predictions, net->outputs, top, indexes);
@@ -789,8 +789,8 @@ void predict_classifier(char *datacfg, char *cfgfile, char *weightfile, char *fi
                 printf("output file: %s\n", output_dir);
                 FILE *output_file = fopen(output_dir, "a");
 
-                fprintf(stderr, "%s: Predicted in %f seconds.\n", input, sec(end-time-global_time_variable));
-                fprintf(output_file, "%s: Predicted in %f seconds.\n", input, sec(end-time-global_time_variable));
+                // fprintf(stderr, "%s: Predicted in %f seconds.\n", input, sec(end-time-global_time_variable));
+                // fprintf(output_file, "%s: Predicted in %f seconds.\n", input, sec(end-time-global_time_variable));
 
                 for(i = 0; i < top; ++i) {
                         int index = indexes[i];
