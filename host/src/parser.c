@@ -824,9 +824,9 @@ network *parse_network_cfg(char *filename)
     net->conv_pool_position.n = sections->conv_pool_position.n;
 
     int conv_pool_num;
-    printf("Select conv_maxpool in TEE (default: 0 ~ MAX num: %d): ", net.conv_pool_position.n - 1);
+    printf("Select conv_maxpool in TEE (default: 0 ~ MAX num: %d): ", net->conv_pool_position.n - 1);
     scanf("%d", &conv_pool_num);
-    if(conv_pool_num < 0 || net.conv_pool_position.n - 1 < conv_pool_num){
+    if(conv_pool_num < 0 || net.conv_pool_position->n - 1 < conv_pool_num){
         printf("Run default (0) mode...\n");
         conv_pool_num = 0;
     }
@@ -1049,8 +1049,8 @@ list *read_cfg(char *filename)
     }
     fclose(file);
 
-    partition_point1 = -1;
-    partition_point2 = options->conv_pool_position.pool[pool_pp - 1];
+    // partition_point1 = -1;
+    // partition_point2 = options->conv_pool_position.pool[pool_pp - 1];
     options->conv_pool_position.n = pool_pp;
 
     return options;
