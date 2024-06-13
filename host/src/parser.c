@@ -1686,6 +1686,18 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         if (l.dontload) continue;
 
         // load weights of the NW side
+        if(i <= partition_point1 || i > partition_point2){
+            load_weights_layer(l, fp, transpose);
+        } 
+        else{ // load weights of the SW side
+            int layerTA_i = i - partition_point1 - 1;
+            comm_load_weights_layer(l, fp, layerTA_i, transpose);
+        }
+
+
+
+        /*
+        // load weights of the NW side
         load_weights_layer(l, fp, transpose);
 
         // load weights of the SW side
@@ -1695,6 +1707,8 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
         else if(l.type == MAXPOOL && i <= net->conv_pool_position.pool[net->conv_pool_position.n - 1]){
             comm_load_weights_layer(l, fp_TA, i, transpose);
         }
+
+        */
 
         // if (i < net->conv_pool_position.pool[net->conv_pool_position.n - 1])
         // {
