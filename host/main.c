@@ -986,7 +986,7 @@ void terminate_tee_session()
 
 int main(int argc, char **argv)
 {
-    clock_t time;
+    clock_t time, end;
 
     time = clock();
 
@@ -998,6 +998,9 @@ int main(int argc, char **argv)
 
     terminate_tee_session();
 
-    printf("Total program time(exclude_time): %f seconds\n", sec(clock() - time - exclude_time));
+    end = clock();
+
+    printf("time: %f seconds\t exclude_time: %f seconds\n", sec(end - time), sec(exclude_time) );
+    printf("Total program time(exclude_time): %f seconds\n", sec(end - time - exclude_time));
     return 0;
 }
