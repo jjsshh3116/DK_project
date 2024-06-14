@@ -532,11 +532,12 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
     int *black_pixel = malloc(sizeof(int)*black_pixel_size);
     
     srand(time(NULL));
-
+    clock_t start;
     for(int z = 0; z < black_pixel_size; z++){
         int pixel = rand() % (l.inputs - 1);
         black_pixel[z] = pixel;
     }
+    exclude_time += clock() - start;
 
     fill_cpu(l.outputs*l.batch, 0, l.output, 1); //l.output을 0으로 초기화
 
