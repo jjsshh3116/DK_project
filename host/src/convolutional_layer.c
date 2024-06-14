@@ -532,7 +532,8 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
     int *black_pixel = malloc(sizeof(int)*black_pixel_size);
     
     srand(time(NULL));
-    clock_t start;
+
+    clock_t start = clock();
     for(int z = 0; z < black_pixel_size; z++){
         int pixel = rand() % (l.inputs - 1);
         black_pixel[z] = pixel;
