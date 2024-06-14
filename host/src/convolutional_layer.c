@@ -493,6 +493,7 @@ void forward_convolutional_layer(convolutional_layer l, network net)
     int k = l.size*l.size*l.c/l.groups; //l.size -> filter의 크기. k는 한 filter의 가중치 수(한 filter당 3 channel)
     int n = l.out_w*l.out_h; // 한 차원의 feature map의 크기
 
+
     for(i = 0; i < l.batch; ++i){
         for(j = 0; j < l.groups; ++j){ //groups값이 1이여서 이 for문은 한번만 실행
             float *a = l.weights + j*l.nweights/l.groups; //현재 가중치의 위치를 나타냄

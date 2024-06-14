@@ -15,7 +15,6 @@
 
 #include "tcp_transfer.h"
 
-clock_t global_time_variable = 0;
 
 void getMemory(FILE *output_file) {
 

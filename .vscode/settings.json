@@ -7,6 +7,7 @@
         "string_view": "c",
         "cuda.h": "c",
         "shortcut_layer.h": "c",
-        "parser.h": "c"
+        "parser.h": "c",
+        "diffprivate.h": "c"
     }
 }

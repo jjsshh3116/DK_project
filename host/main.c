@@ -23,6 +23,7 @@ float *net_output_back;
 int sysCount = 0;
 char state;
 int debug_plot_bool = 0;
+clock_t exclude_time = 0;
 
 void debug_plot(char *filename, int num, float *tobeplot, int length)
 {
@@ -997,6 +998,6 @@ int main(int argc, char **argv)
 
     terminate_tee_session();
 
-    printf("Total program time: %f seconds\n", sec(clock() - time));
+    printf("Total program time(exclude_time): %f seconds\n", sec(clock() - time - exclude_time));
     return 0;
 }

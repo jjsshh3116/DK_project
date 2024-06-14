@@ -7,6 +7,7 @@
 #include <math.h>
 
 #include "diffprivate.h"
+#include "main.h"
 
 int global_count;
 
@@ -123,6 +124,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
 
    int i,j,k;
    global_count = 0;
+   clock_t start;
 
    for(i = 0; i < M; ++i){
         for(j = 0; j < N; ++j){
@@ -137,26 +139,23 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
                 int temp = k*ldb+j;
                 if(B[temp] == -999){
-                    //printf("global_count: %d\n", global_count);
+                    start = clock();
+
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
-                    //printf("Before pixel_data referenced, index: %d\n", temp);
                     black_in_TEE[global_count].B = pixel_data[temp];
                     global_count++;
-                    //printf("gemm.c//: pixel: %d  black_picel_data: %f\n", temp, pixel_data[temp]);     
+
+                    exclude_time += start - clock();
                 }
                 else{
                     C[i*ldc+j] += A_PART*B[temp];
                 }
                
                 
-                // printf("C[%d]: %f\n", i*ldc+j, C[i*ldc+j]);
             }
         }
     }
-    //printf("#######################################################\n");
-    //printf("global_count: %d\n", global_count);
-
 }
 
 void gemm_nt(int M, int N, int K, float ALPHA,

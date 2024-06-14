@@ -42,6 +42,8 @@
 extern TEEC_Context ctx;
 extern TEEC_Session sess;
 
+extern clock_t exclude_time;
+
 extern float *net_input_back;
 extern float *net_delta_back;
 extern float *net_output_back;

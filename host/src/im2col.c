@@ -3,6 +3,7 @@
 #include "darknet.h"
 #include <sys/time.h>
 #include "classifier.h"
+#include "main.h"
 
 int black_count = 0;
 
@@ -53,7 +54,7 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
     if (row < 0 || col < 0 ||
         row >= height || col >= width) return 0;
 
-        time_t start = clock();
+        clock_t start = clock();
         for(int z = 0; z < black_pixel_size; z++){
             if(col + width*(row + height*channel) == black_pixel[z]){
                 pixel_data[col_index] = im[col + width*(row + height*channel)];
@@ -61,7 +62,7 @@ float black_im2col_get_pixel(float *im, int height, int width, int channels,
                 return -999;
             } 
         }
-        global_time_variable += sec(clock() - start);
+        exclude_time += clock() - start;
 
 
     return im[col + width*(row + height*channel)];
