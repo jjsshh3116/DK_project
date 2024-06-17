@@ -540,9 +540,9 @@ static TEE_Result black_forward_network_TA_params(uint32_t param_types,
 
     black_forward_network_TA(c, c_size, black_in_TEE, black_size);
 
-    // for(int z = 0; z < netta.layers[net_index].outputs; z++){
-    //     netta.layers[net_index].output[z] = c[z];
-    // }
+    for(int z = 0; z < netta.layers[net_index].outputs; z++){
+        netta.layers[net_index].output[z] = c[z];
+    }
     netta.input = netta.layers[net_index].output;
 
     while(netta.layers[++net_index].type == CONVOLUTIONAL_TA){
