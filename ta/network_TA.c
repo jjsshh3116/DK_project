@@ -126,11 +126,13 @@ void black_forward_network_TA(float *c, int c_size, black_pixels_TA *black_in_TE
     l.black_size = black_size;
 
     for(int z = 0; z < l.black_size; z++){
-        int c_index = l.black_in_TEE[z].C_index;
-        float A_PART = l.black_in_TEE[z].weight;
-        float b = l.black_in_TEE[z].B;
+        // int c_index = l.black_in_TEE[z].C_index;
+        // float A_PART = l.black_in_TEE[z].weight;
+        // float b = l.black_in_TEE[z].B;
 
-        c[c_index] += A_PART * b;
+        // c[c_index] += A_PART * b;
+
+        c[l.black_in_TEE[z].C_index] += l.black_in_TEE[z].weight * l.black_in_TEE[z].B;
     }
 
     l.output = c;
