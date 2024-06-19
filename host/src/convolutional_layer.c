@@ -526,6 +526,7 @@ void forward_convolutional_layer(convolutional_layer l, network net)
 
 void black_forward_convolutional_layer(convolutional_layer l, network net)
 {
+    printf("start black_forward_convolutional_layer... \n");
     int i, j;
 
     int black_pixel_size = (l.inputs / 10) * 1; //input의 10%을 TEE에서 연산
@@ -562,11 +563,14 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
             if (l.size == 1) { //filter의 크기가 1일 때
                 b = im;
             } else {// filter의 크기가 1인 경우가 거의 없어서, 대부분 연산에서 im2col를 실행.
+            printf("start black_im2col... \n");
                 l.black_size = black_im2col_cpu(im, l.c/l.groups, l.h, l.w, l.size, l.stride, l.pad, b, black_pixel, black_pixel_size, pixel_data);
                 l.black_size = l.black_size * (l.size + 1);
                 l.black_in_TEE = malloc(sizeof(black_pixels)*l.black_size);
             }
+             printf("start black_gemm... \n");
             black_gemm_nn(m,n,k,1,a,k,b,n,c,n, l.black_in_TEE, pixel_data);
+             printf("start black_forward_network_CA... \n");
             black_forward_network_CA(c, l.black_in_TEE, l, net.index);
         }
     }
