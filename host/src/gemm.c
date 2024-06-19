@@ -131,6 +131,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
             C[i*ldc + j] *= 1.0; // -> output 배열의 값들에 1.0을 곱함.(initialize)
         }
     }
+    printf("black gemm C array initialize finish \n");
 
 #pragma omp parallel for
     for(i = 0; i < M; ++i){// filter 수 만큼 반복
@@ -147,9 +148,11 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     global_count++;
 
                     exclude_time += start - clock();
+                    printf("Detect BLACK\n");
                 }
                 else{
                     C[i*ldc+j] += A_PART*B[temp];
+                    printf("Just NORMAL\n");
                 }
                
                 
