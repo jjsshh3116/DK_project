@@ -255,9 +255,8 @@ void forward_network(network *netp)
     int i;
     int s = 0;
     for(i = 0; i < net.n; ++i){
+        printf("For loop start... \n");
         net.index = i;
-        //net_TA.index = i;
-
         layer l = net.layers[i];
 
         if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
