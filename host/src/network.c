@@ -240,6 +240,8 @@ void forward_network(network *netp)
     }
 #endif
 
+    printf("forward_network enter...\n");
+
     network net = *netp;
 
     // int n;
@@ -292,6 +294,7 @@ void forward_network(network *netp)
     }
 
     calc_network_cost(netp);
+    printf("forward_network finish...\n");
     
 }
 
@@ -676,6 +679,8 @@ void top_predictions(network *net, int k, int *index)
 
 float *network_predict(network *net, float *input)
 {
+    printf("netwrok_preidect enter...\n");
+    
     network orig = *net;
     net->input = input;
     net->truth = 0;
@@ -686,9 +691,9 @@ float *network_predict(network *net, float *input)
     float *out;
 
     out = net->output;
-
-     *net = orig;
-     return out;
+    printf("network_predict finish...\n");
+    *net = orig;
+    return out;
 }
 
 
