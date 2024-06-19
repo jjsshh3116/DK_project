@@ -258,7 +258,7 @@ void forward_network(network *netp)
         printf("For loop start... \n");
         net.index = i;
         layer l = net.layers[i];
-
+        printf("before if condition... \n");
         if(l.type == CONVOLUTIONAL && net.index <= net.conv_pool_position.conv[n]){
             //TEE forward
             black_forward_convolutional_layer(l, net);
