@@ -140,19 +140,18 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
                 //int temp = k*ldb+j;
                 if(B[k*ldb+j] == -999){
-                    start = clock();
-
+                    printf("Detect BLACK\n");
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
                     black_in_TEE[global_count].B = pixel_data[k*ldb+j];
                     global_count++;
 
-                    exclude_time += start - clock();
-                    //printf("Detect BLACK\n");
+                    
                 }
                 else{
+                    printf("Just NORMAL\n");
                     C[i*ldc+j] += A_PART*B[k*ldb+j];
-                    //printf("Just NORMAL\n");
+                    
                 }
                
                 
