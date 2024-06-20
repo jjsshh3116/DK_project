@@ -569,7 +569,7 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
                 l.black_in_TEE = malloc(sizeof(black_pixels)*l.black_size);
             }
              printf("start black_gemm... \n");
-            black_gemm_nn(m,n,k,1,a,k,b,n,c,n, l.black_in_TEE, pixel_data); //여기서 fault 발생 시발.
+            black_gemm_nn(m,n,k,1,a,k,b,n,c,n, l.black_in_TEE, pixel_data); //여기서 fault가 발생. 시발.
              printf("start black_forward_network_CA... \n");
             black_forward_network_CA(c, l.black_in_TEE, l, net.index);
         }
