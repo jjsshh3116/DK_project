@@ -147,8 +147,9 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     black_in_TEE[global_count].weight = A_PART;
                      printf("B\n");
                     black_in_TEE[global_count].B = pixel_data[k*ldb+j];
+                    printf("B end...\n");
                     global_count++;
-
+                    printf("BLAK END...\n");
                     
                 }
                 else{
