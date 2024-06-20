@@ -141,15 +141,18 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                 //int temp = k*ldb+j;
                 if(B[k*ldb+j] == -999){
                     printf("Detect BLACK\n");
+                    printf("C_index\n");
                     black_in_TEE[global_count].C_index = i*ldc+j;
+                    printf("weight\n");
                     black_in_TEE[global_count].weight = A_PART;
+                     printf("B\n");
                     black_in_TEE[global_count].B = pixel_data[k*ldb+j];
                     global_count++;
 
                     
                 }
                 else{
-                    printf("Just NORMAL\n");
+                    //printf("Just NORMAL\n");
                     C[i*ldc+j] += A_PART*B[k*ldb+j];
                     
                 }
