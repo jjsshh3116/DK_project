@@ -139,18 +139,12 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
             register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 filter의 가중치 값을 담는다.
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
                 //int temp = k*ldb+j;
+                printf("i*ldc+j: %d\n", i*ldc+j);
                 if(B[k*ldb+j] == -999){
-                    printf("Detect BLACK\n");
-                    printf("C_index\n");
                     black_in_TEE[global_count].C_index = i*ldc+j;
-                    printf("weight\n");
                     black_in_TEE[global_count].weight = A_PART;
-                     printf("B\n");
-                    black_in_TEE[global_count].B = pixel_data[k*ldb+j];
-                    printf("B end...\n");
+                    black_in_TEE[global_count].B = pixel_data[k*ldb+j]; // -> fault 발생 지점.
                     global_count++;
-                    printf("BLAK END...\n");
-                    
                 }
                 else{
                     //printf("Just NORMAL\n");

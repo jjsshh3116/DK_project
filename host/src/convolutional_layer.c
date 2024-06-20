@@ -551,7 +551,7 @@ void black_forward_convolutional_layer(convolutional_layer l, network net)
     int width_col = (l.w + 2*l.pad - l.size) / l.stride + 1;
     int channels_col = l.c/l.groups * l.size * l.size;
     float *pixel_data = malloc(sizeof(pixel_data)*height_col*width_col*channels_col);
-   // printf("pixel_data index: 0 ~ %d\n", height_col*width_col*channels_col - 1);
+    printf("pixel_data index: 0 ~ %d\n", height_col*width_col*channels_col - 1);
 
     for(i = 0; i < l.batch; ++i){
         for(j = 0; j < l.groups; ++j){ //groups값이 1이여서 이 for문은 한번만 실행
