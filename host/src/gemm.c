@@ -139,7 +139,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
             register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 filter의 가중치 값을 담는다.
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
                 //int temp = k*ldb+j;
-                if(B[temp] == -999){
+                if(B[k*ldb+j] == -999){
                     start = clock();
 
                     black_in_TEE[global_count].C_index = i*ldc+j;
@@ -148,11 +148,11 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     global_count++;
 
                     exclude_time += start - clock();
-                    printf("Detect BLACK\n");
+                    //printf("Detect BLACK\n");
                 }
                 else{
                     C[i*ldc+j] += A_PART*B[k*ldb+j];
-                    printf("Just NORMAL\n");
+                    //printf("Just NORMAL\n");
                 }
                
                 
