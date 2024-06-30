@@ -144,7 +144,8 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
                     printf("Inside i*ldc+j: %d\n", i*ldc+j);
-                    black_in_TEE[global_count].B = pixel_data[k*ldb+j]; // -> fault 발생 지점.
+                    // black_in_TEE[global_count].B = pixel_data[k*ldb+j]; // -> fault 발생 지점.
+                    black_in_TEE[global_count].B = 1;
                     global_count++;
                 }
                 else{
