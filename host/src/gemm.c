@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <sys/sysinfo.h>
 
 #include "diffprivate.h"
 #include "main.h"
@@ -125,6 +126,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
    int i,j,k;
    global_count = 0;
    clock_t start;
+   struct sysinfo info;
 
    for(i = 0; i < M; ++i){
         for(j = 0; j < N; ++j){
@@ -139,13 +141,22 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
             register float A_PART = ALPHA*A[i*lda+k]; // A_PART에 filter의 가중치 값을 담는다.
             for(j = 0; j < N; ++j){ // feature map의 크기만큼 반복. 
                 //int temp = k*ldb+j;
-                printf("i*ldc+j: %d\n", i*ldc+j);
+                // printf("i*ldc+j: %d\n", i*ldc+j);
                 if(B[k*ldb+j] == -999){
                     black_in_TEE[global_count].C_index = i*ldc+j;
                     black_in_TEE[global_count].weight = A_PART;
-                    printf("Inside i*ldc+j: %d\n", i*ldc+j);
+                    // printf("Inside i*ldc+j: %d\n", i*ldc+j);
                     // black_in_TEE[global_count].B = pixel_data[k*ldb+j]; // -> fault 발생 지점.
                     black_in_TEE[global_count].B = 1;
+
+                    if (sysinfo(&info) == 0) {
+                        printf("Available RAM: %ld MB\n", info.freeram / 1024 / 1024);
+                        printf("Buffered RAM: %ld MB\n", info.freeram / 1024 / 1024);
+                    } else {
+                        perror("sysinfo");
+                        return 1;
+                    }
+
                     global_count++;
                 }
                 else{
