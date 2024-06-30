@@ -151,7 +151,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
 
                     if (sysinfo(&info) == 0) {
                         printf("Available RAM: %ld MB\n", info.freeram / 1024 / 1024);
-                        printf("Buffered RAM: %ld MB\n", info.bufferram / 1024 / 1024);
+                        printf("Buffered RAM: %ld \n", info.bufferram);
                     } else {
                         perror("sysinfo");
                         return 1;
