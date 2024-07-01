@@ -4,6 +4,7 @@
 #include "darknet.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <math.h>
 #include <sys/sysinfo.h>
 
@@ -110,6 +111,38 @@ void gemm_nn(int M, int N, int K, float ALPHA,
 
 }
 
+void print_memory_usage() {
+    FILE *file = fopen("/proc/self/statm", "r");
+    if (!file) {
+        perror("fopen");
+        return;
+    }
+
+    long size;
+    long resident;
+    long share;
+    long text;
+    long lib;
+    long data;
+    long dt;
+
+    if (fscanf(file, "%ld %ld %ld %ld %ld %ld %ld", &size, &resident, &share, &text, &lib, &data, &dt) != 7) {
+        perror("fscanf");
+        fclose(file);
+        return;
+    }
+    fclose(file);
+
+    long page_size = getpagesize(); // 페이지 크기를 바이트 단위로 가져옴
+
+    printf("Total program size (code+data+stack): %ld KB\n", size * page_size / 1024);
+    printf("Resident set size (RSS): %ld KB\n", resident * page_size / 1024);
+    printf("Shared pages: %ld KB\n", share * page_size / 1024);
+    printf("Text (code): %ld KB\n", text * page_size / 1024);
+    printf("Data + Stack: %ld KB\n", data * page_size / 1024);
+}
+
+
 void black_gemm_nn(int M, int N, int K, float ALPHA,
              float *A, int lda,
              float *B, int ldb,
@@ -148,16 +181,9 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     // printf("Inside i*ldc+j: %d\n", i*ldc+j);
                     // black_in_TEE[global_count].B = pixel_data[k*ldb+j]; // -> fault 발생 지점.
                     black_in_TEE[global_count].B = 1;
-
-                    if (sysinfo(&info) == 0) {
-                        printf("Available RAM: %ld MB\n", info.freeram / 1024 / 1024);
-                        printf("Buffered RAM: %ld \n", info.bufferram);
-                    } else {
-                        perror("sysinfo");
-                        return 1;
-                    }
-
                     global_count++;
+                    print_memory_usage();
+
                 }
                 else{
                     //printf("Just NORMAL\n");

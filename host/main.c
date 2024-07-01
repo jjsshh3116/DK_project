@@ -1,5 +1,7 @@
 #include <err.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -982,11 +984,43 @@ void terminate_tee_session()
     TEEC_FinalizeContext(&ctx);
 }
 
+// 현재 프로세스의 메모리 사용 정보를 출력하는 함수
+void print_memory_usage() {
+    FILE *file = fopen("/proc/self/statm", "r");
+    if (!file) {
+        perror("fopen");
+        return;
+    }
 
+    long size;
+    long resident;
+    long share;
+    long text;
+    long lib;
+    long data;
+    long dt;
+
+    if (fscanf(file, "%ld %ld %ld %ld %ld %ld %ld", &size, &resident, &share, &text, &lib, &data, &dt) != 7) {
+        perror("fscanf");
+        fclose(file);
+        return;
+    }
+    fclose(file);
+
+    long page_size = getpagesize(); // 페이지 크기를 바이트 단위로 가져옴
+
+    printf("Total program size (code+data+stack): %ld KB\n", size * page_size / 1024);
+    printf("Resident set size (RSS): %ld KB\n", resident * page_size / 1024);
+    printf("Shared pages: %ld KB\n", share * page_size / 1024);
+    printf("Text (code): %ld KB\n", text * page_size / 1024);
+    printf("Data + Stack: %ld KB\n", data * page_size / 1024);
+}
 
 int main(int argc, char **argv)
 {
     clock_t time, end;
+
+    print_memory_usage();
 
     time = clock();
 
