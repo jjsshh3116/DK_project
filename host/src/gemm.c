@@ -111,7 +111,7 @@ void gemm_nn(int M, int N, int K, float ALPHA,
 
 }
 
-void print_memory_usage() {
+void print_memory_usage_gemm() {
     FILE *file = fopen("/proc/self/statm", "r");
     if (!file) {
         perror("fopen");
@@ -182,7 +182,7 @@ void black_gemm_nn(int M, int N, int K, float ALPHA,
                     // black_in_TEE[global_count].B = pixel_data[k*ldb+j]; // -> fault 발생 지점.
                     black_in_TEE[global_count].B = 1;
                     global_count++;
-                    print_memory_usage();
+                    print_memory_usage_gemm();
 
                 }
                 else{
